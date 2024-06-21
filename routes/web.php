@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SidebarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Admin.dashboard');
 });
+
+Route::get('dashboard', [SidebarController::class, 'dashboard'])->name('dashboardadmin');
+Route::get('produk', [SidebarController::class, 'produk'])->name('adminproduk');
+Route::get('berita', [SidebarController::class, 'berita'])->name('adminberita');
+Route::post('keluar', [SidebarController::class, 'keluar'])->name('logout');
