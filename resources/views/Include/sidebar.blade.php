@@ -11,25 +11,32 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="{{route('adminproduk')}}">
+            <a class="nav-link" href="{{ route('adminproduk') }}">
                 <i class="bi bi-box-seam"></i>
                 <span>Produk</span>
             </a>
         </li><!-- End Produk Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="{{route('adminberita') }}">
+            <a class="nav-link" href="{{ route('adminberita') }}">
                 <i class="bi bi-newspaper"></i>
-                <span>Berita</span>
+                <span>Kabar Tani</span>
             </a>
         </li><!-- End Berita Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ route('adminpengguna') }}">
                 <i class="bi bi-people"></i>
                 <span>Data Pengguna</span>
             </a>
         </li><!-- End Data Pengguna Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link " href="">
+                <i class="bi bi-people"></i>
+                <span>Profil</span>
+            </a>
+        </li>
 
         <li class="nav-item">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

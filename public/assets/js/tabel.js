@@ -76,10 +76,10 @@ $(document).ready(function () {
     $(".search-text").css("text-align", "right");
 });
 
-// tabel untuk kabar desa
+// tabel untuk produk
 $(document).ready(function () {
     // Inisialisasi DataTables dengan konfigurasi kolom pencarian
-    var table = $("#kabardesa").DataTable({
+    var table = $("#produk").DataTable({
         scrollX: true, // Menambahkan fungsi gulir horizontal
         columns: [
             null, // Kolom nomor urut
@@ -129,28 +129,22 @@ $(document).ready(function () {
     $(".search-text").css("text-align", "right");
 });
 
-// tabel untuk laporan
+// tabel untuk kabar tani
 $(document).ready(function () {
     // Inisialisasi DataTables dengan konfigurasi kolom pencarian
-    var table = $("#laporan").DataTable({
+    var table = $("#kabartani").DataTable({
         scrollX: true, // Menambahkan fungsi gulir horizontal
         columns: [
             null, // Kolom nomor urut
             {
                 searchable: true,
-            }, // nik
+            }, // judul
             {
                 searchable: true,
-            }, // nama lengkap
-            {
-                searchable: true,
-            }, // tipe surat
+            }, // tanggal mulai
             {
                 searchable: false,
-            }, // tanggal pengajuan
-            {
-                searchable: true,
-            }, // status
+            }, // tanggal selesai
             {
                 searchable: false,
             }, // aksi
@@ -187,3 +181,5 @@ $(document).ready(function () {
     // );
     $(".search-text").css("text-align", "right");
 });
+
+

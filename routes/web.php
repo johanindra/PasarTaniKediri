@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('Admin.dashboard');
+    return view('dashboard');
 });
 
 Route::get('dashboard', [SidebarController::class, 'dashboard'])->name('dashboardadmin');
 Route::get('produk', [SidebarController::class, 'produk'])->name('adminproduk');
-Route::get('berita', [SidebarController::class, 'berita'])->name('adminberita');
+Route::get('kabar-tani', [SidebarController::class, 'berita'])->name('adminberita');
+Route::get('data-pengguna', [SidebarController::class, 'pengguna'])->name('adminpengguna');
 Route::post('keluar', [SidebarController::class, 'keluar'])->name('logout');
