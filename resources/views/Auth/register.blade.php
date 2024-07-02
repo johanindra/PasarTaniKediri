@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="col-12">
                                             <p class="small mb-0">Sudah punya akun? <a
-                                                    href="{{ route('masuk') }}">Masuk</a></p>
+                                                    href="{{ route('login') }}">Masuk</a></p>
                                         </div>
                                     </form>
 
@@ -139,7 +139,7 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
-    <!-- SweetAlert2 Success/Error Message -->
+
     @if (session('success'))
         <script>
             Swal.fire({
@@ -165,7 +165,7 @@
         </script>
     @endif
 
-    <!-- Display Form Validation Errors -->
+
     @if ($errors->any())
         <script>
             Swal.fire({

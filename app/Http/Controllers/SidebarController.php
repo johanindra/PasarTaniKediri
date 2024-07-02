@@ -29,4 +29,9 @@ class SidebarController extends Controller
     {
         return view('data-pengguna');
     }
+
+    public function profil()
+    {
+        return view('profil');
+    }
 }

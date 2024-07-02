@@ -16,21 +16,20 @@ class UserController extends Controller
         return view('dashboard');
     }
 
-    public function showLoginForm() {
-        return view( 'Auth.login' );
+    public function masuk()
+    {
+        return view('Auth.login');
     }
 
     public function login(Request $request)
     {
         $credentials = $request->only('email_user', 'password');
-        $user = User::where('email_user', $credentials['email_user'])->first();
 
-        if ($user && Hash::check($credentials['password'], $user->password)) {
-            Auth::login($user);
+        if (Auth::attempt($credentials)) {
             return redirect()->route('dashboardadmin');
-        } else {
-            return redirect()->route('login')->with('error', 'Username atau Password anda salah');
         }
+
+        return redirect()->route('login')->with('error', 'Username atau Password anda salah');
     }
 
     // public function login(Request $request)

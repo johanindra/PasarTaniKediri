@@ -16,7 +16,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i"
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
@@ -30,6 +30,9 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
     <!-- =======================================================
   * Template Name: NiceAdmin
@@ -137,6 +140,20 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        // Cek jika ada pesan error untuk login
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}'
+            });
+        @endif
+    </script>
 
 </body>
 

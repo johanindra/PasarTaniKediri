@@ -48,5 +48,6 @@ class Kernel extends HttpKernel
 
         // Middleware untuk autentikasi pengguna
         'auth.admin' => \App\Http\Middleware\AuthenticateUser::class,
+        'auth.redirect' => \App\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }

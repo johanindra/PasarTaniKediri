@@ -32,7 +32,7 @@
         </li><!-- End Data Pengguna Nav -->
 
         <li class="nav-item">
-            <a class="nav-link " href="">
+            <a class="nav-link " href="{{ route('adminprofil') }}">
                 <i class="bi bi-people"></i>
                 <span>Profil</span>
             </a>
@@ -73,4 +73,14 @@
             }
         });
     }
+
+    @if (session('info'))
+        Swal.fire({
+            icon: 'info',
+            title: 'Info',
+            text: '{{ session('info') }}',
+            showConfirmButton: true,
+            confirmButtonText: 'OK'
+        });
+    @endif
 </script>
