@@ -83,15 +83,16 @@ class UserController extends Controller
             'kecamatan_user' => null,
             'notelp_user' => null,
             'foto_user' => null,
-            'level_user' => 'admin',
+            'level_user' => 'masyarakat',
             'maps_user' => null,
             'instagram_user' => null,
             'facebook_user' => null,
             'link_user' => null,
         ]);
 
+
         if ($user) {
-            return redirect()->route('masuk')->with('success', 'Registrasi berhasil. Silakan login.');
+            return redirect()->route('daftar')->with('success', 'Registrasi berhasil. Silakan login.');
         } else {
             return redirect()->back()->with('error', 'Gagal melakukan registrasi.');
         }

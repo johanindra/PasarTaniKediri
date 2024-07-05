@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\SidebarController;
+use App\Http\Controllers\UploadBeritaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('dashboard', function () {
@@ -29,3 +30,6 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::get('data-pengguna', [SidebarController::class, 'pengguna'])->name('adminpengguna');
     Route::get('profil', [SidebarController::class, 'profil'])->name('adminprofil');
 });
+
+
+Route::post('/upload/berita', [UploadBeritaController::class, 'Upload'])->name('uploadBerita');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berita;
 use Illuminate\Http\Request;
 
 class SidebarController extends Controller
@@ -22,7 +23,8 @@ class SidebarController extends Controller
 
     public function berita()
     {
-        return view('kabar-tani');
+        $berita = Berita::get();
+        return view('kabar-tani', ['berita' => $berita]);
     }
 
     public function pengguna()

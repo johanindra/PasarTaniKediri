@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pasar Tani - Produk</title>
+    <title>Pasar Tani - Data Pengguna</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -56,12 +56,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Produk</h1>
+            <h1>Data Pengguna</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-                    <!-- <li class="breadcrumb-item">Kabar Desa</li> -->
-                    <li class="breadcrumb-item active">Produk</li>
+                    <!-- <li class="breadcrumb-item">Data Pengguna</li> -->
+                    <li class="breadcrumb-item active">Data Pengguna</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -72,7 +72,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-6">
-                            <h5 class="card-title mb-0">Agenda dan Produk</h5>
+                            <h5 class="card-title mb-0">Agenda dan Data Pengguna</h5>
                         </div>
                         <div class="col-md-6 mt-3 mt-md-0 text-md-end text-right">
                             <button type="submit" id="tambah" class="btn btn-primary">Tambah</button>
@@ -84,11 +84,11 @@
 
         <section class="section">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        @include('Tabel.tabel-produk')
-                    </div>
-                </div>
+
+
+                @include('Tabel.tabel-detail-kabartani')
+
+
             </div>
         </section>
 
@@ -126,39 +126,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputForm = document.getElementById('inputForm');
-            inputForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const formData = new FormData(inputForm);
-
-                fetch(inputForm.getAttribute('action'), {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Agenda berhasil ditambahkan.'
-                            }).then((result) => {
-                                if (result.isConfirmed || result.isDismissed) {
-                                    window.location.reload();
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
-        });
-    </script>
-
 
 </body>
 

@@ -148,7 +148,7 @@
                 text: '{{ session('success') }}',
                 confirmButtonText: 'OK',
                 onClose: () => {
-                    window.location.href = '{{ route('masuk') }}';
+                    window.location.href = '{{ route('login') }}';
                 }
             });
         </script>

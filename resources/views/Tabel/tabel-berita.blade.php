@@ -16,17 +16,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Unity Pugh</td>
-                    <td>2023/06/22</td>
-                    <td><img src="assets/img/apple-touch-icon.png" alt="Foto Berita" width="50"></td>
-                    <td class="text-center">
-                        <button class="btn btn-primary btn-sm">Detail</button>
-                        <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
-                    </td>
-                </tr>
+                @foreach ($berita as $b)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $b->judul_berita }}</td>
+                        <td>{{ $b->tanggal_berita }}</td>
+                        <td><img src="{{ url('/Kabar Tani/' . $b->foto_berita) }}" alt="Foto Berita" width="50">
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm">Detail</button>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
+                        </td>
+                    </tr>
+                @endforeach
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
