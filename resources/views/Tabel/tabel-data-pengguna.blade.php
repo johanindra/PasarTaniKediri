@@ -14,28 +14,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Tani Maron</td>
-                    <td>Kelompok Tani</td>
-                    <td>Maron</td>
-                    <td>2024/06/21</td>
-                    <td class="text-center">
-                        <button class="btn btn-primary btn-sm">Detail</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Sugeng Cahyono</td>
-                    <td>Pengguna</td>
-                    <td>Maron</td>
-                    <td>2024/06/24</td>
-                    <td class="text-center">
-                        <button class="btn btn-primary btn-sm">Detail</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
-                    </td>
-                </tr>
+                @foreach ($pengguna as $p)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $p->nama_user }}</td>
+                        <td>{{ $p->level_user }}</td>
+                        <td>{{ $p->alamat_user }}</td>
+                        <td>{{ $p->created_at }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm">Detail</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         <!-- End Table with stripped rows -->

@@ -23,25 +23,33 @@
                         <td>{{ $b->tanggal_berita }}</td>
                         <td><img src="{{ url('/Kabar Tani/' . $b->foto_berita) }}" alt="Foto Berita" width="50">
                         </td>
-                        <td class="text-center">
-                            <button class="btn btn-primary btn-sm">Detail</button>
-                            <button class="btn btn-warning btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
+                        <td class="">
+                            <form action="" method="post">
+                                <input name="id" id="id" type="hidden" value="{{ $b->id_berita }}">
+                                <a href="{{ route('detail.kabar', ['id' => $b->id_berita]) }}"
+                                    class="btn btn-sm btn-primary">Detail</a>
+                                <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
+                                    data-target="#editBeritaModal{{ $b->id_berita }}">EDIT</a>
+                                <a class="btn btn-sm btn-danger" href="#"
+                                    onclick="confirmDelete('/upload/hapus/{{ $b->id_berita }}')">HAPUS</a>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
-                <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
-        <!-- End Table with striped rows -->
     </div>
 </div>
 
 @include('Admin.tambah-berita')
+@include('Admin.edit-berita')
 
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    // Fungsi untuk konfirmasi penghapusan
     function confirmDelete(url) {
         Swal.fire({
             title: 'Yakin ingin menghapus?',
@@ -54,9 +62,26 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Jika konfirmasi, arahkan pengguna ke URL hapus
                 window.location = url;
             }
         });
     }
 </script>
+@if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+        });
+    </script>
+@endif
+@if (session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        });
+    </script>
+@endif

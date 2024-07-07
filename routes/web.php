@@ -33,3 +33,7 @@ Route::middleware(['auth.admin'])->group(function () {
 
 
 Route::post('/upload/berita', [UploadBeritaController::class, 'Upload'])->name('uploadBerita');
+
+Route::get('/upload/hapus/{id}', [UploadBeritaController::class, 'hapus'])->name('upload.hapus');
+Route::get('/detail-berita/{id}', [SidebarController::class, 'detailBerita'])->name('detail.kabar');
+Route::put('/berita/update/{id}', [UploadBeritaController::class, 'update'])->name('updateBerita');

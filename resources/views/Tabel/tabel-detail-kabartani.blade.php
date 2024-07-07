@@ -4,12 +4,12 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- ini untuk judul dari agenda desanya -->
-                    <h5 class="card-title">{{ $kabar_desa->judul }}</h5>
+                    <h5 class="card-title">{{ $berita->judul_berita }}</h5>
 
                     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{ url('/data_foto_berita/' . $kabar_desa->foto) }}" class="d-block w-100"
+                                <img src="{{ url('/Kabar Tani/' . $berita->foto_berita) }}" class="d-block w-100"
                                     alt="...">
                             </div>
                             {{-- <div class="carousel-item">
@@ -37,11 +37,11 @@
                     <br>
                     <div class="agenda-details">
                         <div class="agenda-date">
-                            <h6><b>Tanggal :</b> {{ $kabar_desa->tanggal }}</h6>
+                            <h6><b>Tanggal :</b> {{ $berita->tanggal_berita }}</h6>
                         </div>
                         <div class="agenda-description">
                             <h6><b>Deskripsi :</b></h6>
-                            <p>{{ $kabar_desa->isi }}</p>
+                            <p>{{ $berita->deskripsi_berita }}</p>
                         </div>
                     </div>
                 </div>

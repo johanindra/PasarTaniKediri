@@ -36,7 +36,6 @@ class UploadBeritaController extends Controller
         $tujuan_upload = 'Kabar Tani';
         $foto->move($tujuan_upload, $nama_foto);
 
-        // Menggunakan auth()->id() untuk mendapatkan id_user dari pengguna yang sedang login
         $id_user = auth()->id();
 
         try {
@@ -52,5 +51,66 @@ class UploadBeritaController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function hapus($id_user)
+    {
+        $berita = Berita::find($id_user);
+        if (!$berita) {
+            return redirect()->back()->with('error', 'Berita tidak ditemukan');
+        }
+
+        if (file_exists(public_path('Kabar Tani/' . $berita->foto_berita))) {
+            unlink(public_path('Kabar Tani/' . $berita->foto_berita));
+        }
+
+        $berita->delete();
+
+        return redirect()->back()->with('success', 'Berita Berhasil dihapus');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'judul_berita' => 'required',
+            'tanggal_berita' => 'required',
+            'foto_berita' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
+            'deskripsi_berita' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $berita = Berita::find($id);
+        if (!$berita) {
+            return redirect()->back()->with('error', 'Berita tidak ditemukan.');
+        }
+
+        $berita->judul_berita = $request->judul_berita;
+        $berita->tanggal_berita = $request->tanggal_berita;
+        $berita->deskripsi_berita = $request->deskripsi_berita;
+
+        if ($request->hasFile('foto_berita')) {
+            $foto = $request->file('foto_berita');
+            $nama_foto = time() . "_" . $foto->getClientOriginalName();
+            $tujuan_upload = 'Kabar Tani';
+            $foto->move($tujuan_upload, $nama_foto);
+
+            // Menghapus foto lama jika ada
+            if ($berita->foto_berita && file_exists(public_path($tujuan_upload . '/' . $berita->foto_berita))) {
+                unlink(public_path($tujuan_upload . '/' . $berita->foto_berita));
+            }
+
+            $berita->foto_berita = $nama_foto;
+        }
+
+        try {
+            $berita->save();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui berita. Silakan coba lagi.');
+        }
+
+        return redirect()->back()->with('success', 'Berita berhasil diperbarui.');
     }
 }
