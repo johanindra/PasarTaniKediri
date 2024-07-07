@@ -17,7 +17,7 @@ class AuthenticateUser
 
         // Periksa apakah pengguna memiliki level 'admin'
         $user = Auth::user();
-        if ($user->level_user !== 'admin') {
+        if (!$user) {
             return redirect('login')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
         }
 

@@ -83,12 +83,11 @@ class UserController extends Controller
             'kecamatan_user' => null,
             'notelp_user' => null,
             'foto_user' => null,
-            'level_user' => 'masyarakat',
             'maps_user' => null,
             'instagram_user' => null,
             'facebook_user' => null,
             'link_user' => null,
-        ]);
+        ])->AssignRole('kelompok_tani');
 
 
         if ($user) {

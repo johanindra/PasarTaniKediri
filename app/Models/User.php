@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The table associated with the model.
@@ -33,7 +34,6 @@ class User extends Authenticatable
         'kecamatan_user',
         'notelp_user',
         'foto_user',
-        'level_user',
         'maps_user',
         'instagram_user',
         'facebook_user',

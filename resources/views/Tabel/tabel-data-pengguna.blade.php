@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $p->nama_user }}</td>
-                        <td>{{ $p->level_user }}</td>
+                        <td>{{ $p->nama_user }}</td>
                         <td>{{ $p->alamat_user }}</td>
                         <td>{{ $p->created_at }}</td>
                         <td class="text-center">

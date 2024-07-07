@@ -17,19 +17,23 @@
             </a>
         </li><!-- End Produk Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('adminberita') }}">
-                <i class="bi bi-newspaper"></i>
-                <span>Kabar Tani</span>
-            </a>
-        </li><!-- End Berita Nav -->
+        @if (auth()->user()->hasRole(['admin', 'kelompok_tani']))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('adminberita') }}">
+                    <i class="bi bi-newspaper"></i>
+                    <span>Kabar Tani</span>
+                </a>
+            </li><!-- End Berita Nav -->
+        @endif
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('adminpengguna') }}">
-                <i class="bi bi-people"></i>
-                <span>Data Pengguna</span>
-            </a>
-        </li><!-- End Data Pengguna Nav -->
+        @if (auth()->user()->hasRole(['admin']))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('adminpengguna') }}">
+                    <i class="bi bi-people"></i>
+                    <span>Data Pengguna</span>
+                </a>
+            </li><!-- End Data Pengguna Nav -->
+        @endif
 
         <li class="nav-item">
             <a class="nav-link " href="{{ route('adminprofil') }}">

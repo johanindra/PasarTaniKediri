@@ -141,10 +141,10 @@ $(document).ready(function () {
             }, // judul
             {
                 searchable: true,
-            }, // tanggal mulai
+            }, // tanggal
             {
                 searchable: false,
-            }, // tanggal selesai
+            }, // foto
             {
                 searchable: false,
             }, // aksi

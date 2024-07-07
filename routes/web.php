@@ -24,11 +24,11 @@ Route::post('register', [UserController::class, 'register'])->name('register.pos
 Route::post('keluar', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth.admin'])->group(function () {
-    Route::get('dashboard', [SidebarController::class, 'dashboard'])->name('dashboardadmin');
-    Route::get('produk', [SidebarController::class, 'produk'])->name('adminproduk');
-    Route::get('kabar-tani', [SidebarController::class, 'berita'])->name('adminberita');
-    Route::get('data-pengguna', [SidebarController::class, 'pengguna'])->name('adminpengguna');
-    Route::get('profil', [SidebarController::class, 'profil'])->name('adminprofil');
+    Route::get('dashboard', [SidebarController::class, 'dashboard'])->name('dashboardadmin')->middleware(['role:admin|kelompok_tani|masyarakat']);
+    Route::get('produk', [SidebarController::class, 'produk'])->name('adminproduk')->middleware(['role:admin|kelompok_tani|masyarakat']);
+    Route::get('kabar-tani', [SidebarController::class, 'berita'])->name('adminberita')->middleware(['role:admin|kelompok_tani']);
+    Route::get('data-pengguna', [SidebarController::class, 'pengguna'])->name('adminpengguna')->middleware(['role:admin']);
+    Route::get('profil', [SidebarController::class, 'profil'])->name('adminprofil')->middleware(['role:admin|kelompok_tani|masyarakat']);
 });
 
 

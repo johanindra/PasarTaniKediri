@@ -30,7 +30,6 @@ class RegisterController extends Controller
             'kecamatan_user' => null,
             'notelp_user' => null,
             'foto_user' => null,
-            'level_user' => 'admin',
             'maps_user' => null,
             'instagram_user' => null,
             'facebook_user' => null,

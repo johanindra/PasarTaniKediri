@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SidebarController extends Controller
 {
@@ -24,13 +25,17 @@ class SidebarController extends Controller
 
     public function berita()
     {
-        $berita = Berita::get();
+        if (Auth::user()->hasrole('admin')) {
+            $berita = Berita::get();
+        } else {
+            $berita = Berita::where('id_user', Auth::user()->id_user)->get();
+        }
         return view('kabar-tani', ['berita' => $berita]);
     }
 
     public function pengguna()
     {
-        $pengguna = User::wherein('level_user', ['masyarakat' , 'admin'])->get();
+        $pengguna = User::role(['masyarakat', 'kelompok_tani'])->get();
         // dd($pengguna);
         return view('data-pengguna', ['pengguna' => $pengguna]);
     }

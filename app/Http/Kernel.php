@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
     ];
 
     protected $middlewareAliases = [
+        'Auth' => \Illuminate\Support\Facades\Auth::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
@@ -49,5 +50,8 @@ class Kernel extends HttpKernel
         // Middleware untuk autentikasi pengguna
         'auth.admin' => \App\Http\Middleware\AuthenticateUser::class,
         'auth.redirect' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
     ];
 }

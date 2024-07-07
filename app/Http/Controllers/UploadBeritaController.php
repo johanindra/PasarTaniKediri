@@ -12,7 +12,7 @@ class UploadBeritaController extends Controller
 {
     public function show()
     {
-        $berita = Berita::get();
+        $berita = Berita::where('id_user',Auth::user()->id_user)->get();
         return view('kabar-tani', ['berita' => $berita]);
     }
 
