@@ -21,11 +21,26 @@ class UserController extends Controller
         return view('Auth.login');
     }
 
+    // public function login(Request $request)
+    // {
+    //     $credentials = $request->only('email_user', 'password');
+
+    //     if (Auth::attempt($credentials)) {
+    //         return redirect()->route('dashboardadmin');
+    //     }
+
+    //     return redirect()->route('login')->with('error', 'Username atau Password anda salah');
+    // }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email_user', 'password');
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if (empty($user->alamat_user) || empty($user->kecamatan_user) || empty($user->notelp_user)) {
+                return redirect()->route('lengkapi-profil');
+            }
             return redirect()->route('dashboardadmin');
         }
 

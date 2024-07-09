@@ -9,6 +9,9 @@ Route::get('dashboard', function () {
     return view('dashboard');
 });
 
+// Route::get('/', function () {
+//     return view('lengkapi-profil');
+// });
 Route::get('/', function () {
     return view('Auth.login');
 })->middleware('auth.redirect');

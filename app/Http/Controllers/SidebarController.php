@@ -25,7 +25,7 @@ class SidebarController extends Controller
 
     public function berita()
     {
-        if (Auth::user()->hasrole('admin')) {
+        if (Auth::user()->hasRole('admin')) {
             $berita = Berita::get();
         } else {
             $berita = Berita::where('id_user', Auth::user()->id_user)->get();
