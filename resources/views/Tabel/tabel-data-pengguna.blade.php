@@ -14,19 +14,34 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pengguna as $p)
+                @forelse ($pengguna as $p)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $p->nama_user }}</td>
-                        <td>{{ $p->nama_user }}</td>
+                        <td><a href="{{ route('detail.pengguna', ['id' => $p->id_user]) }}">{{ $p->nama_user }}</a></td>
+                        <td>
+                            @foreach ($p->roles as $role)
+                                {{ $role->name }}
+                            @endforeach
+                        </td>
                         <td>{{ $p->alamat_user }}</td>
                         <td>{{ $p->created_at }}</td>
                         <td class="text-center">
-                            <button class="btn btn-primary btn-sm">Detail</button>
-                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
+                            <form action="" method="post">
+                                <input name="id" id="id" type="hidden" value="{{ $p->id_berita }}">
+                                <a href="{{ route('detail.pengguna', ['id' => $p->id_user]) }}"
+                                    class="btn btn-sm btn-primary">Detail</a>
+                                {{-- <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
+                                    data-target="#editBeritaModal{{ $b->id_berita }}">EDIT</a>
+                                <a class="btn btn-sm btn-danger" href="#"
+                                    onclick="confirmDelete('/upload/hapus/{{ $b->id_berita }}')">HAPUS</a> --}}
+                            </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada data pengguna.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         <!-- End Table with stripped rows -->

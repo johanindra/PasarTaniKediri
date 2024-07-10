@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\UploadBeritaController;
+use App\Http\Controllers\UploadProdukController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('dashboard', function () {
@@ -28,7 +29,7 @@ Route::post('keluar', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth.admin', 'check.profile'])->group(function () {
     Route::get('dashboard', [SidebarController::class, 'dashboard'])->name('dashboardadmin')->middleware(['role:admin|kelompok_tani|masyarakat']);
-    Route::get('produk', [SidebarController::class, 'produk'])->name('adminproduk')->middleware(['role:admin|kelompok_tani|masyarakat']);
+    Route::get('produk-tani', [SidebarController::class, 'produk'])->name('produktani')->middleware(['role:admin|kelompok_tani|masyarakat']);
     Route::get('kabar-tani', [SidebarController::class, 'berita'])->name('adminberita')->middleware(['role:admin|kelompok_tani']);
     Route::get('data-pengguna', [SidebarController::class, 'pengguna'])->name('adminpengguna')->middleware(['role:admin']);
     Route::get('profil', [SidebarController::class, 'profil'])->name('adminprofil')->middleware(['role:admin|kelompok_tani|masyarakat']);
@@ -39,7 +40,14 @@ Route::middleware(['auth.admin', 'ProfilCompletion'])->post('lengkapi-profil', [
 
 
 Route::post('/upload/berita', [UploadBeritaController::class, 'Upload'])->name('uploadBerita');
+Route::post('/upload/produk', [UploadProdukController::class, 'Uploadproduk'])->name('uploadproduk');
 
+// berita
 Route::get('/upload/hapus/{id}', [UploadBeritaController::class, 'hapus'])->name('upload.hapus');
 Route::get('/detail-berita/{id}', [SidebarController::class, 'detailBerita'])->name('detail.kabar');
 Route::put('/berita/update/{id}', [UploadBeritaController::class, 'update'])->name('updateBerita');
+
+
+// produk
+
+Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna');

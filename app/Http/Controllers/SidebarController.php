@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Produk;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +21,18 @@ class SidebarController extends Controller
 
     public function produk()
     {
-        return view('produk');
+        if (Auth::user()->hasRole('admin')) {
+            $produk = Produk::get();
+        } else {
+            $produk = Produk::where('id_user', Auth::user()->id_user)->get();
+        }
+        return view('produk', ['produk' => $produk]);
     }
+    public function produktani()
+    {
+        return view('produk-tani');
+    }
+
 
     public function berita()
     {
@@ -39,6 +50,20 @@ class SidebarController extends Controller
         // dd($pengguna);
         return view('data-pengguna', ['pengguna' => $pengguna]);
     }
+
+    public function detailpengguna($id_user)
+    {
+        $pengguna = User::find($id_user);
+        if (!$pengguna) {
+            return redirect()->back()->with('error', 'Pengguna tidak ditemukan');
+        }
+
+        // Mengambil produk yang sesuai dengan id_user
+        $produk = Produk::where('id_user', $id_user)->get();
+
+        return view('detail-pengguna', ['pengguna' => $pengguna, 'produk' => $produk]);
+    }
+
 
     public function profil()
     {
@@ -70,7 +95,7 @@ class SidebarController extends Controller
             'alamat' => 'required|string|max:255',
             'kecamatan' => 'required|string|max:255',
             'no_telp' => 'required|string|max:15',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_user' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $user->nama_user = $request->nama;
@@ -78,11 +103,12 @@ class SidebarController extends Controller
         $user->kecamatan_user = $request->kecamatan;
         $user->notelp_user = $request->no_telp;
 
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/fotos'), $filename);
-            $user->foto = $filename;
+        if ($request->hasFile('foto_user')) {
+            $foto = $request->file('foto_user');
+            $nama_foto = time() . "_" . $foto->getClientOriginalName();
+            $tujuan_upload = 'Foto Profil User';
+            $foto->move(public_path($tujuan_upload), $nama_foto);
+            $user->foto_user = $nama_foto;
         }
 
         $user->save();

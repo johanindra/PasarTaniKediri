@@ -9,24 +9,31 @@
             <thead>
                 <tr>
                     <th width="1%">#</th>
-                    <th>Nama Produk</th>
-                    <th>Jenis Produk</th>
-                    <th width="1%">Foto</th>
-                    <th width="20%">Aksi</th>
+                    <th width="10%">Nama Produk</th>
+                    <th width="10%">Jenis Produk</th>
+                    {{-- <th width="10%">Harga</th> --}}
+                    <th width="15%">Foto</th>
+                    <th width="10%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Unity Pugh</td>
-                    <td>Sayuran</td>
-                    <td><img src="assets/img/apple-touch-icon.png" alt="Foto Produk" width="50"></td>
-                    <td class="text-center">
-                        <button class="btn btn-primary btn-sm">Detail</button>
-                        <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
-                    </td>
-                </tr>
+                @forelse ($produk as $p)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $p->nama_produk }}</td>
+                        <td>{{ $p->kategori_produk }}</td>
+                        {{-- <td>{{ $p->harga_produk }}</td> --}}
+                        <td><img src="{{ url('/Produk/' . $p->gambar1_produk) }}" alt="Foto Produk" width="50"></td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm">Detail</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Tidak ada data produk.</td>
+                    </tr>
+                @endforelse
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
@@ -57,3 +64,21 @@
         });
     }
 </script>
+@if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+        });
+    </script>
+@endif
+@if (session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        });
+    </script>
+@endif

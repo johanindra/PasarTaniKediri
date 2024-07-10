@@ -82,143 +82,96 @@
             </div>
         </div> -->
 
-        <section class="section">
+        <section class="section profile">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-xl-4">
+
                     <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Profil Pengguna</h5>
-                            <form action="{{ route('lengkapi-profil') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama Lengkap</label>
-                                    <input type="text" class="form-control" id="nama" name="nama"
-                                        placeholder="Masukkan nama Anda" value="{{ old('nama', $user->nama_user) }}"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email"
-                                        placeholder="Masukkan email Anda" value="{{ old('email', $user->email_user) }}"
-                                        readonly>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="alamat" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="alamat" name="alamat"
-                                        placeholder="Masukkan alamat Anda"
-                                        value="{{ old('alamat', $user->alamat_user) }}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="kecamatan" class="form-label">Kecamatan</label>
-                                    <select class="form-select" id="kecamatan" name="kecamatan" required>
-                                        <option value="">Pilih Kecamatan</option>
-                                        <option value="Tarokan"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Tarokan' ? 'selected' : '' }}>
-                                            Tarokan
-                                        </option>
-                                        <option value="Grogol"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Grogol' ? 'selected' : '' }}>
-                                            Grogol
-                                        </option>
-                                        <option value="Banyakan"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Banyakan' ? 'selected' : '' }}>
-                                            Banyakan
-                                        </option>
-                                        <option value="Mojo"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Mojo' ? 'selected' : '' }}>
-                                            Mojo</option>
-                                        <option value="Semen"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Semen' ? 'selected' : '' }}>
-                                            Semen</option>
-                                        <option value="Ngadiluwih"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Ngadiluwih' ? 'selected' : '' }}>
-                                            Ngadiluwih
-                                        </option>
-                                        <option value="Kras"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Kras' ? 'selected' : '' }}>
-                                            Kras</option>
-                                        <option value="Ringinrejo"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Ringinrejo' ? 'selected' : '' }}>
-                                            Ringinrejo</option>
-                                        <option value="Kandat"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Kandat' ? 'selected' : '' }}>
-                                            Kandat
-                                        </option>
-                                        <option value="Wates"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Wates' ? 'selected' : '' }}>
-                                            Wates</option>
-                                        <option value="Ngancar"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Ngancar' ? 'selected' : '' }}>
-                                            Ngancar
-                                        </option>
-                                        <option value="Plosoklaten"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Plosoklaten' ? 'selected' : '' }}>
-                                            Plosoklaten</option>
-                                        <option value="Gurah"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Gurah' ? 'selected' : '' }}>
-                                            Gurah</option>
-                                        <option value="Puncu"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Puncu' ? 'selected' : '' }}>
-                                            Puncu</option>
-                                        <option value="Kepung"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Kepung' ? 'selected' : '' }}>
-                                            Kepung
-                                        </option>
-                                        <option value="Kandangan"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Kandangan' ? 'selected' : '' }}>
-                                            Kandangan
-                                        </option>
-                                        <option value="Pare"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Pare' ? 'selected' : '' }}>
-                                            Pare</option>
-                                        <option value="Badas"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Badas' ? 'selected' : '' }}>
-                                            Badas</option>
-                                        <option value="Kunjang"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Kunjang' ? 'selected' : '' }}>
-                                            Kunjang
-                                        </option>
-                                        <option value="Plemahan"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Plemahan' ? 'selected' : '' }}>
-                                            Plemahan
-                                        </option>
-                                        <option value="Purwoasri"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Purwoasri' ? 'selected' : '' }}>
-                                            Purwoasri
-                                        </option>
-                                        <option value="Papar"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Papar' ? 'selected' : '' }}>
-                                            Papar</option>
-                                        <option value="Pagu"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Pagu' ? 'selected' : '' }}>
-                                            Pagu</option>
-                                        <option value="Kayenkidul"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Kayenkidul' ? 'selected' : '' }}>
-                                            Kayenkidul</option>
-                                        <option value="Gampengrejo"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Gampengrejo' ? 'selected' : '' }}>
-                                            Gampengrejo</option>
-                                        <option value="Ngasem"
-                                            {{ old('kecamatan', $user->kecamatan_user ?? '') == 'Ngasem' ? 'selected' : '' }}>
-                                            Ngasem
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="no_telp" class="form-label">No Telp</label>
-                                    <input type="text" class="form-control" id="no_telp" name="no_telp"
-                                        placeholder="Masukkan nomor telepon Anda"
-                                        value="{{ old('no_telp', $user->notelp_user) }}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="foto" class="form-label">Foto</label>
-                                    <input type="file" class="form-control" id="foto" name="foto_user"
-                                        accept="image/*" {{ $user->foto ? '' : 'required' }}>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Simpan</button>
-                            </form>
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            <img src="{{ url('/Foto Profil User/' . $user->foto_user) }}" alt="Profile"
+                                class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                            <h2>{{ $user->nama_user }}</h2>
+                            <h3>{{ $user->kecamatan_user }}</h3>
+                            <div class="social-links mt-2">
+                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div>
                         </div>
                     </div>
+
+                </div>
+
+                <div class="col-xl-8">
+
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            <!-- Bordered Tabs -->
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab"
+                                        data-bs-target="#profile-overview">Overview</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#profile-change-password">Change Password</button>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content pt-2">
+
+                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                    <h5 class="card-title">Profil Pengguna</h5>
+                                    @include('Admin.edit-profil')
+
+                                </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    <!-- Change Password Form -->
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <label for="currentPassword"
+                                                class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control"
+                                                    id="currentPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                                Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="newpassword" type="password" class="form-control"
+                                                    id="newPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="renewPassword"
+                                                class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="renewpassword" type="password" class="form-control"
+                                                    id="renewPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                        </div>
+                                    </form><!-- End Change Password Form -->
+
+                                </div>
+
+                            </div><!-- End Bordered Tabs -->
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -247,6 +200,9 @@
     <script src="{{ asset('assets/vendors/simple-datatables/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/vendors/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/php-email-form/validate.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/mainjs.js') }}"></script>

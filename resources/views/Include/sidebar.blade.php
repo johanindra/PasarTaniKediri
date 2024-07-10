@@ -11,7 +11,7 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('adminproduk') }}">
+            <a class="nav-link" href="{{ route('produktani') }}">
                 <i class="bi bi-box-seam"></i>
                 <span>Produk</span>
             </a>

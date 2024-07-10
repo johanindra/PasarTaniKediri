@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($berita as $b)
+                @forelse ($berita as $b)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $b->judul_berita }}</td>
@@ -35,7 +35,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada data berita.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
