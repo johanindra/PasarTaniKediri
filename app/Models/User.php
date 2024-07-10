@@ -58,4 +58,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function isProfileComplete()
+    {
+        return $this->nama_user && $this->email_user && $this->alamat_user && $this->kecamatan_user && $this->notelp_user && $this->foto_user && $this->maps_user;
+    }
 }
