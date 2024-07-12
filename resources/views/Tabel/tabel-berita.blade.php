@@ -44,9 +44,8 @@
         </table>
     </div>
 </div>
-
-@include('Admin.tambah-berita')
 @include('Admin.edit-berita')
+@include('Admin.tambah-berita')
 
 
 
