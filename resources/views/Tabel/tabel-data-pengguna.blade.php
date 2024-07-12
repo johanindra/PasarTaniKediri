@@ -20,7 +20,11 @@
                         <td><a href="{{ route('detail.pengguna', ['id' => $p->id_user]) }}">{{ $p->nama_user }}</a></td>
                         <td>
                             @foreach ($p->roles as $role)
-                                {{ $role->name }}
+                                @if ($role->name == 'kelompok_tani')
+                                    <span class="badge bg-success">{{ $role->name }}</span>
+                                @elseif ($role->name == 'masyarakat')
+                                    <span class="badge bg-primary">{{ $role->name }}</span>
+                                @endif
                             @endforeach
                         </td>
                         <td>{{ $p->alamat_user }}</td>
