@@ -1,14 +1,14 @@
 <form action="{{ route('lengkapi-profil') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
-        <label for="nama" class="form-label">Nama Lengkap</label>
-        <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama Anda"
-            value="{{ old('nama', $user->nama_user) }}" required>
-    </div>
-    <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan email Anda"
             value="{{ old('email', $user->email_user) }}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="nama" class="form-label">Nama Lengkap</label>
+        <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama Anda"
+            value="{{ old('nama', $user->nama_user) }}" required>
     </div>
     <div class="mb-3">
         <label for="alamat" class="form-label">Alamat</label>

@@ -80,6 +80,16 @@ class SidebarController extends Controller
         return view('detail-kabar-tani', ['berita' => $berita]);
     }
 
+    public function detailProduk($id_produk)
+    {
+        $produk = Produk::find($id_produk);
+        if (!$produk) {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan');
+        }
+        return view('detail-produk', ['produk' => $produk]);
+    }
+
+
     public function lengkapi()
     {
         $user = Auth::user();

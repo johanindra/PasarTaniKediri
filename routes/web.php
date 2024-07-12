@@ -38,16 +38,22 @@ Route::middleware(['auth.admin', 'check.profile'])->group(function () {
 Route::middleware(['auth.admin', 'ProfilCompletion'])->get('lengkapi-profil', [SidebarController::class, 'lengkapi'])->name('lengkapi-profil');
 Route::middleware(['auth.admin', 'ProfilCompletion'])->post('lengkapi-profil', [SidebarController::class, 'updateProfil'])->name('lengkapi-profil');
 
+Route::middleware('auth.admin')->group(function () {
+    Route::post('/upload/berita', [UploadBeritaController::class, 'Upload'])->name('uploadBerita');
+    Route::post('/upload/produk', [UploadProdukController::class, 'Uploadproduk'])->name('uploadproduk');
 
-Route::post('/upload/berita', [UploadBeritaController::class, 'Upload'])->name('uploadBerita');
-Route::post('/upload/produk', [UploadProdukController::class, 'Uploadproduk'])->name('uploadproduk');
+    // berita
+    Route::get('/upload/hapus/{id}', [UploadBeritaController::class, 'hapus'])->name('upload.hapus');
+    Route::get('/detail-berita/{id}', [SidebarController::class, 'detailBerita'])->name('detail.kabar');
+    Route::put('/berita/update/{id}', [UploadBeritaController::class, 'update'])->name('updateBerita');
 
-// berita
-Route::get('/upload/hapus/{id}', [UploadBeritaController::class, 'hapus'])->name('upload.hapus');
-Route::get('/detail-berita/{id}', [SidebarController::class, 'detailBerita'])->name('detail.kabar');
-Route::put('/berita/update/{id}', [UploadBeritaController::class, 'update'])->name('updateBerita');
+    //produk
+    Route::get('/produk/hapus/{id_produk}', [UploadProdukController::class, 'hapus'])->name('produk.hapus');
+    Route::get('/detail-produk/{id}', [SidebarController::class, 'detailProduk'])->name('produk.detail');
+    Route::put('/produk/update/{id}', [UploadProdukController::class, 'update'])->name('updateProduk');
+
+    Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna')->middleware(['role:admin']);
+});
 
 
 // produk
-
-Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna');

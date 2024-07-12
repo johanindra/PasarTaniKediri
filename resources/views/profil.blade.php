@@ -91,12 +91,12 @@
                             <img src="{{ url('/Foto Profil User/' . $user->foto_user) }}" alt="Profile"
                                 class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
                             <h2>{{ $user->nama_user }}</h2>
-                            <h3>{{ $user->kecamatan_user }}</h3>
+                            <h6>{{ $user->email_user }}</h6>
+                            <h6>{{ $user->alamat_user . ' ' . $user->kecamatan_user }}</h6>
                             <div class="social-links mt-2">
-                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                <a href="#" class="map"><i class="bi bi-geo-alt"></i></a>
                             </div>
                         </div>
                     </div>

@@ -24,9 +24,16 @@
                         <td>{{ $p->kategori_produk }}</td>
                         {{-- <td>{{ $p->harga_produk }}</td> --}}
                         <td><img src="{{ url('/Produk/' . $p->gambar1_produk) }}" alt="Foto Produk" width="50"></td>
-                        <td class="text-center">
-                            <button class="btn btn-primary btn-sm">Detail</button>
-                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('delete-url')">Hapus</button>
+                        <td>
+                            <form action="" method="post">
+                                <input name="id" id="id" type="hidden" value="{{ $p->id_user }}">
+                                <a href="{{ route('produk.detail', ['id' => $p->id_produk]) }}"
+                                    class="btn btn-sm btn-primary">Detail</a>
+                                <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
+                                    data-target="#editProdukModal{{ $p->id_user }}">EDIT</a>
+                                <a class="btn btn-sm btn-danger" href="#"
+                                    onclick="confirmDelete('/produk/hapus/{{ $p->id_produk }}')">HAPUS</a>
+                            </form>
                         </td>
                     </tr>
                 @empty

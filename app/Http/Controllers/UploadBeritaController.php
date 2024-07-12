@@ -69,7 +69,7 @@ class UploadBeritaController extends Controller
         return redirect()->back()->with('success', 'Berita Berhasil dihapus');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_berita)
     {
         $validator = Validator::make($request->all(), [
             'judul_berita' => 'required',
@@ -82,7 +82,7 @@ class UploadBeritaController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $berita = Berita::find($id);
+        $berita = Berita::find($id_berita);
         if (!$berita) {
             return redirect()->back()->with('error', 'Berita tidak ditemukan.');
         }
