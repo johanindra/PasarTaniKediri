@@ -50,7 +50,7 @@ Route::middleware('auth.admin')->group(function () {
     //produk
     Route::get('/produk/hapus/{id_produk}', [UploadProdukController::class, 'hapus'])->name('produk.hapus');
     Route::get('/detail-produk/{id}', [SidebarController::class, 'detailProduk'])->name('produk.detail');
-    Route::put('/produk/update/{id}', [UploadProdukController::class, 'update'])->name('updateProduk');
+    Route::put('/produk/update/{id}', [UploadProdukController::class, 'updateProduk'])->name('updateProduk');
 
     Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna')->middleware(['role:admin']);
 });

@@ -30,7 +30,7 @@
                                 <a href="{{ route('produk.detail', ['id' => $p->id_produk]) }}"
                                     class="btn btn-sm btn-primary">Detail</a>
                                 <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
-                                    data-target="#editProdukModal{{ $p->id_user }}">EDIT</a>
+                                    data-target="#editProdukModal{{ $p->id_produk }}">EDIT</a>
                                 <a class="btn btn-sm btn-danger" href="#"
                                     onclick="confirmDelete('/produk/hapus/{{ $p->id_produk }}')">HAPUS</a>
                             </form>
@@ -48,6 +48,7 @@
     </div>
 </div>
 
+@include('Admin.edit-produk')
 @include('Admin.tambah-produk')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
