@@ -11,8 +11,10 @@
                     <th width="1%">#</th>
                     <th width="10%">Nama Produk</th>
                     <th width="10%">Jenis Produk</th>
-                    {{-- <th width="10%">Harga</th> --}}
-                    <th width="15%">Foto</th>
+                    @if (auth()->user()->hasRole(['admin']))
+                        <th width="10%">Nama User</th>
+                    @endif
+                    <th width="10%">Foto</th>
                     <th width="10%">Aksi</th>
                 </tr>
             </thead>
@@ -22,6 +24,9 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $p->nama_produk }}</td>
                         <td>{{ $p->kategori_produk }}</td>
+                        @if (auth()->user()->hasRole(['admin']))
+                            <td>{{ $p->user->nama_user }}</td>
+                        @endif
                         {{-- <td>{{ $p->harga_produk }}</td> --}}
                         <td><img src="{{ url('/Produk/' . $p->gambar1_produk) }}" alt="Foto Produk" width="50"></td>
                         <td>
@@ -71,6 +76,25 @@
             }
         });
     }
+    var columnsConfig = [
+        null, // Kolom nomor urut
+        {
+            searchable: true
+        }, // Nama Produk
+        {
+            searchable: true
+        }, // Jenis Produk
+        @if (auth()->user()->hasRole(['admin']))
+            {
+                searchable: true
+            }, // Nama User
+        @endif {
+            searchable: false
+        }, // Foto
+        {
+            searchable: false
+        }, // Aksi
+    ];
 </script>
 @if (session('success'))
     <script>

@@ -81,21 +81,7 @@ $(document).ready(function () {
     // Inisialisasi DataTables dengan konfigurasi kolom pencarian
     var table = $("#produk").DataTable({
         scrollX: true, // Menambahkan fungsi gulir horizontal
-        columns: [
-            null, // Kolom nomor urut
-            {
-                searchable: true,
-            }, // judul
-            {
-                searchable: true,
-            }, // tanggal mulai
-            {
-                searchable: false,
-            }, // tanggal selesai
-            {
-                searchable: false,
-            }, // aksi
-        ],
+        columns: columnsConfig,
         language: {
             zeroRecords: "Tidak ada data yang sesuai dengan pencarian",
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
@@ -106,8 +92,8 @@ $(document).ready(function () {
             paginate: {
                 first: "Pertama",
                 last: "Terakhir",
-                next: "next",
-                previous: "previous",
+                next: "Berikutnya",
+                previous: "Sebelumnya",
             },
         },
     });
@@ -181,5 +167,3 @@ $(document).ready(function () {
     // );
     $(".search-text").css("text-align", "right");
 });
-
-

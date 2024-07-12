@@ -22,7 +22,7 @@ class SidebarController extends Controller
     public function produk()
     {
         if (Auth::user()->hasRole('admin')) {
-            $produk = Produk::get();
+            $produk = Produk::with('user')->get();
         } else {
             $produk = Produk::where('id_user', Auth::user()->id_user)->get();
         }
@@ -82,7 +82,7 @@ class SidebarController extends Controller
 
     public function detailProduk($id_produk)
     {
-        $produk = Produk::find($id_produk);
+        $produk = Produk::with('user')->find($id_produk);
         if (!$produk) {
             return redirect()->back()->with('error', 'Produk tidak ditemukan');
         }
