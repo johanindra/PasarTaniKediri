@@ -19,7 +19,8 @@
                 @forelse ($berita as $b)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $b->judul_berita }}</td>
+                        <td><a href="{{ route('detail.kabar', ['id' => $b->id_berita]) }}">{{ $b->judul_berita }}</a>
+                        </td>
                         <td>{{ $b->tanggal_berita }}</td>
                         <td><img src="{{ url('/Kabar Tani/' . $b->foto_berita) }}" alt="Foto Berita" width="50">
                         </td>

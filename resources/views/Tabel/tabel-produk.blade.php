@@ -22,7 +22,8 @@
                 @forelse ($produk as $p)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $p->nama_produk }}</td>
+                        <td><a href="{{ route('produk.detail', ['id' => $p->id_produk]) }}">{{ $p->nama_produk }}</a>
+                        </td>
                         <td>{{ $p->kategori_produk }}</td>
                         @if (auth()->user()->hasRole(['admin']))
                             <td>{{ $p->user->nama_user }}</td>
