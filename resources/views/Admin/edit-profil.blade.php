@@ -103,6 +103,10 @@
         <label for="foto" class="form-label">Foto</label>
         <input type="file" class="form-control" id="foto" name="foto_user" accept="image/*"
             {{ $user->foto ? '' : 'required' }}>
+        @if ($user->foto_user)
+            <img src="{{ url('/Foto Profil User/' . $user->foto_user) }}" alt="{{ $user->nama_user }}" width="100">
+        @endif
     </div>
+
     <button type="submit" class="btn btn-primary w-100">Simpan</button>
 </form>

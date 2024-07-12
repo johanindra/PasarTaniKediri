@@ -88,8 +88,19 @@
 
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <img src="{{ url('/Foto Profil User/' . $user->foto_user) }}" alt="Profile"
-                                class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="mb-3">
+                                @if ($user->foto_user)
+                                    <img src="{{ url('/Foto Profil User/' . $user->foto_user) }}" alt="Profile"
+                                        class="rounded-circle profile-picture"
+                                        style="width: 150px; height: 150px; object-fit: cover;" data-bs-toggle="modal"
+                                        data-bs-target="#fotoModal">
+                                @else
+                                    <img src="{{ url('/Foto Profil User/defaultfoto.png') }}" alt="Default Profile"
+                                        class="rounded-circle profile-picture"
+                                        style="width: 150px; height: 150px; object-fit: cover;" data-bs-toggle="modal"
+                                        data-bs-target="#fotoModal">
+                                @endif
+                            </div>
                             <h2>{{ $user->nama_user }}</h2>
                             <h6>{{ $user->email_user }}</h6>
                             <h6>{{ $user->alamat_user . ' ' . $user->kecamatan_user }}</h6>
@@ -102,6 +113,28 @@
                     </div>
 
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="fotoModal" tabindex="-1" aria-labelledby="fotoModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="fotoModalLabel">Foto Profil</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                @if ($user->foto_user)
+                                    <img src="{{ url('/Foto Profil User/' . $user->foto_user) }}"
+                                        alt="{{ $user->nama_user }}" class="img-fluid">
+                                @else
+                                    <img src="{{ url('/Foto Profil User/defaultfoto.png') }}" alt="Default Profile"
+                                        class="img-fluid">
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-xl-8">
 
@@ -112,12 +145,12 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
-                                        data-bs-target="#profile-overview">Overview</button>
+                                        data-bs-target="#profile-overview">Profil</button>
                                 </li>
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-change-password">Change Password</button>
+                                        data-bs-target="#profile-change-password">Ganti Sandi</button>
                                 </li>
 
                             </ul>

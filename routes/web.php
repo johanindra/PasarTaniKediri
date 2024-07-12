@@ -33,6 +33,8 @@ Route::middleware(['auth.admin', 'check.profile'])->group(function () {
     Route::get('kabar-tani', [SidebarController::class, 'berita'])->name('adminberita')->middleware(['role:admin|kelompok_tani']);
     Route::get('data-pengguna', [SidebarController::class, 'pengguna'])->name('adminpengguna')->middleware(['role:admin']);
     Route::get('profil', [SidebarController::class, 'profil'])->name('adminprofil')->middleware(['role:admin|kelompok_tani|masyarakat']);
+    Route::get('/detail-berita/{id}', [SidebarController::class, 'detailBerita'])->name('detail.kabar')->middleware(['role:admin|kelompok_tani']);
+    Route::get('/detail-produk/{id}', [SidebarController::class, 'detailProduk'])->name('produk.detail');
 });
 
 Route::middleware(['auth.admin', 'ProfilCompletion'])->get('lengkapi-profil', [SidebarController::class, 'lengkapi'])->name('lengkapi-profil');
@@ -44,12 +46,10 @@ Route::middleware('auth.admin')->group(function () {
 
     // berita
     Route::get('/upload/hapus/{id}', [UploadBeritaController::class, 'hapus'])->name('upload.hapus');
-    Route::get('/detail-berita/{id}', [SidebarController::class, 'detailBerita'])->name('detail.kabar');
     Route::put('/berita/update/{id}', [UploadBeritaController::class, 'update'])->name('updateBerita');
 
     //produk
     Route::get('/produk/hapus/{id_produk}', [UploadProdukController::class, 'hapus'])->name('produk.hapus');
-    Route::get('/detail-produk/{id}', [SidebarController::class, 'detailProduk'])->name('produk.detail');
     Route::put('/produk/update/{id}', [UploadProdukController::class, 'updateProduk'])->name('updateProduk');
 
     Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna')->middleware(['role:admin']);

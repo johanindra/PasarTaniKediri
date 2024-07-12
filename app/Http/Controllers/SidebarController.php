@@ -73,20 +73,31 @@ class SidebarController extends Controller
 
     public function detailBerita($id_berita)
     {
-        $berita = Berita::find($id_berita);
-        if (!$berita) {
-            return redirect()->back()->with('error', 'Berita tidak ditemukan');
+        $berita = Berita::findOrFail($id_berita);
+
+        // Memeriksa apakah pengguna yang sedang masuk memiliki akses ke berita
+        if (Auth::id() === $berita->id_user || Auth::user()->hasRole('admin')) {
+            return view('detail-kabar-tani', ['berita' => $berita]);
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengakses berita ini.');
         }
-        return view('detail-kabar-tani', ['berita' => $berita]);
     }
 
     public function detailProduk($id_produk)
     {
         $produk = Produk::with('user')->find($id_produk);
-        if (!$produk) {
-            return redirect()->back()->with('error', 'Produk tidak ditemukan');
+
+        // Memeriksa apakah pengguna yang sedang masuk adalah pemilik produk atau memiliki peran admin
+        if (Auth::id() === $produk->id_user || Auth::user()->hasRole('admin')) {
+            return view('detail-produk', ['produk' => $produk]);
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengakses produk ini.');
         }
-        return view('detail-produk', ['produk' => $produk]);
+        // $produk = Produk::with('user')->find($id_produk);
+        // if (!$produk) {
+        //     return redirect()->back()->with('error', 'Produk tidak ditemukan');
+        // }
+        // return view('detail-produk', ['produk' => $produk]);
     }
 
 
