@@ -102,7 +102,7 @@ class UserController extends Controller
             'instagram_user' => null,
             'facebook_user' => null,
             'link_user' => null,
-        ])->AssignRole('kelompok_tani');
+        ])->AssignRole('masyarakat');
 
 
         if ($user) {

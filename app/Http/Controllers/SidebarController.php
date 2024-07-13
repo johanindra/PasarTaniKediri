@@ -19,37 +19,101 @@ class SidebarController extends Controller
         return view('dashboard');
     }
 
-    public function produk()
+    public function produk(Request $request)
     {
+        $query = Produk::query();
+
         if (Auth::user()->hasRole('admin')) {
-            $produk = Produk::with('user')->get();
+            $query->with('user');
         } else {
-            $produk = Produk::where('id_user', Auth::user()->id_user)->get();
+            $query->where('id_user', Auth::user()->id_user);
         }
+
+        // Filter berdasarkan kecamatan
+        if ($request->filled('kecamatan')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('kecamatan_user', $request->kecamatan);
+            });
+        }
+
+        // Filter berdasarkan pengguna
+        if ($request->filled('pengguna')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->whereHas('roles', function ($roleQuery) use ($request) {
+                    $roleQuery->where('name', $request->pengguna);
+                });
+            });
+        }
+
+        $produk = $query->get();
+
         return view('produk', ['produk' => $produk]);
     }
+
     public function produktani()
     {
         return view('produk-tani');
     }
 
 
-    public function berita()
+    public function berita(Request $request)
     {
+        $query = Berita::query();
+
         if (Auth::user()->hasRole('admin')) {
-            $berita = Berita::get();
+            $query->with('user');
         } else {
-            $berita = Berita::where('id_user', Auth::user()->id_user)->get();
+            $query->where('id_user', Auth::user()->id_user);
         }
+
+        // Filter berdasarkan kecamatan
+        if ($request->filled('kecamatan')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('kecamatan_user', $request->kecamatan);
+            });
+        }
+
+        // Filter berdasarkan pengguna
+        if ($request->filled('pengguna')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->whereHas('roles', function ($roleQuery) use ($request) {
+                    $roleQuery->where('name', $request->pengguna);
+                });
+            });
+        }
+
+        $berita = $query->get();
+
         return view('kabar-tani', ['berita' => $berita]);
     }
 
-    public function pengguna()
+
+    public function pengguna(Request $request)
     {
-        $pengguna = User::role(['masyarakat', 'kelompok_tani'])->get();
-        // dd($pengguna);
-        return view('data-pengguna', ['pengguna' => $pengguna]);
+        // Ambil data pengguna berdasarkan peran (role) dan kecamatan (jika ada)
+        $query = User::query();
+
+        // Filter berdasarkan peran (role)
+        if ($request->pengguna) {
+            $query->role([$request->pengguna]);
+        } else {
+            $query->role(['admin','masyarakat', 'kelompok_tani']);
+        }
+
+        // Filter berdasarkan kecamatan
+        if ($request->kecamatan) {
+            $query->where('kecamatan_user', $request->kecamatan);
+        }
+
+        $penggunaList = $query->get(); // Mengubah nama variabel dari $pengguna menjadi $penggunaList
+
+        return view('data-pengguna', [
+            'penggunaList' => $penggunaList, // Mengubah nama variabel dari $pengguna menjadi $penggunaList
+            'selectedKecamatan' => $request->kecamatan,
+            'selectedPengguna' => $request->pengguna,
+        ]);
     }
+
 
     public function detailpengguna($id_user)
     {

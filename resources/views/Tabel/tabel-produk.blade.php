@@ -3,6 +3,35 @@
     <div class="text-right mb-3">
         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahProdukModal">Tambah</a>
     </div>
+    <!-- Filter Form -->
+    @if (auth()->user()->hasRole(['admin']))
+        <form method="GET" action="{{ route('produktani') }}" class="mb-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="kecamatan" class="form-label"><b>Kecamatan</b></label>
+                    <select class="form-select" id="kecamatan" name="kecamatan" onchange="this.form.submit()">
+                        <option value="">Pilih Kecamatan</option>
+                        @foreach (['Tarokan', 'Grogol', 'Banyakan', 'Mojo', 'Semen', 'Ngadiluwih', 'Kras', 'Ringinrejo', 'Kandat', 'Wates', 'Ngancar', 'Plosoklaten', 'Gurah', 'Puncu', 'Kepung', 'Kandangan', 'Pare', 'Badas', 'Kunjang', 'Plemahan', 'Purwoasri', 'Papar', 'Pagu', 'Kayenkidul', 'Gampengrejo', 'Ngasem'] as $kecamatan)
+                            <option value="{{ $kecamatan }}"
+                                {{ request('kecamatan') == $kecamatan ? 'selected' : '' }}>
+                                {{ $kecamatan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="pengguna" class="form-label"><b>Pengguna</b></label>
+                    <select class="form-select" id="pengguna" name="pengguna" onchange="this.form.submit()">
+                        <option value="">Pilih Pengguna</option>
+                        @foreach (['masyarakat', 'kelompok_tani', 'admin'] as $pengguna)
+                            <option value="{{ $pengguna }}"
+                                {{ request('pengguna') == $pengguna ? 'selected' : '' }}>
+                                {{ ucfirst($pengguna) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </form>
+    @endif
 
     <div class="table-responsive">
         <table id="produk" class="table table-striped table-bordered" style="width:100%">
@@ -29,7 +58,8 @@
                             <td>{{ $p->user->nama_user }}</td>
                         @endif
                         {{-- <td>{{ $p->harga_produk }}</td> --}}
-                        <td><img src="{{ url('/Produk/' . $p->gambar1_produk) }}" alt="Foto Produk" width="50"></td>
+                        <td><img src="{{ url('/Produk/' . $p->gambar1_produk) }}" alt="Foto Produk" width="50">
+                        </td>
                         <td>
                             <form action="" method="post">
                                 <input name="id" id="id" type="hidden" value="{{ $p->id_user }}">
@@ -97,21 +127,3 @@
         }, // Aksi
     ];
 </script>
-@if (session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            text: '{{ session('success') }}',
-        });
-    </script>
-@endif
-@if (session('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{ session('error') }}',
-        });
-    </script>
-@endif

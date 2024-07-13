@@ -3,6 +3,34 @@
     <div class="text-right mb-3">
         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahBeritaModal">Tambah</a>
     </div>
+    <!-- Filter Form -->
+    @if (auth()->user()->hasRole(['admin']))
+        <form method="GET" action="{{ route('adminberita') }}">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="kecamatan" class="form-label"><b>Kecamatan</b></label>
+                    <select class="form-select" id="kecamatan" name="kecamatan" onchange="this.form.submit()">
+                        <option value="">Pilih Kecamatan</option>
+                        @foreach (['Tarokan', 'Grogol', 'Banyakan', 'Mojo', 'Semen', 'Ngadiluwih', 'Kras', 'Ringinrejo', 'Kandat', 'Wates', 'Ngancar', 'Plosoklaten', 'Gurah', 'Puncu', 'Kepung', 'Kandangan', 'Pare', 'Badas', 'Kunjang', 'Plemahan', 'Purwoasri', 'Papar', 'Pagu', 'Kayenkidul', 'Gampengrejo', 'Ngasem'] as $kecamatan)
+                            <option value="{{ $kecamatan }}"
+                                {{ request('kecamatan') == $kecamatan ? 'selected' : '' }}>{{ $kecamatan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="pengguna" class="form-label"><b>Pengguna</b></label>
+                    <select class="form-select" id="pengguna" name="pengguna" onchange="this.form.submit()">
+                        <option value="">Pilih Pengguna</option>
+                        @foreach (['kelompok_tani', 'admin'] as $pengguna)
+                            <option value="{{ $pengguna }}"
+                                {{ request('pengguna') == $pengguna ? 'selected' : '' }}>{{ ucfirst($pengguna) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </form>
+    @endif
 
     <div class="table-responsive">
         <table id="kabartani" class="display table table-striped table-bordered" cellspacing="0" width="100%">
@@ -10,6 +38,9 @@
                 <tr>
                     <th width="1%">#</th>
                     <th>Judul</th>
+                    @if (auth()->user()->hasRole(['admin']))
+                        <th >Nama User</th>
+                    @endif
                     <th>Tanggal</th>
                     <th width="1%">Foto</th>
                     <th width="20%">Aksi</th>
@@ -21,6 +52,9 @@
                         <td>{{ $loop->iteration }}</td>
                         <td><a href="{{ route('detail.kabar', ['id' => $b->id_berita]) }}">{{ $b->judul_berita }}</a>
                         </td>
+                        @if (auth()->user()->hasRole(['admin']))
+                            <td>{{ $b->user->nama_user }}</td>
+                        @endif
                         <td>{{ $b->tanggal_berita }}</td>
                         <td><img src="{{ url('/Kabar Tani/' . $b->foto_berita) }}" alt="Foto Berita" width="50">
                         </td>
@@ -70,22 +104,23 @@
             }
         });
     }
+    var columnsConfig = [
+        null, // Kolom nomor urut
+        {
+            searchable: true
+        }, // Nama Produk
+        @if (auth()->user()->hasRole(['admin']))
+            {
+                searchable: true
+            }, // Nama User
+        @endif {
+            searchable: true
+        }, // Jenis Produk
+        {
+            searchable: false
+        }, // Foto
+        {
+            searchable: false
+        }, // Aksi
+    ];
 </script>
-@if (session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            text: '{{ session('success') }}',
-        });
-    </script>
-@endif
-@if (session('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{ session('error') }}',
-        });
-    </script>
-@endif

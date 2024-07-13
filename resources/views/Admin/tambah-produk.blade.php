@@ -49,6 +49,11 @@
                         <input type="file" class="form-control-file" id="gambar3_produk" name="gambar3_produk">
                     </div>
                     <div class="form-group">
+                        <label for="shopee_produk"><b>Link Shopee Produk</b></label>
+                        <input type="url" class="form-control" id="shopee_produk"
+                            placeholder="Masukkan link Shopee produk" name="shopee_produk">
+                    </div>
+                    <div class="form-group">
                         <label for="deskripsi_produk"><b>Deskripsi</b></label>
                         <textarea class="form-control" id="deskripsi_produk" name="deskripsi_produk" placeholder="Masukkan deskripsi" required></textarea>
                     </div>

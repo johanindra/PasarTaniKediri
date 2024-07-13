@@ -120,21 +120,7 @@ $(document).ready(function () {
     // Inisialisasi DataTables dengan konfigurasi kolom pencarian
     var table = $("#kabartani").DataTable({
         scrollX: true, // Menambahkan fungsi gulir horizontal
-        columns: [
-            null, // Kolom nomor urut
-            {
-                searchable: true,
-            }, // judul
-            {
-                searchable: true,
-            }, // tanggal
-            {
-                searchable: false,
-            }, // foto
-            {
-                searchable: false,
-            }, // aksi
-        ],
+        columns: columnsConfig,
         language: {
             zeroRecords: "Tidak ada data yang sesuai dengan pencarian",
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",

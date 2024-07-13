@@ -13,53 +13,77 @@
 
                     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="{{ url('/Produk/' . $produk->gambar1_produk) }}" class="d-block w-100"
-                                    alt="Gambar 1 Produk" data-bs-toggle="modal" data-bs-target="#fotoModal"
-                                    onclick="showModal(0)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{ url('/Produk/' . $produk->gambar2_produk) }}" class="d-block w-100"
-                                    alt="Gambar 2 Produk" data-bs-toggle="modal" data-bs-target="#fotoModal"
-                                    onclick="showModal(1)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{ url('/Produk/' . $produk->gambar3_produk) }}" class="d-block w-100"
-                                    alt="Gambar 3 Produk" data-bs-toggle="modal" data-bs-target="#fotoModal"
-                                    onclick="showModal(2)">
-                            </div>
+                            @if (!empty($produk->gambar1_produk))
+                                <div class="carousel-item active">
+                                    <img src="{{ url('/Produk/' . $produk->gambar1_produk) }}" class="d-block w-100"
+                                        alt="Gambar 1 Produk" data-bs-toggle="modal" data-bs-target="#fotoModal"
+                                        onclick="showModal(0)">
+                                </div>
+                            @endif
+                            @if (!empty($produk->gambar2_produk))
+                                <div class="carousel-item{{ empty($produk->gambar1_produk) ? ' active' : '' }}">
+                                    <img src="{{ url('/Produk/' . $produk->gambar2_produk) }}" class="d-block w-100"
+                                        alt="Gambar 2 Produk" data-bs-toggle="modal" data-bs-target="#fotoModal"
+                                        onclick="showModal(1)">
+                                </div>
+                            @endif
+                            @if (!empty($produk->gambar3_produk))
+                                <div
+                                    class="carousel-item{{ empty($produk->gambar1_produk) && empty($produk->gambar2_produk) ? ' active' : '' }}">
+                                    <img src="{{ url('/Produk/' . $produk->gambar3_produk) }}" class="d-block w-100"
+                                        alt="Gambar 3 Produk" data-bs-toggle="modal" data-bs-target="#fotoModal"
+                                        onclick="showModal(2)">
+                                </div>
+                            @endif
                         </div>
 
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        @if (!empty($produk->gambar2_produk) || !empty($produk->gambar3_produk))
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card-title"></div>
                     <br>
                     <div class="agenda-details">
-                        <div class="agenda-date">
-                            <h6><b>Nama Produk:</b> {{ $produk->nama_produk }}</h6>
-                        </div>
-                        <div class="agenda-date">
-                            <h6><b>Jenis Produk:</b> {{ $produk->kategori_produk }}</h6>
-                        </div>
-                        <div class="agenda-date">
-                            <h6><b>Harga:</b> Rp.{{ $produk->harga_produk }}</h6>
-                        </div>
-                        <div class="agenda-description">
-                            <h6><b>Deskripsi:</b> {{ $produk->deskripsi_produk }}</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Nama Produk</th>
+                                        <td>{{ $produk->nama_produk }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Jenis Produk</th>
+                                        <td>{{ $produk->kategori_produk }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Harga Produk</th>
+                                        <td>Rp. {{ number_format($produk->harga_produk, 0, ',', '.') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Link Shopee</th>
+                                        <td>{{$produk->shopee_produk}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Deskripsi</th>
+                                        <td>{{ $produk->deskripsi_produk }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -76,14 +100,16 @@
             <div class="modal-body text-center">
                 <img id="fotoModalImage" src="" class="img-fluid" alt="Foto Produk">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" onclick="prevImage()">
-                    <i class="bi bi-arrow-left"></i> Sebelumnya
-                </button>
-                <button type="button" class="btn btn-outline-primary" onclick="nextImage()">
-                    Berikutnya <i class="bi bi-arrow-right"></i>
-                </button>
-            </div>
+            @if (!empty($produk->gambar2_produk) || !empty($produk->gambar3_produk))
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" onclick="prevImage()">
+                        <i class="bi bi-arrow-left"></i> Sebelumnya
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="nextImage()">
+                        Berikutnya <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -91,9 +117,15 @@
 <script>
     var currentImageIndex = 0;
     var images = [
-        '{{ url('/Produk/' . $produk->gambar1_produk) }}',
-        '{{ url('/Produk/' . $produk->gambar2_produk) }}',
-        '{{ url('/Produk/' . $produk->gambar3_produk) }}'
+        @if (!empty($produk->gambar1_produk))
+            '{{ url('/Produk/' . $produk->gambar1_produk) }}',
+        @endif
+        @if (!empty($produk->gambar2_produk))
+            '{{ url('/Produk/' . $produk->gambar2_produk) }}',
+        @endif
+        @if (!empty($produk->gambar3_produk))
+            '{{ url('/Produk/' . $produk->gambar3_produk) }}',
+        @endif
     ];
 
     function showModal(index) {

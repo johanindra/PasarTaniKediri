@@ -25,6 +25,7 @@ class UploadProdukController extends Controller
             'gambar1_produk' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
             'gambar2_produk' => 'file|image|mimes:jpeg,png,jpg|max:2048',
             'gambar3_produk' => 'file|image|mimes:jpeg,png,jpg|max:2048',
+            'shopee_produk' => 'nullable|url', // Validasi untuk shopee_produk
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +61,7 @@ class UploadProdukController extends Controller
                 'gambar1_produk' => $nama_gambar1,
                 'gambar2_produk' => $nama_gambar2,
                 'gambar3_produk' => $nama_gambar3,
+                'shopee_produk' => $request->shopee_produk, // Memasukkan shopee_produk ke dalam database
                 'id_user' => $id_user,
             ]);
         } catch (\Exception $e) {
@@ -68,6 +70,7 @@ class UploadProdukController extends Controller
 
         return response()->json(['success' => true]);
     }
+
 
     public function hapus($id_produk)
     {
