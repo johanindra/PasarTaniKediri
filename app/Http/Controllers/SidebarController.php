@@ -14,10 +14,70 @@ class SidebarController extends Controller
     {
         return view('Auth.login');
     }
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        return view('dashboard');
+        $user = Auth::user();
+        $totalProduk = 0;
+        $totalBerita = 0;
+        $pengguna = 0;
+        $berita = [];
+        $produkPerKecamatan = [];
+        $produkDitawarkan = [];
+        $filter = $request->filter;
+
+        if ($user->hasRole('admin')) {
+            // Jika pengguna adalah admin, hitung semua produk
+            $totalProduk = Produk::count();
+            $totalBerita = Berita::count();
+            $pengguna = User::count();
+            $berita = Berita::all();
+            $produkPerKecamatan = Produk::join('users', 'produk.id_user', '=', 'users.id_user')
+                ->select('users.kecamatan_user', \DB::raw('count(*) as total'))
+                ->groupBy('users.kecamatan_user')
+                ->pluck('total', 'kecamatan_user')->all();
+            // Filter berdasarkan pilihan
+            switch ($filter) {
+                case 'Hari Ini':
+                    $produkDitawarkan = Produk::whereDate('created_at', today())->get();
+                    break;
+                case 'Minggu Ini':
+                    $produkDitawarkan = Produk::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->get();
+                    break;
+                case 'Bulan Ini':
+                    $produkDitawarkan = Produk::whereMonth('created_at', now()->month)->get();
+                    break;
+                default:
+                    $produkDitawarkan = Produk::all(); // Menampilkan semua data jika tidak ada filter yang dipilih
+                    break;
+            }
+        } elseif ($user->hasRole(['masyarakat', 'kelompok_tani'])) {
+            // Jika pengguna adalah masyarakat atau kelompok tani, hitung produk yang ditambahkan oleh pengguna
+            $totalProduk = Produk::where('id_user', Auth::user()->id_user)->count();
+            $totalBerita = Berita::where('id_user', Auth::user()->id_user)->count();
+            $berita = Berita::where('id_user', Auth::user()->id_user)->get();
+            // Filter berdasarkan pilihan
+            switch ($filter) {
+                case 'Hari Ini':
+                    $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)
+                        ->whereDate('created_at', today())
+                        ->get();
+                    break;
+                case 'Minggu Ini':
+                    $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)
+                        ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                        ->get();
+                    break;
+                case 'Bulan Ini':
+                default:
+                    $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)
+                        ->get();
+                    break;
+            }
+        }
+
+        return view('dashboard', compact(['totalProduk', 'totalBerita', 'pengguna', 'berita', 'produkPerKecamatan', 'produkDitawarkan', 'filter']));
     }
+
 
     public function produk(Request $request)
     {
@@ -97,7 +157,7 @@ class SidebarController extends Controller
         if ($request->pengguna) {
             $query->role([$request->pengguna]);
         } else {
-            $query->role(['admin','masyarakat', 'kelompok_tani']);
+            $query->role(['admin', 'masyarakat', 'kelompok_tani']);
         }
 
         // Filter berdasarkan kecamatan
@@ -171,7 +231,7 @@ class SidebarController extends Controller
         return view('lengkapi-profil', compact('user'));
     }
 
-    public function updateProfil(Request $request)
+    public function lengkapiProfil(Request $request)
     {
         $user = Auth::user();
 
@@ -180,6 +240,7 @@ class SidebarController extends Controller
             'alamat' => 'required|string|max:255',
             'kecamatan' => 'required|string|max:255',
             'no_telp' => 'required|string|max:15',
+            'maps_user' => 'required|string|max:255', // Validasi untuk maps_user
             'foto_user' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -187,6 +248,7 @@ class SidebarController extends Controller
         $user->alamat_user = $request->alamat;
         $user->kecamatan_user = $request->kecamatan;
         $user->notelp_user = $request->no_telp;
+        $user->maps_user = $request->maps_user; // Simpan maps_user ke dalam model User
 
         if ($request->hasFile('foto_user')) {
             $foto = $request->file('foto_user');
@@ -199,5 +261,49 @@ class SidebarController extends Controller
         $user->save();
 
         return redirect()->route('dashboardadmin')->with('success', 'Profil Anda berhasil diperbarui.');
+    }
+
+    public function updateProfil(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:15',
+            'foto_user' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
+            'maps_user' => 'nullable|string|max:255',
+            'instagram_user' => 'nullable|string|max:255',
+            'facebook_user' => 'nullable|string|max:255',
+            'link_user' => 'nullable|string|max:255',
+        ]);
+
+        $user->nama_user = $request->nama;
+        $user->alamat_user = $request->alamat;
+        $user->kecamatan_user = $request->kecamatan;
+        $user->notelp_user = $request->no_telp;
+        $user->maps_user = $request->maps_user;
+        $user->instagram_user = $request->instagram_user;
+        $user->facebook_user = $request->facebook_user;
+        $user->link_user = $request->link_user;
+
+        if ($request->hasFile('foto_user')) {
+            $foto = $request->file('foto_user');
+            $nama_foto = time() . "_" . $foto->getClientOriginalName();
+            $tujuan_upload = 'Foto Profil User';
+
+            // Hapus foto lama jika ada
+            if ($user->foto_user && file_exists(public_path($tujuan_upload . '/' . $user->foto_user))) {
+                unlink(public_path($tujuan_upload . '/' . $user->foto_user));
+            }
+
+            $foto->move(public_path($tujuan_upload), $nama_foto);
+            $user->foto_user = $nama_foto;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil Anda berhasil diperbarui.');
     }
 }

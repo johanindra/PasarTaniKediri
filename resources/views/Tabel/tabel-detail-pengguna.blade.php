@@ -4,17 +4,38 @@
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
             <img src="{{ url('/Foto Profil User/' . $pengguna->foto_user) }}" alt="Profile" class="rounded-circle"
                 style="width: 150px; height: 150px; object-fit: cover;">
-            <h2>{{ $pengguna->nama_user }}</h2>
-            <h6>{{ $pengguna->email_user }}</h6>
-            <h6>{{ $pengguna->alamat_user . ' ' . $pengguna->kecamatan_user }}</h6>
+            <h4 class="text-center">{{ $pengguna->nama_user }}</h4>
+            <h6 class="text-center">{{ $pengguna->email_user }}</h6>
+            <small class="text-center">{{ $pengguna->alamat_user . ' ' . $pengguna->kecamatan_user }}</small>
+
             <div class="social-links mt-2">
-                <a href="https://wa.me/{{$pengguna->notelp_user}}" class="telephone"><i class="bi bi-whatsapp"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="map"><i class="bi bi-geo-alt"></i></a>
+                <!-- Tampilkan link WhatsApp jika ada -->
+                @if ($pengguna->notelp_user)
+                    <a href="https://wa.me/{{ $pengguna->notelp_user }}" class="telephone" target="_blank"><i
+                            class="bi bi-whatsapp"></i></a>
+                @endif
+
+                <!-- Tampilkan link Facebook jika ada -->
+                @if ($pengguna->facebook_user)
+                    <a href="{{ $pengguna->facebook_user }}" class="facebook" target="_blank"><i
+                            class="bi bi-facebook"></i></a>
+                @endif
+
+                <!-- Tampilkan link Instagram jika ada -->
+                @if ($pengguna->instagram_user)
+                    <a href="https://instagram.com/{{ $pengguna->instagram_user }}" class="instagram" target="_blank"><i
+                            class="bi bi-instagram"></i></a>
+                @endif
+
+                <!-- Tampilkan link Maps jika ada -->
+                @if ($pengguna->maps_user)
+                    <a href="{{ $pengguna->maps_user }}" class="map" target="_blank"><i
+                            class="bi bi-geo-alt"></i></a>
+                @endif
             </div>
         </div>
     </div>
+
 
 </div>
 <div class="col-xl-9">

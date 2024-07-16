@@ -104,13 +104,33 @@
                             <h2>{{ $user->nama_user }}</h2>
                             <h6>{{ $user->email_user }}</h6>
                             <h6>{{ $user->alamat_user . ' ' . $user->kecamatan_user }}</h6>
-                            <div class="social-links mt-2">
-                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="map"><i class="bi bi-geo-alt"></i></a>
-                            </div>
+
+                            <!-- Tampilkan link ke Google Maps jika ada -->
+                            @if ($user->maps_user)
+                                <div class="social-links mt-2">
+                                    <a href="{{ $user->maps_user }}" target="_blank" class="map"><i
+                                            class="bi bi-geo-alt"></i> Lihat Lokasi</a>
+                                </div>
+                            @endif
+
+                            <!-- Tampilkan link Instagram jika ada -->
+                            @if ($user->instagram_user)
+                                <div class="social-links mt-2">
+                                    <a href="https://instagram.com/{{ $user->instagram_user }}" target="_blank"
+                                        class="instagram"><i class="bi bi-instagram"></i> Instagram</a>
+                                </div>
+                            @endif
+
+                            <!-- Tampilkan link Facebook jika ada -->
+                            @if ($user->facebook_user)
+                                <div class="social-links mt-2">
+                                    <a href="https://facebook.com/{{ $user->facebook_user }}" target="_blank" class="facebook"><i
+                                            class="bi bi-facebook"></i> Facebook</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
+
 
                 </div>
                 <!-- Modal -->
@@ -278,6 +298,24 @@
             });
         });
     </script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
 
 
 </body>

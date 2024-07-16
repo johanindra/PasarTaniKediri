@@ -38,11 +38,12 @@ Route::middleware(['auth.admin', 'check.profile'])->group(function () {
 });
 
 Route::middleware(['auth.admin', 'ProfilCompletion'])->get('lengkapi-profil', [SidebarController::class, 'lengkapi'])->name('lengkapi-profil');
-Route::middleware(['auth.admin', 'ProfilCompletion'])->post('lengkapi-profil', [SidebarController::class, 'updateProfil'])->name('lengkapi-profil');
+Route::middleware(['auth.admin', 'ProfilCompletion'])->post('lengkapi-profil', [SidebarController::class, 'lengkapiProfil'])->name('lengkapi-profil');
 
 Route::middleware('auth.admin')->group(function () {
     Route::post('/upload/berita', [UploadBeritaController::class, 'Upload'])->name('uploadBerita');
     Route::post('/upload/produk', [UploadProdukController::class, 'Uploadproduk'])->name('uploadproduk');
+    Route::post('/update/profil', [SidebarController::class, 'updateProfil'])->name('update-profil');
 
     // berita
     Route::get('/upload/hapus/{id}', [UploadBeritaController::class, 'hapus'])->name('upload.hapus');

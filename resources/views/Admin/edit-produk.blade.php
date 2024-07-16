@@ -32,20 +32,21 @@
                             <select class="form-control" id="kategori_produk" name="kategori_produk"
                                 aria-label="Pilih Jenis Produk" required>
                                 <option disabled>Pilih Jenis Produk</option>
-                                <option value="Hasil Tanam"
-                                    {{ $p->kategori_produk == 'Hasil Tanam' ? 'selected' : '' }}>Hasil Tanam</option>
-                                <option value="Alat Pertanian"
-                                    {{ $p->kategori_produk == 'Alat Pertanian' ? 'selected' : '' }}>Alat Pertanian
+                                <option value="Hasil pertanian"
+                                    {{ $p->kategori_produk == 'Hasil pertanian' ? 'selected' : '' }}>Hasil pertanian
                                 </option>
-                                <option value="Pupuk" {{ $p->kategori_produk == 'Pupuk' ? 'selected' : '' }}>Pupuk
+                                <option value="Benih dan bibit"
+                                    {{ $p->kategori_produk == 'Benih dan bibit' ? 'selected' : '' }}>Benih dan bibit
                                 </option>
-                                <option value="Benih" {{ $p->kategori_produk == 'Benih' ? 'selected' : '' }}>Benih
-                                </option>
-                                <option value="Obat Hama" {{ $p->kategori_produk == 'Obat Hama' ? 'selected' : '' }}>
-                                    Obat Hama</option>
-                                <option value="Perlengkapan Pertanian"
-                                    {{ $p->kategori_produk == 'Perlengkapan Pertanian' ? 'selected' : '' }}>
-                                    Perlengkapan Pertanian</option>
+                                <option value="Pupuk dan pestisida"
+                                    {{ $p->kategori_produk == 'Pupuk dan pestisida' ? 'selected' : '' }}>Pupuk dan
+                                    pestisida</option>
+                                <option value="Alat dan mesin pertanian"
+                                    {{ $p->kategori_produk == 'Alat dan mesin pertanian' ? 'selected' : '' }}>Alat dan
+                                    mesin pertanian</option>
+                                <option value="Produk olahan pertanian"
+                                    {{ $p->kategori_produk == 'Produk olahan pertanian' ? 'selected' : '' }}>Produk
+                                    olahan pertanian</option>
                             </select>
                         </div>
                         <div class="form-group">

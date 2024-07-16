@@ -42,6 +42,7 @@
                     <th width="10%">Jenis Produk</th>
                     @if (auth()->user()->hasRole(['admin']))
                         <th width="10%">Nama User</th>
+                        <th width="10%">Alamat User</th>
                     @endif
                     <th width="10%">Foto</th>
                     <th width="10%">Aksi</th>
@@ -56,25 +57,32 @@
                         <td>{{ $p->kategori_produk }}</td>
                         @if (auth()->user()->hasRole(['admin']))
                             <td>{{ $p->user->nama_user }}</td>
+                            <td>{{ $p->user->alamat_user . ', ' . $p->user->kecamatan_user }}</td>
                         @endif
                         {{-- <td>{{ $p->harga_produk }}</td> --}}
                         <td><img src="{{ url('/Produk/' . $p->gambar1_produk) }}" alt="Foto Produk" width="50">
                         </td>
-                        <td>
+                        <td class="text-center">
                             <form action="" method="post">
                                 <input name="id" id="id" type="hidden" value="{{ $p->id_user }}">
                                 <a href="{{ route('produk.detail', ['id' => $p->id_produk]) }}"
-                                    class="btn btn-sm btn-primary">Detail</a>
-                                <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
-                                    data-target="#editProdukModal{{ $p->id_produk }}">EDIT</a>
-                                <a class="btn btn-sm btn-danger" href="#"
-                                    onclick="confirmDelete('/produk/hapus/{{ $p->id_produk }}')">HAPUS</a>
+                                    class="btn btn-sm btn-primary btn-icon"><img src="assets/img/detail.png"
+                                        alt="Detail" style="width: 20px; height: 20px;"></a></a>
+                                @if (auth()->user()->hasRole(['admin', 'kelompok_tani', 'masyarakat']) && $p->id_user == auth()->user()->id_user)
+                                    <!-- Tampilkan tombol EDIT hanya jika user adalah admin dan pemilik produk -->
+                                    <a class="btn btn-sm btn-warning btn-icon" href="#" data-toggle="modal"
+                                        data-target="#editProdukModal{{ $p->id_produk }}"><img
+                                            src="assets/img/edit.png" alt="Edit"
+                                            style="width: 20px; height: 20px;"></a>
+                                @endif
+                                <a class="btn btn-sm btn-danger btn-icon" href="#"
+                                    onclick="confirmDelete('/produk/hapus/{{ $p->id_produk }}')"><img src="assets/img/hapus.png" alt="Hapus" style="width: 20px; height: 20px;"></a>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">Tidak ada data produk.</td>
+                        <td colspan="7" class="text-center">Tidak ada data produk.</td>
                     </tr>
                 @endforelse
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
@@ -118,6 +126,9 @@
         @if (auth()->user()->hasRole(['admin']))
             {
                 searchable: true
+            }, // Nama User
+            {
+                searchable: false
             }, // Nama User
         @endif {
             searchable: false

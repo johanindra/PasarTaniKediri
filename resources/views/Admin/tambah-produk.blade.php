@@ -27,12 +27,11 @@
                         <select class="form-control" id="kategori_produk" name="kategori_produk"
                             aria-label="Pilih Jenis Produk" required>
                             <option disabled selected>Pilih Jenis Produk</option>
-                            <option value="Hasil Tanam">Hasil Tanam</option>
-                            <option value="Alat Pertanian">Alat Pertanian</option>
-                            <option value="Pupuk">Pupuk</option>
-                            <option value="Benih">Benih</option>
-                            <option value="Obat Hama">Obat Hama</option>
-                            <option value="Perlengkapan Pertanian">Perlengkapan Pertanian</option>
+                            <option value="Hasil pertanian">Hasil pertanian</option>
+                            <option value="Benih dan bibit">Benih dan bibit</option>
+                            <option value="Pupuk dan pestisida">Pupuk dan pestisida</option>
+                            <option value="Alat dan mesin pertanian">Alat dan mesin pertanian</option>
+                            <option value="Produk olahan pertanian">Produk olahan pertanian</option>
                         </select>
                     </div>
                     <div class="form-group">

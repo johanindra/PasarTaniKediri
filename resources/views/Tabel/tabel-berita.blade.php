@@ -39,11 +39,12 @@
                     <th width="1%">#</th>
                     <th>Judul</th>
                     @if (auth()->user()->hasRole(['admin']))
-                        <th >Nama User</th>
+                        <th>Nama User</th>
+                        <th>Alamat</th>
                     @endif
                     <th>Tanggal</th>
                     <th width="1%">Foto</th>
-                    <th width="20%">Aksi</th>
+                    <th width="15%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,25 +55,34 @@
                         </td>
                         @if (auth()->user()->hasRole(['admin']))
                             <td>{{ $b->user->nama_user }}</td>
+                            <td>{{ $b->user->alamat_user . ', ' . $b->user->kecamatan_user }}</td>
                         @endif
                         <td>{{ $b->tanggal_berita }}</td>
                         <td><img src="{{ url('/Kabar Tani/' . $b->foto_berita) }}" alt="Foto Berita" width="50">
                         </td>
-                        <td class="">
+                        <td class="text-center">
                             <form action="" method="post">
                                 <input name="id" id="id" type="hidden" value="{{ $b->id_berita }}">
                                 <a href="{{ route('detail.kabar', ['id' => $b->id_berita]) }}"
-                                    class="btn btn-sm btn-primary">Detail</a>
-                                <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
-                                    data-target="#editBeritaModal{{ $b->id_berita }}">EDIT</a>
-                                <a class="btn btn-sm btn-danger" href="#"
-                                    onclick="confirmDelete('/upload/hapus/{{ $b->id_berita }}')">HAPUS</a>
+                                    class="btn btn-sm btn-primary btn-icon"><img src="assets/img/detail.png"
+                                        alt="Detail" style="width: 20px; height: 20px;"></a>
+                                @if (auth()->user()->hasRole('admin') && $b->id_user == auth()->user()->id_user)
+                                    <a class="btn btn-sm btn-warning btn-icon" href="#" data-toggle="modal"
+                                        data-target="#editBeritaModal{{ $b->id_berita }}"><img
+                                            src="assets/img/edit.png" alt="Edit"
+                                            style="width: 20px; height: 20px;"></a>
+                                @endif
+                                <a class="btn btn-sm btn-danger btn-icon" href="#"
+                                    onclick="confirmDelete('/upload/hapus/{{ $b->id_berita }}')">
+                                    <img src="assets/img/hapus.png" alt="Hapus" style="width: 20px; height: 20px;">
+                                </a>
+
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada data berita.</td>
+                        <td colspan="7" class="text-center">Tidak ada data berita.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -112,6 +122,9 @@
         @if (auth()->user()->hasRole(['admin']))
             {
                 searchable: true
+            }, // Nama User
+            {
+                searchable: false
             }, // Nama User
         @endif {
             searchable: true

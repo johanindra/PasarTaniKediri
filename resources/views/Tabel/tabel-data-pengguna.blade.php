@@ -54,7 +54,7 @@
                             @endforeach
 
                         </td>
-                        <td>{{ $p->alamat_user }}</td>
+                        <td>{{ $p->alamat_user . ', ' . $p->kecamatan_user }}</td>
                         <td>{{ $p->created_at }}</td>
                         <td class="text-center">
                             <form action="" method="post">

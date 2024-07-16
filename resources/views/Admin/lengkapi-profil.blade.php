@@ -95,9 +95,74 @@
             placeholder="Masukkan nomor telepon Anda" value="{{ old('no_telp', $user->notelp_user) }}" required>
     </div>
     <div class="mb-3">
+        <label for="maps_user" class="form-label">Lokasi (Maps)</label>
+        <input type="text" class="form-control" id="maps_user" name="maps_user"
+            placeholder="Masukkan link lokasi Anda" value="{{ old('maps_user', $user->maps_user) }}">
+        <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
+        <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude') }}">
+        <button type="button" class="btn btn-secondary mt-2" onclick="getCurrentLocation()">Ambil Lokasi
+            Terkini</button>
+        {{-- <div id="googleMap" style="width:100%;height:400px;margin-top:15px;"></div> --}}
+    </div>
+    <div class="mb-3">
         <label for="foto" class="form-label">Foto</label>
         <input type="file" class="form-control" id="foto" name="foto_user" accept="image/*"
             {{ $user->foto ? '' : 'required' }}>
     </div>
     <button type="submit" class="btn btn-primary w-100">Simpan Profil</button>
 </form>
+
+<script>
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+        document.getElementById('maps_user').value = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        initMap(latitude, longitude);
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+
+    function initMap(latitude, longitude) {
+        var mapProp = {
+            center: new google.maps.LatLng(latitude, longitude),
+            zoom: 15,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            map: map
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        if (document.getElementById('latitude').value && document.getElementById('longitude').value) {
+            initMap(document.getElementById('latitude').value, document.getElementById('longitude').value);
+        }
+    });
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
