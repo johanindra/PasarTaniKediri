@@ -5,10 +5,10 @@
                 <div class="col-md-6">
                     <!-- Judul Berita -->
                     @if (auth()->user()->hasRole(['admin']))
-                        <h5 class="card-title">Kabar {{ $berita->user->nama_user }}</h5>
+                        <h5 class="card-title"><i class="bi bi-person-circle"></i> {{ $berita->user->nama_user }}</h5>
                     @endif
-                    @if (auth()->user()->hasRole(['masyarakat', 'kelompok_tani']))
-                        <h5 class="card-title">Kabar Saya</h5>
+                    @if (auth()->user()->hasRole('kelompok_tani'))
+                        <h5 class="card-title"><i class="bi bi-person-circle"></i> Saya</h5>
                     @endif
 
                     <!-- Carousel Gambar Berita -->

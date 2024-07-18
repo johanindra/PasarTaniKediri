@@ -22,6 +22,7 @@ class SidebarController extends Controller
         $pengguna = 0;
         $berita = [];
         $produkPerKecamatan = [];
+        $produkPerKategori = [];
         $produkDitawarkan = [];
         $filter = $request->filter;
 
@@ -35,6 +36,9 @@ class SidebarController extends Controller
                 ->select('users.kecamatan_user', \DB::raw('count(*) as total'))
                 ->groupBy('users.kecamatan_user')
                 ->pluck('total', 'kecamatan_user')->all();
+            $produkPerKategori = Produk::select('kategori_produk', \DB::raw('count(*) as total'))
+                ->groupBy('kategori_produk')
+                ->pluck('total', 'kategori_produk')->all();
             // Filter berdasarkan pilihan
             switch ($filter) {
                 case 'Hari Ini':
@@ -75,7 +79,7 @@ class SidebarController extends Controller
             }
         }
 
-        return view('dashboard', compact(['totalProduk', 'totalBerita', 'pengguna', 'berita', 'produkPerKecamatan', 'produkDitawarkan', 'filter']));
+        return view('dashboard', compact(['totalProduk', 'totalBerita', 'pengguna', 'berita', 'produkPerKecamatan', 'produkDitawarkan', 'filter', 'produkPerKategori']));
     }
 
 

@@ -79,7 +79,7 @@
                         <div class="card info-card sales-card" onclick="location.href='{{ route('produktani') }}';"
                             style="cursor: pointer;">
 
-                            <div class="filter">
+                            {{-- <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                         class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -90,24 +90,24 @@
                                     <li><a class="dropdown-item" href="#">This Month</a></li>
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
 
                             <div class="card-body">
                                 @if (auth()->user()->hasRole('admin'))
-                                    <h5 class="card-title">Produk Tani <span>| Today</span></h5>
+                                    <h5 class="card-title">Produk Tani</h5>
                                 @elseif (auth()->user()->hasRole(['masyarakat', 'kelompok_tani']))
-                                    <h5 class="card-title">Produk Saya <span>| Today</span></h5>
+                                    <h5 class="card-title">Produk Saya</h5>
                                 @endif
 
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
+                                        <i class="bi bi-box-seam"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{ $totalProduk }}</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span>
-                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                         <div class="card info-card revenue-card" onclick="location.href='{{ route('adminberita') }}';"
                             style="cursor: pointer;">
 
-                            <div class="filter">
+                            {{-- <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                         class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -138,25 +138,25 @@
                                     <li><a class="dropdown-item" href="#">This Month</a></li>
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
 
                             <div class="card-body">
                                 @if (auth()->user()->hasRole(['admin']))
-                                    <h5 class="card-title">Kabar Tani <span>| Today</span></h5>
+                                    <h5 class="card-title">Kabar Tani</h5>
                                 @endif
                                 @if (auth()->user()->hasRole(['kelompok_tani']))
-                                    <h5 class="card-title">Kabar Saya <span>| Today</span></h5>
+                                    <h5 class="card-title">Kabar Saya</h5>
                                 @endif
 
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-currency-dollar"></i>
+                                        <i class="bi bi-newspaper"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{ $totalBerita }}</h6>
-                                        <span class="text-success small pt-1 fw-bold">8%</span>
-                                        <span class="text-muted small pt-2 ps-1">increase</span>
+                                        {{-- <span class="text-success small pt-1 fw-bold">8%</span>
+                                        <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@
                         <div class="card info-card customers-card"
                             onclick="location.href='{{ route('adminpengguna') }}';" style="cursor: pointer;">
 
-                            <div class="filter">
+                            {{-- <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                         class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -185,10 +185,10 @@
                                     <li><a class="dropdown-item" href="#">This Month</a></li>
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
 
                             <div class="card-body">
-                                <h5 class="card-title">Pengguna <span>| This Year</span></h5>
+                                <h5 class="card-title">Pengguna</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div
@@ -197,8 +197,8 @@
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{ $pengguna }}</h6>
-                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">decrease</span>
+                                        {{-- <span class="text-danger small pt-1 fw-bold">12%</span> <span
+                                            class="text-muted small pt-2 ps-1">decrease</span> --}}
 
                                     </div>
                                 </div>
@@ -210,27 +210,106 @@
                 @endif
                 <!-- End Customers Card -->
 
-                <!-- Reports -->
                 @if (auth()->user()->hasRole(['admin']))
+                    <!-- Website Traffic -->
+                    <div class="col-12">
+                        <div class="card">
+                            {{-- <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div> --}}
+
+                            <div class="card-body pb-0">
+                                <h5 class="card-title">Produk Berdasarkan <span>| Kategori</span></h5>
+                                <div id="produkChart" style="min-height: 400px;" class="echart"></div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const produkData = @json($produkPerKategori);
+
+                                        const categories = [
+                                            'Hasil pertanian',
+                                            'Benih dan bibit',
+                                            'Pupuk dan pestisida',
+                                            'Alat dan mesin pertanian',
+                                            'Produk olahan pertanian'
+                                        ];
+
+                                        const data = categories.map(category => ({
+                                            value: produkData[category] || 0,
+                                            name: category
+                                        }));
+
+                                        echarts.init(document.querySelector("#produkChart")).setOption({
+                                            tooltip: {
+                                                trigger: 'item',
+                                                formatter: '{a} <br/>{b}: {c} ({d}%)'
+                                            },
+                                            legend: {
+                                                top: '5%',
+                                                left: 'center',
+                                                textStyle: {
+                                                    color: '#333',
+                                                    fontWeight: 'bold'
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'Produk Berdasarkan Kategori',
+                                                type: 'pie',
+                                                radius: ['40%', '70%'],
+                                                avoidLabelOverlap: false,
+                                                label: {
+                                                    show: true,
+                                                    position: 'outside',
+                                                    formatter: '{b}\n{d}%',
+                                                    fontSize: 14,
+                                                    fontWeight: 'bold',
+                                                    color: '#000'
+                                                },
+                                                emphasis: {
+                                                    label: {
+                                                        show: true,
+                                                        fontSize: '16',
+                                                        fontWeight: 'bold',
+                                                        color: '#333'
+                                                    }
+                                                },
+                                                labelLine: {
+                                                    show: true,
+                                                    length: 15,
+                                                    length2: 10
+                                                },
+                                                itemStyle: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                },
+                                                data: data,
+                                                color: [
+                                                    '#FF6347', // Tomato
+                                                    '#FFD700', // Gold
+                                                    '#90EE90', // LightGreen
+                                                    '#1E90FF', // DodgerBlue
+                                                    '#9370DB' // MediumPurple
+                                                ]
+                                            }]
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Website Traffic -->
+                    <!-- Reports -->
                     <div class="col-12">
                         <div class="card">
 
-                            <div class="filter">
+                            {{-- <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                         class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
+                            </div> --}}
 
                             <div class="card-body">
-                                <h5 class="card-title">Grafik Produk <span>/Kecamatan</span></h5>
+                                <h5 class="card-title">Produk Berdasarkan <span>| Kecamatan</span></h5>
 
                                 <!-- Line Chart -->
                                 <div id="reportsChart"></div>
@@ -312,6 +391,7 @@
                         </div>
                     </div>
                 @endif
+
                 <!-- End Reports -->
 
                 <!-- Recent Sales -->
@@ -631,89 +711,12 @@
                         </div>
                     </div><!-- End Budget Report --> --}}
 
-                <!-- Website Traffic -->
-                {{-- <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                    class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
 
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Website Traffic <span>| Today</span></h5>
-
-                            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-                            <script>
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    echarts.init(document.querySelector("#trafficChart")).setOption({
-                                        tooltip: {
-                                            trigger: 'item'
-                                        },
-                                        legend: {
-                                            top: '5%',
-                                            left: 'center'
-                                        },
-                                        series: [{
-                                            name: 'Access From',
-                                            type: 'pie',
-                                            radius: ['40%', '70%'],
-                                            avoidLabelOverlap: false,
-                                            label: {
-                                                show: false,
-                                                position: 'center'
-                                            },
-                                            emphasis: {
-                                                label: {
-                                                    show: true,
-                                                    fontSize: '18',
-                                                    fontWeight: 'bold'
-                                                }
-                                            },
-                                            labelLine: {
-                                                show: false
-                                            },
-                                            data: [{
-                                                    value: 1048,
-                                                    name: 'Search Engine'
-                                                },
-                                                {
-                                                    value: 735,
-                                                    name: 'Direct'
-                                                },
-                                                {
-                                                    value: 580,
-                                                    name: 'Email'
-                                                },
-                                                {
-                                                    value: 484,
-                                                    name: 'Union Ads'
-                                                },
-                                                {
-                                                    value: 300,
-                                                    name: 'Video Ads'
-                                                }
-                                            ]
-                                        }]
-                                    });
-                                });
-                            </script>
-
-                        </div>
-                    </div><!-- End Website Traffic --> --}}
 
                 <!-- News & Updates Traffic -->
                 @if (auth()->user()->hasRole(['admin', 'kelompok_tani']))
                     <div class="card">
-                        <div class="filter">
+                        {{-- <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                     class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -725,14 +728,14 @@
                                 <li><a class="dropdown-item" href="#">This Month</a></li>
                                 <li><a class="dropdown-item" href="#">This Year</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
 
                         <div class="card-body pb-0">
                             @if (auth()->user()->hasRole(['admin']))
-                                <h5 class="card-title">Kabar Tani <span>| Today</span></h5>
+                                <h5 class="card-title">Kabar Tani</h5>
                             @endif
                             @if (auth()->user()->hasRole(['kelompok_tani']))
-                                <h5 class="card-title">Kabar Saya <span>| Today</span></h5>
+                                <h5 class="card-title">Kabar Saya</h5>
                             @endif
 
                             <div class="news">

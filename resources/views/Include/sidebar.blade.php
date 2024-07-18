@@ -37,7 +37,7 @@
 
         <li class="nav-item">
             <a class="nav-link " href="{{ route('adminprofil') }}">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-person-circle"></i>
                 <span>Profil</span>
             </a>
         </li>
