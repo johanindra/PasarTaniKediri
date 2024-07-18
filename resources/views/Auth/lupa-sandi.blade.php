@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pasar Tani - Masuk</title>
+    <title>Pasar Tani - Ganti Kata Sandi</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -66,8 +66,8 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Masuk</h5>
-                                        <p class="text-center small">Masukkan email dan kata sandi untuk masuk</p>
+                                        <h5 class="card-title text-center pb-0 fs-4">Reset kata Sandi</h5>
+                                        <p class="text-center small">Masukkan kata sandi baru anda</p>
                                     </div>
 
                                     <form class="row g-3 needs-validation" novalidate method="POST"
@@ -75,46 +75,32 @@
                                         @csrf
 
                                         <div class="col-12">
-                                            <label for="yourEmail" class="form-label">Email</label>
-                                            <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="email" name="email_user"
-                                                    class="form-control @error('email_user') is-invalid @enderror"
-                                                    id="yourEmail" value="{{ old('email_user') }}" required>
-                                                <div class="invalid-feedback">Masukkan email Anda.</div>
-                                            </div>
-                                            @error('email_user')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Kata Sandi</label>
+                                            <label for="password" class="form-label">Kata Sandi</label>
                                             <input type="password" name="password"
                                                 class="form-control @error('password') is-invalid @enderror"
-                                                id="yourPassword" required>
-                                            <div class="invalid-feedback">Masukkan kata sandi Anda.</div>
+                                                id="password" required>
                                             @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @else
+                                                <div class="invalid-feedback">Masukkan kata sandi Anda.</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Masuk</button>
+                                            <label for="password_confirmation" class="form-label">Konfirmasi Kata
+                                                Sandi</label>
+                                            <input type="password" name="password_confirmation"
+                                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                id="password_confirmation" required>
+                                            @error('password_confirmation')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @else
+                                                <div class="invalid-feedback">Konfirmasi kata sandi Anda.</div>
+                                            @enderror
                                         </div>
 
                                         <div class="col-12">
-                                            <p class="small mb-0">Belum punya akun? <a href="#"
-                                                    id="daftarLink">Daftar</a></p>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <p class="small mb-0"><a href="{{ route('verifikasi-email') }}">Lupa Kata
-                                                    Sandi</a></p>
+                                            <button class="btn btn-primary w-100" type="submit">Simpan</button>
                                         </div>
                                     </form>
 

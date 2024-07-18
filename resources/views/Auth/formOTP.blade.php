@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pasar Tani - Masuk</title>
+    <title>Pasar Tani - Verifikasi Kode OTP</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -66,55 +66,31 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Masuk</h5>
-                                        <p class="text-center small">Masukkan email dan kata sandi untuk masuk</p>
+                                        <h5 class="card-title text-center pb-0 fs-4">Verifikasi Kode OTP</h5>
+                                        <p class="text-center small">Masukkan kode OTP yang telah dikirim ke email anda
+                                        </p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate method="POST"
-                                        action="{{ route('login') }}">
+                                    <form class="row g-3 needs-validation" novalidate method="POST" action="">
                                         @csrf
 
                                         <div class="col-12">
-                                            <label for="yourEmail" class="form-label">Email</label>
+                                            <label for="otp" class="form-label">Kode OTP</label>
                                             <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="email" name="email_user"
-                                                    class="form-control @error('email_user') is-invalid @enderror"
-                                                    id="yourEmail" value="{{ old('email_user') }}" required>
-                                                <div class="invalid-feedback">Masukkan email Anda.</div>
+                                                <span class="input-group-text" id="inputGroupPrepend">#</span>
+                                                <input type="text" name="otp"
+                                                    class="form-control @error('otp') is-invalid @enderror"
+                                                    id="otp" value="{{ old('otp') }}" required>
+                                                <div class="invalid-feedback">Masukkan kode OTP Anda.</div>
                                             </div>
-                                            @error('email_user')
+                                            @error('otp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
-
                                         <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Kata Sandi</label>
-                                            <input type="password" name="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                id="yourPassword" required>
-                                            <div class="invalid-feedback">Masukkan kata sandi Anda.</div>
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Masuk</button>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <p class="small mb-0">Belum punya akun? <a href="#"
-                                                    id="daftarLink">Daftar</a></p>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <p class="small mb-0"><a href="{{ route('verifikasi-email') }}">Lupa Kata
-                                                    Sandi</a></p>
+                                            <a href="{{route('lupa-sandi')}}" class="btn btn-primary w-100" type="submit">Verifikasi</a>
                                         </div>
                                     </form>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LupaSandiController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\UploadBeritaController;
@@ -18,6 +19,12 @@ Route::get('/', function () {
 })->middleware('auth.redirect');
 
 Route::get('login', [SidebarController::class, 'login'])->name('login')->middleware('auth.redirect');
+
+//lupa sandi
+Route::get('verifikasi-email', [LupaSandiController::class, 'verifikasi'])->name('verifikasi-email')->middleware('auth.redirect');
+Route::get('verifikasi-otp', [LupaSandiController::class, 'verifikasiotp'])->name('verifikasi-otp')->middleware('auth.redirect');
+Route::get('reset-sandi', [LupaSandiController::class, 'lupasandi'])->name('lupa-sandi')->middleware('auth.redirect');
+Route::post('Emailverifikasi', [LupaSandiController::class, 'verifikasiemail']);
 
 // Route::get('masuk', [UserController::class, 'masuk'])->name('masuk')->middleware('auth.redirect');
 Route::post('login', [UserController::class, 'login']);
