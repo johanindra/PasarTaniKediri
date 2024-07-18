@@ -65,6 +65,9 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('/produk/hapus/{id_produk}', [UploadProdukController::class, 'hapus'])->name('produk.hapus');
     Route::put('/produk/update/{id}', [UploadProdukController::class, 'updateProduk'])->name('updateProduk');
 
+    //data pengguna
+    Route::post('pengguna/tambah-admin', [UserController::class, 'tambahAdmin'])->name('AddAdmin');
+
     //profil
     Route::delete('/profil/hapus/{id_user}', [SidebarController::class, 'hapusAkun'])->name('hapus-akun');
 

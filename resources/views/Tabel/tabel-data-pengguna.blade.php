@@ -1,5 +1,11 @@
+@include('Admin.tambah-admin')
 <div class="card-body">
     <h5 class="card-title">Tabel Data Pengguna Pasar Tani Kediri</h5>
+    @if (auth()->user()->hasRole('admin') && auth()->user()->email_user == 'pasartanikediri@gmail.com')
+        <div class="text-right mb-3">
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambahAdminModal">Tambah</a>
+        </div>
+    @endif
     <form method="GET" action="{{ route('adminpengguna') }}">
         <div class="row">
             <div class="col-md-6 mb-3">

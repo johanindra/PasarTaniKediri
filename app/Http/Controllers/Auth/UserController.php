@@ -152,4 +152,42 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Gagal melakukan registrasi.');
         }
     }
+
+    public function tambahAdmin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_user' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/'],
+            'email_user' => 'required|string|email|max:255|unique:users,email_user',
+            'password' => ['required', 'string', 'min:8', 'max:16', 'regex:/^\S*$/'],
+        ], [
+            'nama_user.regex' => 'Nama hanya boleh mengandung huruf, angka, dan spasi.',
+            'password.regex' => 'Password tidak boleh mengandung spasi.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::create([
+            'nama_user' => $request->nama_user,
+            'email_user' => $request->email_user,
+            'password' => Hash::make($request->password),
+            'alamat_user' => null,
+            'kecamatan_user' => null,
+            'notelp_user' => null,
+            'foto_user' => null,
+            'maps_user' => null,
+            'instagram_user' => null,
+            'facebook_user' => null,
+            'link_user' => null,
+        ]);
+
+        $user->assignRole('admin');
+
+        if ($user) {
+            return redirect()->route('adminpengguna')->with('success', 'Admin berhasil ditambahkan.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menambahkan admin.');
+        }
+    }
 }

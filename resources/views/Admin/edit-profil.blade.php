@@ -143,7 +143,8 @@
 
     <button type="submit" class="btn btn-primary w-100">Simpan</button>
 </form>
-@if (auth()->user()->hasRole(['masyarakat', 'kelompok_tani']))
+@if (auth()->user()->hasRole(['admin', 'masyarakat', 'kelompok_tani']) &&
+        auth()->user()->email_user != 'pasartanikediri@gmail.com')
     <form action="{{ route('hapus-akun', ['id_user' => auth()->user()->id_user]) }}" method="POST"
         id="hapusAkunForm">
         @csrf
