@@ -223,6 +223,31 @@ class SidebarController extends Controller
             unlink(public_path('Foto Profil User/' . $user->foto_user));
         }
 
+        // Hapus foto produk jika ada
+        $produks = $user->produks;
+        if ($produks) {
+            foreach ($produks as $produk) {
+                if ($produk->gambar1_produk && file_exists(public_path('Produk/' . $produk->gambar1_produk))) {
+                    unlink(public_path('Produk/' . $produk->gambar1_produk));
+                }
+                if ($produk->gambar2_produk && file_exists(public_path('Produk/' . $produk->gambar2_produk))) {
+                    unlink(public_path('Produk/' . $produk->gambar2_produk));
+                }
+                if ($produk->gambar3_produk && file_exists(public_path('Produk/' . $produk->gambar3_produk))) {
+                    unlink(public_path('Produk/' . $produk->gambar3_produk));
+                }
+                $produk->delete();
+            }
+        }
+
+        // Hapus foto Kabar Tani jika ada
+        foreach ($user->kabarTani as $berita) {
+            if ($berita->foto_berita && file_exists(public_path('Kabar Tani/' . $berita->foto_berita))) {
+                unlink(public_path('Kabar Tani/' . $berita->foto_berita));
+            }
+            $berita->delete();
+        }
+
         // Hapus pengguna dari database
         $user->delete();
 

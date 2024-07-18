@@ -63,4 +63,14 @@ class User extends Authenticatable
     {
         return $this->nama_user && $this->email_user && $this->alamat_user && $this->kecamatan_user && $this->notelp_user && $this->foto_user && $this->maps_user;
     }
+
+    public function produks()
+    {
+        return $this->hasMany(Produk::class, 'id_user');
+    }
+
+    public function kabarTani()
+    {
+        return $this->hasMany(Berita::class, 'id_user');
+    }
 }
