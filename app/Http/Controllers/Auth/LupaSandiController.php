@@ -23,4 +23,5 @@ class LupaSandiController extends Controller
     {
         return view('Auth.form-email');
     }
+    
 }

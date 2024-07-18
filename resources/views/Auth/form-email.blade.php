@@ -71,7 +71,8 @@
                                             OTP</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate method="POST" action="">
+                                    <form class="row g-3 needs-validation" novalidate method="POST"
+                                        action="{{ route('sendotp') }}">
                                         @csrf
 
                                         <div class="col-12">
@@ -90,7 +91,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <a href="{{route('verifikasi-otp')}}" class="btn btn-primary w-100" type="submit">Kirim kode OTP</a>
+                                            <button class="btn btn-primary w-100" type="submit">Kirim kode OTP</button>
                                         </div>
 
                                         <div class="col-12">

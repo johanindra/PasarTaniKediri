@@ -71,38 +71,39 @@
                                     </div>
 
                                     <form class="row g-3 needs-validation" novalidate method="POST"
-                                        action="{{ route('login') }}">
+                                        action="{{ route('update-password') }}">
                                         @csrf
 
+                                        <input type="hidden" name="email" value="{{ $email }}">
+
                                         <div class="col-12">
-                                            <label for="password" class="form-label">Kata Sandi</label>
-                                            <input type="password" name="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                id="password" required>
-                                            @error('password')
+                                            <label for="new_password" class="form-label">Kata Sandi Baru</label>
+                                            <input type="password" name="new_password"
+                                                class="form-control @error('new_password') is-invalid @enderror"
+                                                id="new_password" required>
+                                            @error('new_password')
                                                 <div class="invalid-feedback">{{ $message }}</div>
-                                            @else
-                                                <div class="invalid-feedback">Masukkan kata sandi Anda.</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="password_confirmation" class="form-label">Konfirmasi Kata
-                                                Sandi</label>
+                                            <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi
+                                                Baru</label>
                                             <input type="password" name="password_confirmation"
                                                 class="form-control @error('password_confirmation') is-invalid @enderror"
                                                 id="password_confirmation" required>
                                             @error('password_confirmation')
                                                 <div class="invalid-feedback">{{ $message }}</div>
-                                            @else
-                                                <div class="invalid-feedback">Konfirmasi kata sandi Anda.</div>
                                             @enderror
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Simpan</button>
+                                            <button class="btn btn-primary w-100" type="submit">Simpan Kata Sandi
+                                                Baru</button>
                                         </div>
                                     </form>
+
+
 
                                 </div>
                             </div>

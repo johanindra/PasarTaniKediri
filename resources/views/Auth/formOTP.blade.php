@@ -71,7 +71,8 @@
                                         </p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate method="POST" action="">
+                                    <form class="row g-3 needs-validation" novalidate method="POST"
+                                        action="{{ route('verifikasikodeotp') }}">
                                         @csrf
 
                                         <div class="col-12">
@@ -90,10 +91,9 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <a href="{{route('lupa-sandi')}}" class="btn btn-primary w-100" type="submit">Verifikasi</a>
+                                            <button class="btn btn-primary w-100" type="submit">Verifikasi</button>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
 

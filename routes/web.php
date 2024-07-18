@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LupaSandiController;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\UploadBeritaController;
@@ -24,7 +25,9 @@ Route::get('login', [SidebarController::class, 'login'])->name('login')->middlew
 Route::get('verifikasi-email', [LupaSandiController::class, 'verifikasi'])->name('verifikasi-email')->middleware('auth.redirect');
 Route::get('verifikasi-otp', [LupaSandiController::class, 'verifikasiotp'])->name('verifikasi-otp')->middleware('auth.redirect');
 Route::get('reset-sandi', [LupaSandiController::class, 'lupasandi'])->name('lupa-sandi')->middleware('auth.redirect');
-Route::post('Emailverifikasi', [LupaSandiController::class, 'verifikasiemail']);
+Route::post('send-otp', [OtpController::class, 'sendOtp'])->name('sendotp');
+Route::post('verifikasi-kodeOTP', [OtpController::class, 'verifyOtp'])->name('verifikasikodeotp');
+Route::post('update-sandi', [OtpController::class, 'updatePassword'])->name('update-password');
 
 // Route::get('masuk', [UserController::class, 'masuk'])->name('masuk')->middleware('auth.redirect');
 Route::post('login', [UserController::class, 'login']);
