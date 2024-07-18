@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pages / Register - NiceAdmin Bootstrap Template</title>
+    <title>Pasar Tani - Daftar</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -69,7 +69,7 @@
                                         <div class="col-12">
                                             <label for="nama_user" class="form-label">Nama Lengkap</label>
                                             <input type="text" name="nama_user"
-                                                class="form-control @error('nama_user') is-invalid @enderror"
+                                                class="form-control @error('nama_user') is-invalid @enderror" placeholder="Contoh: Muhamad Sugeng Cahyono"
                                                 id="nama_user" value="{{ old('nama_user') }}" required>
                                             @error('nama_user')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -81,7 +81,7 @@
                                         <div class="col-12">
                                             <label for="email_user" class="form-label">Email</label>
                                             <input type="email" name="email_user"
-                                                class="form-control @error('email_user') is-invalid @enderror"
+                                                class="form-control @error('email_user') is-invalid @enderror" placeholder="Contoh: Sugeng@gmail.com"
                                                 id="email_user" value="{{ old('email_user') }}" required>
                                             @error('email_user')
                                                 <div class="invalid-feedback">{{ $message }}</div>

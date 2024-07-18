@@ -23,7 +23,9 @@ Route::get('login', [SidebarController::class, 'login'])->name('login')->middlew
 Route::post('login', [UserController::class, 'login']);
 
 Route::get('daftar', [UserController::class, 'Daftar'])->name('daftar')->middleware('auth.redirect');
+Route::get('daftar-tani', [UserController::class, 'DaftarTani'])->name('daftar-tani')->middleware('auth.redirect');
 Route::post('register', [UserController::class, 'register'])->name('register.post');
+Route::post('register-tani', [UserController::class, 'registerKelompok'])->name('registerkelompok.post');
 
 Route::post('keluar', [UserController::class, 'logout'])->name('logout');
 
@@ -53,8 +55,8 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('/produk/hapus/{id_produk}', [UploadProdukController::class, 'hapus'])->name('produk.hapus');
     Route::put('/produk/update/{id}', [UploadProdukController::class, 'updateProduk'])->name('updateProduk');
 
+    //profil
+    Route::delete('/profil/hapus/{id_user}', [SidebarController::class, 'hapusAkun'])->name('hapus-akun');
+
     Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna')->middleware(['role:admin']);
 });
-
-
-// produk

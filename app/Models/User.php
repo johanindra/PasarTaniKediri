@@ -37,6 +37,7 @@ class User extends Authenticatable
         'maps_user',
         'instagram_user',
         'facebook_user',
+        'npwp',
         'link_user'
     ];
 

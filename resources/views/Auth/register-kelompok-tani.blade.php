@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pages / Register - NiceAdmin Bootstrap Template</title>
+    <title>Pasar Tani - Daftar Kelompok Tani</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -59,7 +59,7 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Buat akun anda</h5>
+                                        <h5 class="card-title text-center pb-0 fs-4">Buat akun Kelompok Tani</h5>
                                         <p class="text-center small">Lengkapi data di bawah untuk membuat akun</p>
                                     </div>
 
@@ -67,14 +67,15 @@
                                         action="{{ route('registerkelompok.post') }}">
                                         @csrf
                                         <div class="col-12">
-                                            <label for="nama_user" class="form-label">Nama Lengkap</label>
+                                            <label for="nama_user" class="form-label">Nama Kelompok Tani</label>
                                             <input type="text" name="nama_user"
                                                 class="form-control @error('nama_user') is-invalid @enderror"
-                                                id="nama_user" value="{{ old('nama_user') }}" required>
+                                                placeholder="Contoh: Sido Tani" id="nama_user"
+                                                value="{{ old('nama_user') }}" required>
                                             @error('nama_user')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
-                                                <div class="invalid-feedback">Masukkan nama lengkap Anda.</div>
+                                                <div class="invalid-feedback">Masukkan nama kelompok tani anda.</div>
                                             @enderror
                                         </div>
 
@@ -82,22 +83,24 @@
                                             <label for="email_user" class="form-label">Email</label>
                                             <input type="email" name="email_user"
                                                 class="form-control @error('email_user') is-invalid @enderror"
-                                                id="email_user" value="{{ old('email_user') }}" required>
+                                                placeholder="Contoh: kelompoktani@gmail.com" id="email_user"
+                                                value="{{ old('email_user') }}" required>
                                             @error('email_user')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
-                                                <div class="invalid-feedback">Masukkan email Anda.</div>
+                                                <div class="invalid-feedback">Masukkan email kelompok tani.</div>
                                             @enderror
                                         </div>
                                         <div class="col-12">
                                             <label for="npwp" class="form-label">NPWP</label>
                                             <input type="text" name="npwp"
                                                 class="form-control @error('npwp') is-invalid @enderror" id="npwp"
-                                                value="{{ old('npwp') }}" required>
+                                                placeholder="Contoh: 01.234.567.8-123.000" value="{{ old('npwp') }}"
+                                                required>
                                             @error('npwp')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
-                                                <div class="invalid-feedback">Masukkan NPWP Anda.</div>
+                                                <div class="invalid-feedback">Masukkan NPWP kelompok tani.</div>
                                             @enderror
                                         </div>
 
@@ -109,7 +112,7 @@
                                             @error('password')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
-                                                <div class="invalid-feedback">Masukkan kata sandi Anda.</div>
+                                                <div class="invalid-feedback">Masukkan kata sandi.</div>
                                             @enderror
                                         </div>
 
@@ -122,7 +125,7 @@
                                             @error('password_confirmation')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
-                                                <div class="invalid-feedback">Konfirmasi kata sandi Anda.</div>
+                                                <div class="invalid-feedback">Konfirmasi kata sandi.</div>
                                             @enderror
                                         </div>
 
@@ -130,8 +133,6 @@
                                             <button class="btn btn-primary w-100" type="submit">Daftar</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0">daftar sebagai masyarakat? <a
-                                                    href="{{ route('daftar') }}">Daftar</a></p>
                                             <p class="small mb-0">Sudah punya akun? <a
                                                     href="{{ route('login') }}">Masuk</a></p>
                                         </div>

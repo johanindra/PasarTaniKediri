@@ -211,6 +211,27 @@ class SidebarController extends Controller
         }
     }
 
+    public function hapusAkun($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Akun tidak ditemukan');
+        }
+
+        // Hapus foto profil jika ada
+        if ($user->foto_user && file_exists(public_path('Foto Profil User/' . $user->foto_user))) {
+            unlink(public_path('Foto Profil User/' . $user->foto_user));
+        }
+
+        // Hapus pengguna dari database
+        $user->delete();
+
+        // Logout pengguna
+        Auth::logout();
+
+        return redirect()->route('login')->with('success', 'Akun Berhasil dihapus');
+    }
+
     public function detailProduk($id_produk)
     {
         $produk = Produk::with('user')->find($id_produk);
@@ -244,7 +265,7 @@ class SidebarController extends Controller
             'alamat' => 'required|string|max:255',
             'kecamatan' => 'required|string|max:255',
             'no_telp' => 'required|string|max:15',
-            'maps_user' => 'required|string|max:255', // Validasi untuk maps_user
+            'maps_user' => 'required|string|max:255',
             'foto_user' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -252,7 +273,7 @@ class SidebarController extends Controller
         $user->alamat_user = $request->alamat;
         $user->kecamatan_user = $request->kecamatan;
         $user->notelp_user = $request->no_telp;
-        $user->maps_user = $request->maps_user; // Simpan maps_user ke dalam model User
+        $user->maps_user = $request->maps_user;
 
         if ($request->hasFile('foto_user')) {
             $foto = $request->file('foto_user');
@@ -260,6 +281,13 @@ class SidebarController extends Controller
             $tujuan_upload = 'Foto Profil User';
             $foto->move(public_path($tujuan_upload), $nama_foto);
             $user->foto_user = $nama_foto;
+        }
+
+        if ($request->has('npwp') && auth()->user()->hasRole('kelompok_tani')) {
+            $request->validate([
+                'npwp' => 'required|string|max:20|unique:users,npwp,' . $user->id_user . ',id_user',
+            ]);
+            $user->npwp = $request->npwp;
         }
 
         $user->save();
@@ -291,6 +319,14 @@ class SidebarController extends Controller
         $user->instagram_user = $request->instagram_user;
         $user->facebook_user = $request->facebook_user;
         $user->link_user = $request->link_user;
+        // Validasi NPWP hanya untuk kelompok_tani
+        if ($user->hasRole('kelompok_tani')) {
+            $request->validate([
+                'npwp' => 'required|string|max:20|unique:users,npwp,' . $user->id_user . ',id_user',
+            ]);
+
+            $user->npwp = $request->npwp;
+        }
 
         if ($request->hasFile('foto_user')) {
             $foto = $request->file('foto_user');

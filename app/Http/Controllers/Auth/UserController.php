@@ -111,4 +111,45 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Gagal melakukan registrasi.');
         }
     }
+
+    public function DaftarTani()
+    {
+        return view('Auth.register-kelompok-tani');
+    }
+
+    public function registerKelompok(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_user' => 'required|string|max:255',
+            'email_user' => 'required|string|email|max:255|unique:users,email_user',
+            'password' => 'required|string|min:8|confirmed',
+            'npwp' => 'required|string|max:20|unique:users,npwp',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::create([
+            'nama_user' => $request->nama_user,
+            'email_user' => $request->email_user,
+            'password' => Hash::make($request->password),
+            'alamat_user' => null,
+            'kecamatan_user' => null,
+            'notelp_user' => null,
+            'foto_user' => null,
+            'maps_user' => null,
+            'instagram_user' => null,
+            'facebook_user' => null,
+            'link_user' => null,
+            'npwp' => $request->npwp,
+        ])->AssignRole('kelompok_tani');
+
+
+        if ($user) {
+            return redirect()->route('daftar-tani')->with('success', 'Registrasi berhasil. Silakan login.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal melakukan registrasi.');
+        }
+    }
 }

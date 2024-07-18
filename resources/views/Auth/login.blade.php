@@ -108,8 +108,8 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <p class="small mb-0">Belum punya akun? <a
-                                                    href="{{ route('daftar') }}">Daftar</a></p>
+                                            <p class="small mb-0">Belum punya akun? <a href="#"
+                                                    id="daftarLink">Daftar</a></p>
                                         </div>
                                     </form>
 
@@ -144,16 +144,48 @@
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         // Cek jika ada pesan error untuk login
-        @if (session('error'))
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('daftarLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Daftar sebagai?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Kelompok Tani',
+                    cancelButtonText: 'Masyarakat'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to daftar-tani route
+                        window.location.href = "{{ route('daftar-tani') }}";
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // Redirect to daftar route
+                        window.location.href = "{{ route('daftar') }}";
+                    }
+                });
+            });
+        });
+    </script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: '{{ session('error') }}'
+                text: '{{ session('error') }}',
             });
-        @endif
-    </script>
+        </script>
+    @endif
 
 </body>
 

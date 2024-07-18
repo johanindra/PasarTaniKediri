@@ -10,6 +10,13 @@
         <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama Anda"
             value="{{ old('nama', $user->nama_user) }}" required>
     </div>
+    @if (auth()->user()->hasRole(['kelompok_tani']))
+        <div class="mb-3">
+            <label for="npwp" class="form-label">NPWP</label>
+            <input type="text" class="form-control" id="npwp" name="npwp" placeholder="Masukkan NPWP"
+                value="{{ old('npwp', $user->npwp) }}" required>
+        </div>
+    @endif
     <div class="mb-3">
         <label for="alamat" class="form-label">Alamat</label>
         <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan alamat Anda"
@@ -112,7 +119,8 @@
     <div class="mb-3">
         <label for="instagram_user" class="form-label">Instagram</label>
         <input type="text" class="form-control" id="instagram_user" name="instagram_user"
-            placeholder="Masukkan username Instagram Anda" value="{{ old('instagram_user', $user->instagram_user) }}">
+            placeholder="Masukkan username Instagram Anda"
+            value="{{ old('instagram_user', $user->instagram_user) }}">
     </div>
     <div class="mb-3">
         <label for="facebook_user" class="form-label">Facebook</label>
@@ -135,6 +143,14 @@
 
     <button type="submit" class="btn btn-primary w-100">Simpan</button>
 </form>
+@if (auth()->user()->hasRole(['masyarakat', 'kelompok_tani']))
+    <form action="{{ route('hapus-akun', ['id_user' => auth()->user()->id_user]) }}" method="POST"
+        id="hapusAkunForm">
+        @csrf
+        @method('DELETE')
+        <button type="button" class="btn btn-danger w-100 mt-2" id="hapusAkunButton">Hapus Akun</button>
+    </form>
+@endif
 <script>
     function getCurrentLocation() {
         if (navigator.geolocation) {

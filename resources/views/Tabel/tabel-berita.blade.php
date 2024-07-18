@@ -66,7 +66,7 @@
                                 <a href="{{ route('detail.kabar', ['id' => $b->id_berita]) }}"
                                     class="btn btn-sm btn-primary btn-icon"><img src="assets/img/detail.png"
                                         alt="Detail" style="width: 20px; height: 20px;"></a>
-                                @if (auth()->user()->hasRole('admin') && $b->id_user == auth()->user()->id_user)
+                                @if (auth()->user()->hasRole(['admin','kelompok_tani']) && $b->id_user == auth()->user()->id_user)
                                     <a class="btn btn-sm btn-warning btn-icon" href="#" data-toggle="modal"
                                         data-target="#editBeritaModal{{ $b->id_berita }}"><img
                                             src="assets/img/edit.png" alt="Edit"

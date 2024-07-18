@@ -124,8 +124,8 @@
                             <!-- Tampilkan link Facebook jika ada -->
                             @if ($user->facebook_user)
                                 <div class="social-links mt-2">
-                                    <a href="https://facebook.com/{{ $user->facebook_user }}" target="_blank" class="facebook"><i
-                                            class="bi bi-facebook"></i> Facebook</a>
+                                    <a href="https://facebook.com/{{ $user->facebook_user }}" target="_blank"
+                                        class="facebook"><i class="bi bi-facebook"></i> Facebook</a>
                                 </div>
                             @endif
                         </div>
@@ -296,6 +296,21 @@
                         console.error('Error:', error);
                     });
             });
+        });
+        document.getElementById('hapusAkunButton').addEventListener('click', function(event) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan bisa memulihkan akun ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus akun!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('hapusAkunForm').submit();
+                }
+            })
         });
     </script>
     @if (session('success'))
