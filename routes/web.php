@@ -23,8 +23,8 @@ Route::get('login', [SidebarController::class, 'login'])->name('login')->middlew
 
 //lupa sandi
 Route::get('verifikasi-email', [LupaSandiController::class, 'verifikasi'])->name('verifikasi-email')->middleware('auth.redirect');
-Route::get('verifikasi-otp', [LupaSandiController::class, 'verifikasiotp'])->name('verifikasi-otp')->middleware('auth.redirect');
-Route::get('reset-sandi', [LupaSandiController::class, 'lupasandi'])->name('lupa-sandi')->middleware('auth.redirect');
+Route::get('verifikasi-otp', [LupaSandiController::class, 'verifikasiotp'])->name('verifikasi-otp')->middleware('auth.redirect', 'check.email.verification');
+Route::get('reset-sandi', [LupaSandiController::class, 'lupasandi'])->name('lupa-sandi')->middleware('auth.redirect', 'check.email.verification');
 Route::post('send-otp', [OtpController::class, 'sendOtp'])->name('sendotp');
 Route::post('verifikasi-kodeOTP', [OtpController::class, 'verifyOtp'])->name('verifikasikodeotp');
 Route::post('update-sandi', [OtpController::class, 'updatePassword'])->name('update-password');

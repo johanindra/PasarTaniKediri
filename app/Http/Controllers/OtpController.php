@@ -38,6 +38,7 @@ class OtpController extends Controller
         }
     }
 
+
     public function verifyOtp(Request $request)
     {
         $otp = $request->input('otp');
@@ -74,7 +75,7 @@ class OtpController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        
+
         session()->forget('otp');
         session()->forget('email');
 
@@ -86,7 +87,7 @@ class OtpController extends Controller
 
 
 
-    
+
 
 
     public function checkEmail(Request $request)
