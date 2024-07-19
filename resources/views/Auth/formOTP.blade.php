@@ -71,7 +71,7 @@
                                         </p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate method="POST"
+                                    {{-- <form class="row g-3 needs-validation" novalidate method="POST"
                                         action="{{ route('verifikasikodeotp') }}">
                                         @csrf
 
@@ -93,7 +93,82 @@
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Verifikasi</button>
                                         </div>
+                                    </form> --}}
+                                    <form id="otpForm" method="POST" action="{{ route('verifikasikodeotp') }}"
+                                        class="row g-3 needs-validation" novalidate>
+                                        @csrf
+                                        <div class="col-12">
+                                            <label for="otp" class="form-label">Kode OTP</label>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="otp-inputs">
+                                                    @for ($i = 1; $i <= 4; $i++)
+                                                        <input type="text" class="form-control otp-input"
+                                                            id="otp{{ $i }}" name="otp[]" maxlength="1"
+                                                            required>
+                                                    @endfor
+                                                </div>
+                                                @error('otp')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @else
+                                                    <div class="invalid-feedback">Masukkan kode OTP Anda.</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </form>
+                                    <style>
+                                        .otp-inputs {
+                                            display: flex;
+                                            justify-content: center;
+                                            gap: 10px;
+                                        }
+
+                                        .otp-input {
+                                            text-align: center;
+                                            font-size: 1.5rem;
+                                            width: 50px;
+                                            height: 50px;
+                                            border: 2px solid #ced4da;
+                                            border-radius: 5px;
+                                            transition: border-color 0.3s ease;
+                                        }
+
+                                        .otp-input:focus {
+                                            border-color: #80bdff;
+                                            outline: none;
+                                        }
+                                    </style>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const otpInputs = document.querySelectorAll('.otp-input');
+                                            const otpForm = document.getElementById('otpForm');
+
+                                            otpInputs.forEach((input, index) => {
+                                                input.addEventListener('input', function() {
+                                                    // Hapus spasi tambahan jika ada
+                                                    this.value = this.value.replace(/\s/g, '');
+
+                                                    // Jika ada nilai, pindah ke input berikutnya
+                                                    if (this.value.length === 1 && index < otpInputs.length - 1) {
+                                                        otpInputs[index + 1].focus();
+                                                    }
+
+                                                    // Jika semua input sudah terisi, kirim form
+                                                    if (Array.from(otpInputs).every(input => input.value.length === 1)) {
+                                                        otpForm.submit();
+                                                    }
+                                                });
+
+                                                input.addEventListener('keydown', function(event) {
+                                                    // Jika tombol Backspace ditekan dan input kosong, pindah ke input sebelumnya
+                                                    if (event.key === 'Backspace' && this.value === '' && index > 0) {
+                                                        otpInputs[index - 1].focus();
+                                                    }
+                                                });
+                                            });
+                                        });
+                                    </script>
                                 </div>
                             </div>
 

@@ -41,6 +41,15 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+    <style>
+        .password-valid {
+            color: blue;
+        }
+
+        .password-invalid {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -84,6 +93,7 @@
                                             @error('new_password')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
+                                            <div id="passwordMessage" class="form-text"></div>
                                         </div>
 
                                         <div class="col-12">
@@ -97,14 +107,44 @@
                                             @enderror
                                         </div>
 
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const passwordField = document.getElementById('new_password');
+                                                const passwordMessage = document.getElementById('passwordMessage');
+                                                const passwordConfirmationField = document.getElementById('password_confirmation');
+
+                                                function removeSpaces(event) {
+                                                    event.target.value = event.target.value.replace(/\s/g, '');
+                                                }
+
+                                                function updatePasswordMessage() {
+                                                    const password = passwordField.value;
+
+                                                    if (password.length < 8) {
+                                                        passwordMessage.textContent = 'Kata sandi harus memiliki minimal 8 karakter.';
+                                                        passwordMessage.className = 'form-text password-invalid'; // Apply invalid class
+                                                    } else {
+                                                        passwordMessage.textContent = 'Kata sandi memenuhi syarat.';
+                                                        passwordMessage.className = 'form-text password-valid'; // Apply valid class
+                                                    }
+                                                }
+
+                                                if (passwordField) {
+                                                    passwordField.addEventListener('input', removeSpaces);
+                                                    passwordField.addEventListener('input', updatePasswordMessage);
+                                                }
+
+                                                if (passwordConfirmationField) {
+                                                    passwordConfirmationField.addEventListener('input', removeSpaces);
+                                                }
+                                            });
+                                        </script>
+
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Simpan Kata Sandi
                                                 Baru</button>
                                         </div>
                                     </form>
-
-
-
                                 </div>
                             </div>
 

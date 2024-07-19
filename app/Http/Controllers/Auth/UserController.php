@@ -21,48 +21,43 @@ class UserController extends Controller
         return view('Auth.login');
     }
 
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email_user', 'password');
+        $user = User::where('email_user', $request->email_user)->first();
+
+        if (!$user) {
+            // Email tidak ditemukan
+            return redirect()->back()->withInput()->with('error', 'Pengguna tidak terdaftar');
+        }
+
+        if (!Auth::attempt($credentials)) {
+            // Password salah
+            return redirect()->back()->withInput()->with('error', 'Password salah');
+        }
+
+        // Jika berhasil login
+        if (empty($user->alamat_user) || empty($user->kecamatan_user) || empty($user->notelp_user)) {
+            return redirect()->route('lengkapi-profil');
+        }
+
+        return redirect()->route('dashboardadmin');
+    }
+
+    // Login lama
     // public function login(Request $request)
     // {
     //     $credentials = $request->only('email_user', 'password');
 
     //     if (Auth::attempt($credentials)) {
+    //         $user = Auth::user();
+    //         if (empty($user->alamat_user) || empty($user->kecamatan_user) || empty($user->notelp_user)) {
+    //             return redirect()->route('lengkapi-profil');
+    //         }
     //         return redirect()->route('dashboardadmin');
     //     }
 
     //     return redirect()->route('login')->with('error', 'Username atau Password anda salah');
-    // }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email_user', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if (empty($user->alamat_user) || empty($user->kecamatan_user) || empty($user->notelp_user)) {
-                return redirect()->route('lengkapi-profil');
-            }
-            return redirect()->route('dashboardadmin');
-        }
-
-        return redirect()->route('login')->with('error', 'Username atau Password anda salah');
-    }
-
-    // public function login(Request $request)
-    // {
-    //     $request->validate([
-    //         'email_user' => 'required|email',
-    //         'password' => 'required',
-    //     ]);
-
-    //     $credentials = $request->only('email_user', 'password');
-
-    //     if (Auth::attempt($credentials)) {
-    //         return redirect()->route('dashboardadmin');
-    //     }
-
-    //     return redirect()->back()->withInput($request->only('email_user'))->withErrors([
-    //         'email_user' => 'Email atau password salah.',
-    //     ]);
     // }
 
     public function logout(Request $request)
@@ -81,9 +76,33 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_user' => 'required|string|max:255',
-            'email_user' => 'required|string|email|max:255|unique:users,email_user',
-            'password' => 'required|string|min:8|confirmed',
+            'nama_user' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z0-9\s]+$/', // Nama hanya boleh mengandung huruf, angka, dan spasi
+                'regex:/^(?!.*\s$).+$/', // Nama tidak boleh mengandung spasi di akhir
+            ],
+            'email_user' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email_user',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:16',
+                'regex:/^\S*$/', // Password tidak boleh mengandung spasi
+                'confirmed'
+            ],
+        ], [
+            'nama_user.regex' => 'Nama tidak boleh menggunakan karakter spesial.',
+            'nama_user.regex' => 'Nama tidak boleh mengandung spasi di akhir.',
+            'email_user.unique' => 'Email sudah terdaftar, silakan gunakan email yang lain.',
+            'password.regex' => 'Password tidak boleh mengandung spasi.',
         ]);
 
         if ($validator->fails()) {
@@ -120,10 +139,41 @@ class UserController extends Controller
     public function registerKelompok(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_user' => 'required|string|max:255',
-            'email_user' => 'required|string|email|max:255|unique:users,email_user',
-            'password' => 'required|string|min:8|confirmed',
-            'npwp' => 'required|string|max:20|unique:users,npwp',
+            'nama_user' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z0-9\s]+$/', // Nama hanya boleh mengandung huruf, angka, dan spasi
+                'regex:/^(?!.*\s$).+$/', // Nama tidak boleh mengandung spasi di akhir
+            ],
+            'email_user' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email_user',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:16',
+                'regex:/^\S*$/', // Password tidak boleh mengandung spasi
+                'confirmed',
+            ],
+            'npwp' => [
+                'required',
+                'string',
+                'max:20',
+                'regex:/^\d+$/', // NPWP hanya boleh mengandung angka
+                'unique:users,npwp',
+            ],
+        ], [
+            'nama_user.regex' => 'Nama hanya boleh mengandung huruf, angka, dan spasi.',
+            'nama_user.regex' => 'Nama tidak boleh mengandung spasi di akhir.',
+            'email_user.unique' => 'Email sudah terdaftar, silakan gunakan email yang lain.',
+            'password.regex' => 'Password tidak boleh mengandung spasi.',
+            'npwp.regex' => 'NPWP hanya boleh mengandung angka.',
         ]);
 
         if ($validator->fails()) {
@@ -165,7 +215,10 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('modal_open', true);  // Tambahkan parameter ini
         }
 
         $user = User::create([

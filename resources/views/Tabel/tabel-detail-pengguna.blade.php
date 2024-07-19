@@ -11,8 +11,13 @@
             <div class="social-links mt-2">
                 <!-- Tampilkan link WhatsApp jika ada -->
                 @if ($pengguna->notelp_user)
-                    <a href="https://wa.me/{{ $pengguna->notelp_user }}" class="telephone" target="_blank"><i
-                            class="bi bi-whatsapp"></i></a>
+                    @php
+                        // Mengganti awalan '08' dengan '628'
+                        $formattedNotelp = preg_replace('/^08/', '628', $pengguna->notelp_user);
+                    @endphp
+                    <a href="https://wa.me/{{ $formattedNotelp }}" class="telephone" target="_blank">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
                 @endif
 
                 <!-- Tampilkan link Facebook jika ada -->

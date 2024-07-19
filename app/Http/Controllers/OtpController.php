@@ -41,21 +41,24 @@ class OtpController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        $otp = $request->input('otp');
+        $otpArray = $request->input('otp');
+        $otp = implode('', $otpArray); // Menggabungkan array menjadi string
 
         // Ambil OTP dan email dari session
         $storedOTP = session('otp');
         $email = session('email');
 
-        // Contoh sederhana untuk membandingkan OTP
-        if ($otp == $storedOTP) {
-            // OTP berhasil diverifikasi, tampilkan form update password
+        // Debugging
+        logger()->info('Received OTP:', ['otp' => $otp]);
+        logger()->info('Stored OTP:', ['otp' => $storedOTP]);
+
+        if ($otp === $storedOTP) {
             return view('Auth.lupa-sandi', compact('email'));
         } else {
-            // OTP salah, kembali ke halaman verifikasi OTP dengan pesan kesalahan
             return redirect()->route('verifikasi-otp')->with('error', 'OTP salah, coba lagi.');
         }
     }
+
 
     public function updatePassword(Request $request)
     {
@@ -81,14 +84,6 @@ class OtpController extends Controller
 
         return redirect()->route('login')->with('success', 'Password berhasil diubah. Silakan masuk dengan password baru Anda.');
     }
-
-
-
-
-
-
-
-
 
     public function checkEmail(Request $request)
     {

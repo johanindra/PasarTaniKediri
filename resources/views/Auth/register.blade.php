@@ -33,7 +33,15 @@
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        .password-valid {
+            color: blue;
+        }
 
+        .password-invalid {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,8 +77,9 @@
                                         <div class="col-12">
                                             <label for="nama_user" class="form-label">Nama Lengkap</label>
                                             <input type="text" name="nama_user"
-                                                class="form-control @error('nama_user') is-invalid @enderror" placeholder="Contoh: Muhamad Sugeng Cahyono"
-                                                id="nama_user" value="{{ old('nama_user') }}" required>
+                                                class="form-control @error('nama_user') is-invalid @enderror"
+                                                placeholder="Contoh: Muhamad Sugeng Cahyono" id="nama_user"
+                                                value="{{ old('nama_user') }}" required>
                                             @error('nama_user')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
@@ -81,8 +90,9 @@
                                         <div class="col-12">
                                             <label for="email_user" class="form-label">Email</label>
                                             <input type="email" name="email_user"
-                                                class="form-control @error('email_user') is-invalid @enderror" placeholder="Contoh: Sugeng@gmail.com"
-                                                id="email_user" value="{{ old('email_user') }}" required>
+                                                class="form-control @error('email_user') is-invalid @enderror"
+                                                placeholder="Contoh: Sugeng@gmail.com" id="email_user"
+                                                value="{{ old('email_user') }}" required>
                                             @error('email_user')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
@@ -100,7 +110,32 @@
                                             @else
                                                 <div class="invalid-feedback">Masukkan kata sandi Anda.</div>
                                             @enderror
+                                            <div id="passwordMessage" class="form-text"></div>
                                         </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const passwordField = document.getElementById('password');
+                                                const passwordMessage = document.getElementById('passwordMessage');
+
+                                                function updatePasswordMessage() {
+                                                    const password = passwordField.value;
+
+                                                    if (password.length < 8 && password.length > 0) {
+                                                        passwordMessage.textContent = 'Kata sandi harus memiliki minimal 8 karakter.';
+                                                        passwordMessage.className = 'form-text password-invalid'; // Apply invalid class
+                                                    } else if (password.length >= 8) {
+                                                        passwordMessage.textContent = 'Kata sandi memenuhi syarat.';
+                                                        passwordMessage.className = 'form-text password-valid'; // Apply valid class
+                                                    } else {
+                                                        passwordMessage.textContent = ''; // Clear message if password is empty
+                                                    }
+                                                }
+
+                                                if (passwordField) {
+                                                    passwordField.addEventListener('input', updatePasswordMessage);
+                                                }
+                                            });
+                                        </script>
 
                                         <div class="col-12">
                                             <label for="password_confirmation" class="form-label">Konfirmasi Kata

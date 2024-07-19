@@ -33,7 +33,15 @@
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        .password-valid {
+            color: blue;
+        }
 
+        .password-invalid {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -95,14 +103,21 @@
                                             <label for="npwp" class="form-label">NPWP</label>
                                             <input type="text" name="npwp"
                                                 class="form-control @error('npwp') is-invalid @enderror" id="npwp"
-                                                placeholder="Contoh: 01.234.567.8-123.000" value="{{ old('npwp') }}"
-                                                required>
+                                                placeholder="Contoh: 0123456789123000" value="{{ old('npwp') }}"
+                                                required pattern="\d*" title="NPWP hanya boleh mengandung angka">
                                             @error('npwp')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @else
                                                 <div class="invalid-feedback">Masukkan NPWP kelompok tani.</div>
                                             @enderror
                                         </div>
+
+                                        <script>
+                                            document.getElementById('npwp').addEventListener('input', function(e) {
+                                                // Menghapus karakter yang bukan angka
+                                                this.value = this.value.replace(/\D/g, '');
+                                            });
+                                        </script>
 
                                         <div class="col-12">
                                             <label for="password" class="form-label">Kata Sandi</label>
@@ -114,7 +129,32 @@
                                             @else
                                                 <div class="invalid-feedback">Masukkan kata sandi.</div>
                                             @enderror
+                                            <div id="passwordMessage" class="form-text"></div>
                                         </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const passwordField = document.getElementById('password');
+                                                const passwordMessage = document.getElementById('passwordMessage');
+
+                                                function updatePasswordMessage() {
+                                                    const password = passwordField.value;
+
+                                                    if (password.length < 8 && password.length > 0) {
+                                                        passwordMessage.textContent = 'Kata sandi harus memiliki minimal 8 karakter.';
+                                                        passwordMessage.className = 'form-text password-invalid'; // Apply invalid class
+                                                    } else if (password.length >= 8) {
+                                                        passwordMessage.textContent = 'Kata sandi memenuhi syarat.';
+                                                        passwordMessage.className = 'form-text password-valid'; // Apply valid class
+                                                    } else {
+                                                        passwordMessage.textContent = ''; // Clear message if password is empty
+                                                    }
+                                                }
+
+                                                if (passwordField) {
+                                                    passwordField.addEventListener('input', updatePasswordMessage);
+                                                }
+                                            });
+                                        </script>
 
                                         <div class="col-12">
                                             <label for="password_confirmation" class="form-label">Konfirmasi Kata

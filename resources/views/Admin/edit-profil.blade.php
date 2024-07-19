@@ -10,13 +10,27 @@
         <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama Anda"
             value="{{ old('nama', $user->nama_user) }}" required>
     </div>
-    @if (auth()->user()->hasRole(['kelompok_tani']))
+    @if (auth()->user()->hasRole('kelompok_tani'))
         <div class="mb-3">
             <label for="npwp" class="form-label">NPWP</label>
-            <input type="text" class="form-control" id="npwp" name="npwp" placeholder="Masukkan NPWP"
-                value="{{ old('npwp', $user->npwp) }}" required>
+            <input type="text" class="form-control @error('npwp') is-invalid @enderror" id="npwp" name="npwp"
+                placeholder="Masukkan NPWP" value="{{ old('npwp', $user->npwp) }}" required pattern="\d*"
+                title="NPWP hanya boleh mengandung angka">
+            @error('npwp')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @else
+                <div class="invalid-feedback">Masukkan NPWP yang valid.</div>
+            @enderror
         </div>
     @endif
+
+    <script>
+        document.getElementById('npwp').addEventListener('input', function(e) {
+            // Menghapus karakter yang bukan angka
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+
     <div class="mb-3">
         <label for="alamat" class="form-label">Alamat</label>
         <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan alamat Anda"

@@ -127,18 +127,30 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Tampilkan pesan kesalahan validasi
-        @if ($errors->any())
-            Swal.fire({
-                icon: 'error',
-                title: 'Kesalahan Validasi',
-                html: '<ul>' +
-                    @foreach ($errors->all() as $error)
-                        '<li>{{ $error }}</li>' +
-                    @endforeach
-                '</ul>'
-            });
-        @endif
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek apakah ada parameter modal_open
+            @if (session('modal_open'))
+                $('#tambahAdminModal').modal('show'); // Tampilkan modal jika ada kesalahan
+            @endif
+
+            // Tampilkan pesan kesalahan validasi
+            @if ($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan Validasi',
+                    html: '<ul>' +
+                        @foreach ($errors->all() as $error)
+                            '<li>{{ $error }}</li>' +
+                        @endforeach
+                    '</ul>',
+                    confirmButtonText: 'OK',
+                    willClose: () => {
+                        // Ini untuk memastikan modal tetap terbuka setelah pesan ditutup
+                        $('#tambahAdminModal').modal('show');
+                    }
+                });
+            @endif
+        });
     </script>
     @if (session('success'))
         <script>
