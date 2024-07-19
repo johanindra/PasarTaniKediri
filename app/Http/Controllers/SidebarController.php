@@ -7,6 +7,7 @@ use App\Models\Produk;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class SidebarController extends Controller
 {
@@ -370,5 +371,39 @@ class SidebarController extends Controller
         $user->save();
 
         return back()->with('success', 'Profil Anda berhasil diperbarui.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'password' => 'required',
+            'newpassword' => [
+                'required',
+                'min:8',
+                'max:16',
+                'regex:/^\S*$/u', // Tidak boleh mengandung spasi
+                'confirmed'
+            ],
+            'newpassword_confirmation' => 'required|same:newpassword'
+        ], [
+            'newpassword.min' => 'Password harus memiliki minimal 8 karakter.',
+            'newpassword.regex' => 'Password tidak boleh mengandung spasi.',
+            'newpassword.confirmed' => 'Konfirmasi password tidak sesuai.'
+        ]);
+
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Periksa apakah kata sandi lama sesuai
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->withErrors(['password' => 'Kata sandi lama salah.'])->with('activeTab', 'change-password');
+        }
+
+        // Update kata sandi user
+        $user->password = Hash::make($request->newpassword);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Kata sandi berhasil diubah.')->with('activeTab', 'change-password');
     }
 }

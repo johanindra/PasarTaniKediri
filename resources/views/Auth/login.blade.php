@@ -104,17 +104,17 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Masuk</button>
+                                            <p class="small mb-0"><a href="{{ route('verifikasi-email') }}">Lupa Kata
+                                                    Sandi?</a></p>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="btn btn-success w-100" type="submit">Masuk</button>
                                         </div>
 
                                         <div class="col-12">
                                             <p class="small mb-0">Belum punya akun? <a href="#"
-                                                    id="daftarLink">Daftar</a></p>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <p class="small mb-0"><a href="{{ route('verifikasi-email') }}">Lupa Kata
-                                                    Sandi</a></p>
+                                                    id="daftarLink">Buat akun</a></p>
                                         </div>
                                     </form>
 

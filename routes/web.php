@@ -70,6 +70,7 @@ Route::middleware('auth.admin')->group(function () {
 
     //profil
     Route::delete('/profil/hapus/{id_user}', [SidebarController::class, 'hapusAkun'])->name('hapus-akun');
+    Route::post('/update-password', [SidebarController::class, 'updatePassword'])->name('updatePassword');
 
     Route::get('/detail-pengguna/{id}', [SidebarController::class, 'detailpengguna'])->name('detail.pengguna')->middleware(['role:admin']);
 });
