@@ -151,7 +151,7 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Daftar</button>
+                                            <button class="btn btn-success w-100" type="submit">Daftar</button>
                                         </div>
                                         <div class="col-12">
                                             <p class="small mb-0">Sudah punya akun? <a

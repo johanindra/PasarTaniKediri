@@ -91,7 +91,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Kirim kode OTP</button>
+                                            <button class="btn btn-success w-100" type="submit">Kirim kode OTP</button>
                                         </div>
 
                                         <div class="col-12">
