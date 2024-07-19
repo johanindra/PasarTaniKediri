@@ -39,6 +39,12 @@ class OtpController extends Controller
     }
 
 
+    public function lupasandi(Request $request)
+    {
+        $email = $request->email; // pastikan email diambil dari request atau session
+        return view('Auth.lupa-sandi', compact('email'));
+    }
+
     public function verifyOtp(Request $request)
     {
         $otpArray = $request->input('otp');
@@ -53,12 +59,11 @@ class OtpController extends Controller
         logger()->info('Stored OTP:', ['otp' => $storedOTP]);
 
         if ($otp === $storedOTP) {
-            return view('Auth.lupa-sandi', compact('email'));
+            return redirect()->route('lupa-sandi', compact('email'));
         } else {
             return redirect()->route('verifikasi-otp')->with('error', 'OTP salah, coba lagi.');
         }
     }
-
 
     public function updatePassword(Request $request)
     {

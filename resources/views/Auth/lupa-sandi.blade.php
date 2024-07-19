@@ -33,14 +33,6 @@
 
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
     <style>
         .password-valid {
             color: blue;
@@ -56,31 +48,26 @@
 
     <main>
         <div class="container">
-
             <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
                             <div class="d-flex justify-content-center py-4">
                                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                                     <img src="assets/img/logo.png" alt="">
                                     <span class="d-none d-lg-block">Pasar Tani Kediri</span>
                                 </a>
                             </div><!-- End Logo -->
-
                             <div class="card mb-3">
-
                                 <div class="card-body">
-
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Reset kata Sandi</h5>
                                         <p class="text-center small">Masukkan kata sandi baru anda</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate method="POST"
-                                        action="{{ route('update-password') }}">
+                                    <form id="resetPasswordForm" class="row g-3 needs-validation" novalidate
+                                        method="POST" action="{{ route('update-password') }}">
                                         @csrf
 
                                         <input type="hidden" name="email" value="{{ $email }}">
@@ -91,7 +78,8 @@
                                                 class="form-control @error('new_password') is-invalid @enderror"
                                                 id="new_password" required>
                                             @error('new_password')
-                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                <div id="newPasswordError" class="invalid-feedback">{{ $message }}
+                                                </div>
                                             @enderror
                                             <div id="passwordMessage" class="form-text"></div>
                                         </div>
@@ -103,7 +91,8 @@
                                                 class="form-control @error('password_confirmation') is-invalid @enderror"
                                                 id="password_confirmation" required>
                                             @error('password_confirmation')
-                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                <div id="passwordConfirmationError" class="invalid-feedback">
+                                                    {{ $message }}</div>
                                             @enderror
                                         </div>
 
@@ -112,6 +101,7 @@
                                                 const passwordField = document.getElementById('new_password');
                                                 const passwordMessage = document.getElementById('passwordMessage');
                                                 const passwordConfirmationField = document.getElementById('password_confirmation');
+                                                const form = document.getElementById('resetPasswordForm');
 
                                                 function removeSpaces(event) {
                                                     event.target.value = event.target.value.replace(/\s/g, '');
@@ -120,12 +110,12 @@
                                                 function updatePasswordMessage() {
                                                     const password = passwordField.value;
 
-                                                    if (password.length < 8) {
-                                                        passwordMessage.textContent = 'Kata sandi harus memiliki minimal 8 karakter.';
-                                                        passwordMessage.className = 'form-text password-invalid'; // Apply invalid class
+                                                    if (password.length < 8 || password.length > 16) {
+                                                        passwordMessage.textContent = 'Kata sandi harus memiliki 8-16 karakter.';
+                                                        passwordMessage.className = 'form-text password-invalid';
                                                     } else {
                                                         passwordMessage.textContent = 'Kata sandi memenuhi syarat.';
-                                                        passwordMessage.className = 'form-text password-valid'; // Apply valid class
+                                                        passwordMessage.className = 'form-text password-valid';
                                                     }
                                                 }
 
@@ -137,6 +127,29 @@
                                                 if (passwordConfirmationField) {
                                                     passwordConfirmationField.addEventListener('input', removeSpaces);
                                                 }
+
+                                                // Display SweetAlert2 messages based on session flash data
+                                                @if (session('error'))
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Error',
+                                                        text: "{{ session('error') }}",
+                                                        willOpen: () => {
+                                                            document.getElementById('newPasswordError').textContent =
+                                                                "{{ session('error') }}";
+                                                        }
+                                                    });
+                                                @elseif (session('success'))
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Success',
+                                                        text: "{{ session('success') }}",
+                                                        willOpen: () => {
+                                                            document.getElementById('passwordMessage').textContent =
+                                                                "{{ session('success') }}";
+                                                        }
+                                                    });
+                                                @endif
                                             });
                                         </script>
 
@@ -145,6 +158,7 @@
                                                 Baru</button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
 
@@ -175,50 +189,6 @@
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script>
-        // Cek jika ada pesan error untuk login
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('daftarLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Daftar sebagai?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Kelompok Tani',
-                    cancelButtonText: 'Masyarakat'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to daftar-tani route
-                        window.location.href = "{{ route('daftar-tani') }}";
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        // Redirect to daftar route
-                        window.location.href = "{{ route('daftar') }}";
-                    }
-                });
-            });
-        });
-    </script>
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-            });
-        </script>
-    @endif
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '{{ session('error') }}',
-            });
-        </script>
-    @endif
-
 </body>
 
 </html>
