@@ -79,7 +79,8 @@ class UserController extends Controller
             'nama_user' => [
                 'required',
                 'string',
-                'max:255',
+                'min:2',
+                'max:100',
                 'regex:/^[a-zA-Z0-9\s]+$/', // Nama hanya boleh mengandung huruf, angka, dan spasi
                 'regex:/^(?!.*\s$).+$/', // Nama tidak boleh mengandung spasi di akhir
             ],
@@ -99,10 +100,22 @@ class UserController extends Controller
                 'confirmed'
             ],
         ], [
-            'nama_user.regex' => 'Nama tidak boleh menggunakan karakter spesial.',
+            //nama
+            'nama_user.required' => 'Nama Lengkap tidak boleh kosong.',
             'nama_user.regex' => 'Nama tidak boleh mengandung spasi di akhir.',
+            'nama_user.min' => 'Nama tidak boleh kurang dari 2 karakter.',
+            'nama_user.max' => 'Nama tidak boleh lebih dari 100 karakter.',
+            'nama_user.regex' => 'Nama tidak boleh menggunakan Karakter spesial.',
+            //email
+            'email_user.required' => 'Email tidak boleh kosong.',
+            'email_user.email' => 'Email harus menggunakan @gmail.com.',
             'email_user.unique' => 'Email sudah terdaftar, silakan gunakan email yang lain.',
+            //password
+            'password.min' => 'Password tidak boleh kurang dari 8 karakter.',
+            'password.max' => 'Password tidak boleh lebih dari 16 karakter.',
+            'password.required' => 'Password tidak boleh kosong.',
             'password.regex' => 'Password tidak boleh mengandung spasi.',
+            'password.confirmed' => 'Password dan konfirmasi password tidak sama.',
         ]);
 
         if ($validator->fails()) {
@@ -142,7 +155,8 @@ class UserController extends Controller
             'nama_user' => [
                 'required',
                 'string',
-                'max:255',
+                'min:2',
+                'max:100',
                 'regex:/^[a-zA-Z0-9\s]+$/', // Nama hanya boleh mengandung huruf, angka, dan spasi
                 'regex:/^(?!.*\s$).+$/', // Nama tidak boleh mengandung spasi di akhir
             ],
@@ -153,6 +167,14 @@ class UserController extends Controller
                 'max:255',
                 'unique:users,email_user',
             ],
+            'npwp' => [
+                'required',
+                'string',
+                'man:15',
+                'max:16',
+                'regex:/^\d+$/', // NPWP hanya boleh mengandung angka
+                'unique:users,npwp',
+            ],
             'password' => [
                 'required',
                 'string',
@@ -161,19 +183,29 @@ class UserController extends Controller
                 'regex:/^\S*$/', // Password tidak boleh mengandung spasi
                 'confirmed',
             ],
-            'npwp' => [
-                'required',
-                'string',
-                'max:20',
-                'regex:/^\d+$/', // NPWP hanya boleh mengandung angka
-                'unique:users,npwp',
-            ],
         ], [
-            'nama_user.regex' => 'Nama hanya boleh mengandung huruf, angka, dan spasi.',
+            //nama
+            'nama_user.required' => 'Nama Lengkap tidak boleh kosong.',
+            'nama_user.min' => 'Nama tidak boleh kurang dari 2 karakter.',
+            'nama_user.max' => 'Nama tidak boleh lebih dari 100 karakter.',
+            'nama_user.regex' => 'Nama tidak boleh menggunakan Karakter spesial.',
             'nama_user.regex' => 'Nama tidak boleh mengandung spasi di akhir.',
+            //email
+            'email_user.email' => 'Email harus menggunakan @gmail.com.',
+            'email_user.required' => 'Email tidak boleh kosong',
             'email_user.unique' => 'Email sudah terdaftar, silakan gunakan email yang lain.',
-            'password.regex' => 'Password tidak boleh mengandung spasi.',
+            //npwp
+            'npwp.required' => 'NPWP tidak boleh kosong.',
             'npwp.regex' => 'NPWP hanya boleh mengandung angka.',
+            'npwp.min' => 'NPWP tidak boleh kurang dari 15 digit angka.',
+            'npwp.max' => 'NPWP tidak boleh lebih dari 16 digit angka.',
+            'npwp.unique' => 'NPWP sudah terdaftar.',
+            //password
+            'password.min' => 'Password tidak boleh kurang dari 8 karakter.',
+            'password.max' => 'Password tidak boleh lebih dari 16 karakter.',
+            'password.required' => 'Password tidak boleh kosong.',
+            'password.regex' => 'Password tidak boleh mengandung spasi.',
+            'password.confirmed' => 'Password dan konfirmasi password tidak sama.',
         ]);
 
         if ($validator->fails()) {
@@ -206,11 +238,23 @@ class UserController extends Controller
     public function tambahAdmin(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_user' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/'],
+            'nama_user' => ['required', 'string', 'max:100', 'min:2', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'email_user' => 'required|string|email|max:255|unique:users,email_user',
             'password' => ['required', 'string', 'min:8', 'max:16', 'regex:/^\S*$/'],
         ], [
+            // nama
+            'nama_user.required' => 'Nama Lengkap tidak boleh kosong.',
+            'nama_user.max' => 'Nama Lengkap tidak boleh lebih dari 100 karakter.',
+            'nama_user.min' => 'Nama Lengkap tidak boleh kurang dari 2 karakter.',
             'nama_user.regex' => 'Nama hanya boleh mengandung huruf, angka, dan spasi.',
+            //email
+            'email_user.required' => 'Email tidak boleh kosong.',
+            'email_user.email' => 'Email harus menggunakan @gmail.com.',
+            'email_user.unique' => 'Email sudah terdaftar. silakan gunakan email yang lain.',
+            //password
+            'password.required' => 'Password tidak boleh kosonh.',
+            'password.min' => 'Password tidak boleh kurang dari 8 karakter.',
+            'password.max' => 'Password tidak boleh lebih dari 16 karakter.',
             'password.regex' => 'Password tidak boleh mengandung spasi.',
         ]);
 
