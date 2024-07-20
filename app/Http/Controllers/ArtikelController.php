@@ -20,4 +20,10 @@ class ArtikelController extends Controller
         return view('landing.artikel', compact('berita'));
         
     }
+    public function show($id_berita)
+{
+    $berita = Berita::findOrFail($id_berita);
+    return view('landing.detailartikel', compact('berita'));
+}
+
 }

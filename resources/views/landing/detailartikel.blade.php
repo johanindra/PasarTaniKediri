@@ -35,10 +35,10 @@
                         <div class="container">
                             @foreach ($berita as $item)
                                 <article class="article">
+
                                     <div class="post-img">
-                                        <img src="{{ url('/Kabar Tani/' . $item->foto_berita) }}"
-                                            alt="{{ $item->judul_berita }}"
-                                            style="width: 370px; height: 250px; object-fit: cover;">
+                                        <img src="{{ url('/Kabar Tani/' . $item->foto_berita) }}" alt="" style="display: block; margin: 0 auto; max-width: 50%; height: auto;">
+
                                     </div>
                                     <h2 class="title">{{ $item->judul_berita }}</h2>
                                     <div class="meta-top">
@@ -57,7 +57,7 @@
                     @endforeach
 
                     <!-- Blog Comments Section -->
-                    <section id="blog-comments" class="blog-comments section">
+                    {{-- <section id="blog-comments" class="blog-comments section">
                         <div class="container">
                             <h4 class="comments-count">8 Comments</h4>
                             <div id="comment-1" class="comment">
@@ -209,58 +209,29 @@
                                 </div>
                             </form>
                         </div>
-                    </section><!-- /Comment Form Section -->
+                    </section><!-- /Comment Form Section --> --}}
                 </div>
 
                 <div class="col-lg-4 sidebar">
                     <div class="widgets-container">
-
                         <!-- Recent Posts Widget -->
                         <div class="recent-posts-widget widget-item">
                             <h3 class="widget-title">Kabar Tani</h3>
-                            <div class="post-item">
-                                <img src="assets/img/blog/blog-recent-1.jpg" alt="" class="flex-shrink-0">
-                                <div>
-                                    <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <img src="assets/img/blog/blog-recent-2.jpg" alt="" class="flex-shrink-0">
-                                <div>
-                                    <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <img src="assets/img/blog/blog-recent-3.jpg" alt="" class="flex-shrink-0">
-                                <div>
-                                    <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a>
-                                    </h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <img src="assets/img/blog/blog-recent-4.jpg" alt="" class="flex-shrink-0">
-                                <div>
-                                    <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <img src="assets/img/blog/blog-recent-5.jpg" alt="" class="flex-shrink-0">
-                                <div>
-                                    <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div><!-- End recent post item-->
-                        </div><!--/Recent Posts Widget -->
+                            @foreach ($berita_lain as $item)
+                                <div class="post-item" style="display: flex; align-items: flex-start;">
+                                    <img src="{{ url('/Kabar Tani/' . $item->foto_berita) }}" alt="" class="flex-shrink-0" style="max-width: 20%; height: auto; margin-right: 10px;">
+                
+                                    <div style="flex-grow: 1; margin-left: 10px;">
+                                        <h4><a href="{{ route('detailartikel', ['id_berita' => $item->id_berita]) }}">{{ $item->judul_berita }}</a></h4>
+                                        <time datetime="{{ $item->tanggal_berita }}">{{ $item->tanggal_berita }}</time>
+                                    </div>
+                                </div><!-- End recent post item-->
+                            @endforeach
+                        </div>
                     </div>
                 </div>
+                
+                
             </div>
         </div>
     </main>

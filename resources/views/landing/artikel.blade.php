@@ -85,6 +85,10 @@
                                 <a href="{{ route('detailartikel', ['id_berita' => $item->id_berita]) }}" class="readmore stretched-link">
                                     <span>Baca Selengkapnya</span><i class="bi bi-arrow-right"></i>
                                 </a>
+                                {{-- <a href="{{ route('detailproduk', ['id_produk' => $p->id_produk]) }}" title="Detail Produk" class="details-link" style="text-decoration: none; color: inherit;">
+                                    <h4>{{ $item->nama_produk }}</h4>
+                                </a> --}}
+                                
                                 
                                 
                             </div>

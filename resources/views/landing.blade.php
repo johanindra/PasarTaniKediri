@@ -40,38 +40,50 @@
                         <li data-filter=".filter-branding">Alat dan Mesin Pertanian</li>
                         <li data-filter=".filter-books">Produk Olahan Pertanian</li>
                     </ul><!-- End Portfolio Filters -->
-                    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    {{-- <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
                         @foreach ($produk as $item)
                             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
                                 <div class="portfolio-content h-100">
-                                    {{-- <img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt=""> --}}
                                     <img src="{{ url('/Produk/' . $item->gambar1_produk) }}"
                                         style="width: 370px; height: 250px; object-fit: cover;">
                                     <div class="portfolio-info">
-                                        {{-- <h4>App 1 - hasil pertanian</h4>
-                                    <p>Nama Produk, Harga Produk</p> --}}
                                         <h4>Hasil Pertanian</h4>
                                         <p>{{ $item->nama_produk }} ,{{ $item->harga_produk }} </p>
-                                        {{-- <p>{{ $item->harga_produk }}</p> --}}
                                         <a href="{{ url('/Produk/' . $item->gambar1_produk) }}" title="Detail Foto Produk"
                                             data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
                                                 class="bi bi-zoom-in"></i></a>
-
-                                        <a href="{{ route('detailproduk', ['id_produk' => $item->id_produk]) }}" title="Detail Produk" class="details-link"><i
-                                                class="bi bi-link-45deg"></i></a>
-
-                                                {{-- <a href="{{ route('detailproduk', ['id_produk' => $item->id_produk]) }}"
-                                                    class="readmore stretched-link">
-                                                    <span>Baca Selengkapnya</span><i class="bi bi-arrow-right"></i>
-                                                </a> --}}
-                                                {{-- <a href="{{ route('produk.show', ['id_produk' => $item->id_produk]) }}" title="Detail Produk" class="details-link">
-                                                    <i class="bi bi-link-45deg"></i>
-                                                </a> --}}
-                                                
+                                        <a href="{{ route('detailproduk', ['id_produk' => $item->id_produk]) }}"
+                                            title="Detail Produk" class="details-link"><i class="bi bi-link-45deg"></i></a>
                                     </div>
                                 </div>
                         @endforeach
-                    </div><!-- End Portfolio Item -->
+                    </div><!-- End Portfolio Item --> --}}
+                    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                        @foreach ($produk as $p)
+                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                            <div class="menu-item">
+                                <a href="{{ url('/Produk/' . $p->gambar1_produk) }}" class="glightbox">
+                                    <img src="{{ url('/Produk/' . $p->gambar1_produk) }}" class="menu-img img-fluid" style="width: 100%; height: 200px; object-fit: cover;" alt="{{ $p->nama_produk }}">
+                                </a>
+                                {{-- <a href="{{ route('detailproduk', ['id_produk' => $p->id_produk]) }}" title="Detail Produk" class="details-link" style="text-decoration: none; color: inherit;">
+                                    
+                                    <h4>{{ $p->nama_produk }}</h4>
+                                </a> --}}
+                                <a href="{{ route('detailproduk', ['id_produk' => $p->id_produk]) }}" title="Detail Produk" class="details-link" style="text-decoration: none; color: inherit;">
+                                    <h4>{{ $p->nama_produk }}</h4>
+                                </a>
+                                
+                                <p class="ingredients">
+                                    {{ $p->deskripsi_produk }}
+                                </p>
+                                <div class="portfolio-info">
+                                    <a href="{{ url('/Produk/' . $p->gambar1_produk) }}" title="Detail Foto Produk" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                                </div>
+                            </div><!-- Menu Item -->
+                        </div>
+                        @endforeach
+                    </div><!-- End Portfolio Container -->
+                    
 
                     {{-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
                             <div class="portfolio-content h-100">
@@ -237,27 +249,31 @@
                                 </div><!-- End Info Item -->
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="col-lg-6">
                             @if (session('message_sent'))
                                 <div class="alert alert-success">
                                     {{ session('message_sent') }}
                                 </div>
                             @endif
-                        
-                            <form action="/landing/contact" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+
+                            <form action="/landing/contact" method="post" class="php-email-form" data-aos="fade-up"
+                                data-aos-delay="200">
                                 @csrf
                                 <div class="row gy-4">
                                     <h3>Layanan Konsultasi Website</h3>
                                     <div class="col-md-6">
-                                        <input type="text" name="name" class="form-control" placeholder="Nama" required="">
+                                        <input type="text" name="name" class="form-control" placeholder="Nama"
+                                            required="">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="email" class="form-control" name="email" placeholder="Email" required="">
+                                        <input type="email" class="form-control" name="email" placeholder="Email"
+                                            required="">
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="subject" placeholder="Subjek" required="">
+                                        <input type="text" class="form-control" name="subject" placeholder="Subjek"
+                                            required="">
                                     </div>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="message" rows="6" placeholder="Pesan" required=""></textarea>
