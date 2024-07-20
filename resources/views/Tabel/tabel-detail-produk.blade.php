@@ -70,10 +70,21 @@
                                         <th scope="row">Harga Produk</th>
                                         <td>Rp. {{ number_format($produk->harga_produk, 0, ',', '.') }}</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">Link Shopee</th>
-                                        <td>{{$produk->shopee_produk}}</td>
-                                    </tr>
+                                    @if ($produk->shopee_produk)
+                                        <tr>
+                                            <th scope="row">Link Shopee</th>
+                                            <td>
+                                                <a href="{{ $produk->shopee_produk }}" target="_blank"
+                                                    class="btn btn-primary"
+                                                    style="color: white; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 5px; background-color: #FF6600;">
+                                                    <img src="https://logospng.org/wp-content/uploads/shopee.png"
+                                                        alt="Shopee"
+                                                        style="height: 20px; vertical-align: middle; margin-right: 5px;">
+                                                    Lihat Produk
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endif
                                     <tr>
                                         <th scope="row">Deskripsi</th>
                                         <td>{{ $produk->deskripsi_produk }}</td>

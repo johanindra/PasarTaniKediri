@@ -32,7 +32,7 @@ class SidebarController extends Controller
             $totalProduk = Produk::count();
             $totalBerita = Berita::count();
             $pengguna = User::count();
-            $berita = Berita::all();
+            $berita = Berita::orderBy('id_berita', 'desc')->get();
             $produkPerKecamatan = Produk::join('users', 'produk.id_user', '=', 'users.id_user')
                 ->select('users.kecamatan_user', \DB::raw('count(*) as total'))
                 ->groupBy('users.kecamatan_user')
@@ -43,38 +43,41 @@ class SidebarController extends Controller
             // Filter berdasarkan pilihan
             switch ($filter) {
                 case 'Hari Ini':
-                    $produkDitawarkan = Produk::whereDate('created_at', today())->get();
+                    $produkDitawarkan = Produk::whereDate('created_at', today())->orderBy('id_produk', 'desc')->get();
                     break;
                 case 'Minggu Ini':
-                    $produkDitawarkan = Produk::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->get();
+                    $produkDitawarkan = Produk::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->orderBy('id_produk', 'desc')->get();
                     break;
                 case 'Bulan Ini':
-                    $produkDitawarkan = Produk::whereMonth('created_at', now()->month)->get();
+                    $produkDitawarkan = Produk::whereMonth('created_at', now()->month)->orderBy('id_produk', 'desc')->get();
                     break;
                 default:
-                    $produkDitawarkan = Produk::all(); // Menampilkan semua data jika tidak ada filter yang dipilih
+                    $produkDitawarkan = Produk::orderBy('id_produk', 'desc')
+                        ->get(); // Menampilkan semua data jika tidak ada filter yang dipilih
                     break;
             }
         } elseif ($user->hasRole(['masyarakat', 'kelompok_tani'])) {
             // Jika pengguna adalah masyarakat atau kelompok tani, hitung produk yang ditambahkan oleh pengguna
             $totalProduk = Produk::where('id_user', Auth::user()->id_user)->count();
             $totalBerita = Berita::where('id_user', Auth::user()->id_user)->count();
-            $berita = Berita::where('id_user', Auth::user()->id_user)->get();
+            $berita = Berita::where('id_user', Auth::user()->id_user)
+                ->orderBy('id_berita', 'desc')
+                ->get();
             // Filter berdasarkan pilihan
             switch ($filter) {
                 case 'Hari Ini':
                     $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)
-                        ->whereDate('created_at', today())
+                        ->whereDate('created_at', today())->orderBy('id_produk', 'desc')
                         ->get();
                     break;
                 case 'Minggu Ini':
                     $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)
-                        ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                        ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->orderBy('id_produk', 'desc')
                         ->get();
                     break;
                 case 'Bulan Ini':
                 default:
-                    $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)
+                    $produkDitawarkan = Produk::where('id_user', Auth::user()->id_user)->orderBy('id_produk', 'desc')
                         ->get();
                     break;
             }
@@ -84,73 +87,160 @@ class SidebarController extends Controller
     }
 
 
+    // public function produk(Request $request)
+    // {
+    //     $query = Produk::query();
+
+    //     if (Auth::user()->hasRole('admin')) {
+    //         $query->with('user');
+    //     } else {
+    //         $query->where('id_user', Auth::user()->id_user);
+    //     }
+
+    //     // Filter berdasarkan kecamatan
+    //     if ($request->filled('kecamatan')) {
+    //         $query->whereHas('user', function ($q) use ($request) {
+    //             $q->where('kecamatan_user', $request->kecamatan);
+    //         });
+    //     }
+
+    //     // Filter berdasarkan pengguna
+    //     if ($request->filled('pengguna')) {
+    //         $query->whereHas('user', function ($q) use ($request) {
+    //             $q->whereHas('roles', function ($roleQuery) use ($request) {
+    //                 $roleQuery->where('name', $request->pengguna);
+    //             });
+    //         });
+    //     }
+
+    //     $produk = $query->get();
+
+    //     return view('produk', ['produk' => $produk]);
+    // }
+
     public function produk(Request $request)
     {
-        $query = Produk::query();
+        $user = Auth::user();
 
-        if (Auth::user()->hasRole('admin')) {
-            $query->with('user');
+        if ($user->hasRole('admin')) {
+            // Produk yang ditulis oleh admin yang sedang login
+            $adminProduk = Produk::with('user')
+                ->where('id_user', $user->id_user)
+                ->orderBy('id_produk', 'asc')
+                ->get();
+
+            // Produk lainnya yang tidak ditulis oleh admin yang sedang login
+            $otherProduk = Produk::with('user')
+                ->where('id_user', '!=', $user->id_user)
+                ->orderBy('id_produk', 'asc')
+                ->get();
+
+            // Gabungkan kedua koleksi produk
+            $produk = $adminProduk->merge($otherProduk);
         } else {
-            $query->where('id_user', Auth::user()->id_user);
+            // Produk untuk pengguna selain admin
+            $produk = Produk::with('user')
+                ->where('id_user', $user->id_user)
+                ->orderBy('id_produk', 'asc')
+                ->get();
         }
 
         // Filter berdasarkan kecamatan
         if ($request->filled('kecamatan')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('kecamatan_user', $request->kecamatan);
+            $produk = $produk->filter(function ($item) use ($request) {
+                return $item->user->kecamatan_user == $request->kecamatan;
             });
         }
 
         // Filter berdasarkan pengguna
         if ($request->filled('pengguna')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->whereHas('roles', function ($roleQuery) use ($request) {
-                    $roleQuery->where('name', $request->pengguna);
-                });
+            $produk = $produk->filter(function ($item) use ($request) {
+                return $item->user->hasRole($request->pengguna);
             });
         }
 
-        $produk = $query->get();
-
         return view('produk', ['produk' => $produk]);
     }
+
 
     public function produktani()
     {
         return view('produk-tani');
     }
 
-
     public function berita(Request $request)
     {
-        $query = Berita::query();
+        $user = Auth::user();
 
-        if (Auth::user()->hasRole('admin')) {
-            $query->with('user');
+        if ($user->hasRole('admin')) {
+            // Berita yang ditulis oleh admin yang sedang login
+            $adminBerita = Berita::with('user')
+                ->where('id_user', $user->id_user)
+                ->orderBy('id_berita', 'asc')
+                ->get();
+
+            // Berita lainnya yang tidak ditulis oleh admin yang sedang login
+            $otherBerita = Berita::with('user')
+                ->where('id_user', '!=', $user->id_user)
+                ->orderBy('id_berita', 'asc')
+                ->get();
+
+            // Gabungkan kedua koleksi berita
+            $berita = $adminBerita->merge($otherBerita);
         } else {
-            $query->where('id_user', Auth::user()->id_user);
+            // Berita untuk pengguna selain admin
+            $berita = Berita::with('user')
+                ->where('id_user', $user->id_user)
+                ->orderBy('id_berita', 'asc')
+                ->get();
         }
 
         // Filter berdasarkan kecamatan
         if ($request->filled('kecamatan')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('kecamatan_user', $request->kecamatan);
+            $berita = $berita->filter(function ($item) use ($request) {
+                return $item->user->kecamatan_user == $request->kecamatan;
             });
         }
 
         // Filter berdasarkan pengguna
         if ($request->filled('pengguna')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->whereHas('roles', function ($roleQuery) use ($request) {
-                    $roleQuery->where('name', $request->pengguna);
-                });
+            $berita = $berita->filter(function ($item) use ($request) {
+                return $item->user->hasRole($request->pengguna);
             });
         }
 
-        $berita = $query->get();
-
         return view('kabar-tani', ['berita' => $berita]);
     }
+    // public function berita(Request $request)
+    // {
+    //     $query = Berita::query();
+
+    //     if (Auth::user()->hasRole('admin')) {
+    //         $query->with('user');
+    //     } else {
+    //         $query->where('id_user', Auth::user()->id_user);
+    //     }
+
+    //     // Filter berdasarkan kecamatan
+    //     if ($request->filled('kecamatan')) {
+    //         $query->whereHas('user', function ($q) use ($request) {
+    //             $q->where('kecamatan_user', $request->kecamatan);
+    //         });
+    //     }
+
+    //     // Filter berdasarkan pengguna
+    //     if ($request->filled('pengguna')) {
+    //         $query->whereHas('user', function ($q) use ($request) {
+    //             $q->whereHas('roles', function ($roleQuery) use ($request) {
+    //                 $roleQuery->where('name', $request->pengguna);
+    //             });
+    //         });
+    //     }
+
+    //     $berita = $query->get();
+
+    //     return view('kabar-tani', ['berita' => $berita]);
+    // }
 
 
     public function pengguna(Request $request)

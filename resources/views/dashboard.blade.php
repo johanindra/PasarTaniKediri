@@ -732,7 +732,7 @@
 
                         <div class="card-body pb-0">
                             @if (auth()->user()->hasRole(['admin']))
-                                <h5 class="card-title">Kabar Tani</h5>
+                                <h5 class="card-title">Kabar Tani <span>|Terbaru</span></h5>
                             @endif
                             @if (auth()->user()->hasRole(['kelompok_tani']))
                                 <h5 class="card-title">Kabar Saya</h5>
