@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
             <img src="{{ url('/Foto Profil User/' . $pengguna->foto_user) }}" alt="Profile" class="rounded-circle"
-                style="width: 150px; height: 150px; object-fit: cover;">
+                style="width: 150px; height: 150px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#fotoModal">
             <h4 class="text-center">{{ $pengguna->nama_user }}</h4>
             <h6 class="text-center">{{ $pengguna->email_user }}</h6>
             <small class="text-center">{{ $pengguna->alamat_user . ' ' . $pengguna->kecamatan_user }}</small>
@@ -37,6 +37,26 @@
                     <a href="{{ $pengguna->maps_user }}" class="map" target="_blank"><i
                             class="bi bi-geo-alt"></i></a>
                 @endif
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="fotoModal" tabindex="-1" aria-labelledby="fotoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fotoModalLabel">Foto Profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    @if ($pengguna->foto_user)
+                        <img src="{{ url('/Foto Profil User/' . $pengguna->foto_user) }}" alt="{{ $pengguna->nama_user }}"
+                            class="img-fluid">
+                    @else
+                        <img src="{{ url('/Foto Profil User/defaultfoto.png') }}" alt="Default Profile"
+                            class="img-fluid">
+                    @endif
+                </div>
             </div>
         </div>
     </div>
