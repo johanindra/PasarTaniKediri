@@ -44,6 +44,10 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    // Check if there's any user with email 'pasartanikediri@gmail.com'
+$emailRestricted = $penggunaList->contains('email_user', 'pasartanikediri@gmail.com');
+                @endphp
                 @forelse ($penggunaList as $p)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
@@ -58,20 +62,37 @@
                                     <span class="badge bg-info">{{ $role->name }}</span>
                                 @endif
                             @endforeach
-
                         </td>
                         <td>{{ $p->alamat_user . ', ' . $p->kecamatan_user }}</td>
                         <td>{{ $p->created_at }}</td>
                         <td class="text-center">
-                            <form action="" method="post">
-                                <input name="id" id="id" type="hidden" value="{{ $p->id_berita }}">
+                            @if (auth()->user()->hasRole('admin'))
+                                <div class="d-flex justify-content-around">
+                                    <a href="{{ route('detail.pengguna', ['id' => $p->id_user]) }}"
+                                        class="btn btn-sm btn-primary btn-icon"><img src="assets/img/detail.png"
+                                            alt="Detail" style="width: 20px; height: 20px;"></a>
+
+                                    @if ($emailRestricted && $p->email_user == 'pasartanikediri@gmail.com')
+                                        <!-- Hide button for rows with email pasartanikediri@gmail.com -->
+                                    @elseif (auth()->user()->email_user == 'pasartanikediri@gmail.com' ||
+                                            $p->roles->pluck('name')->intersect(['masyarakat', 'kelompok_tani'])->isNotEmpty())
+                                        <form id="delete-form-{{ $p->id_user }}"
+                                            action="{{ route('HapusAkunUser', ['id' => $p->id_user]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-sm btn-danger btn-icon"
+                                                onclick="confirmDelete({{ $p->id_user }})"><img
+                                                    src="assets/img/hapus.png" alt="Hapus"
+                                                    style="width: 20px; height: 20px;"></button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @else
                                 <a href="{{ route('detail.pengguna', ['id' => $p->id_user]) }}"
-                                    class="btn btn-sm btn-primary">Detail</a>
-                                {{-- <a class="btn btn-sm btn-warning" href="#" data-toggle="modal"
-                data-target="#editBeritaModal{{ $b->id_berita }}">EDIT</a>
-            <a class="btn btn-sm btn-danger" href="#"
-                onclick="confirmDelete('/upload/hapus/{{ $b->id_berita }}')">HAPUS</a> --}}
-                            </form>
+                                    class="btn btn-sm btn-primary btn-icon"><img src="assets/img/detail.png"
+                                        alt="Detail" style="width: 20px; height: 20px;"></a>
+                            @endif
                         </td>
                     </tr>
                 @empty
@@ -88,20 +109,20 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     // Fungsi untuk konfirmasi penghapusan
-    function confirmDelete(url) {
+    function confirmDelete(userId) {
         Swal.fire({
-            title: 'Yakin ingin menghapus?',
-            text: "Anda tidak akan dapat mengembalikan data ini!",
+            title: 'Apakah Anda yakin?',
+            text: "Anda tidak dapat mengembalikan akun ini setelah dihapus!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, hapus!',
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Jika konfirmasi, arahkan pengguna ke URL hapus
-                window.location = url;
+                // Submit the form
+                document.getElementById('delete-form-' + userId).submit();
             }
         });
     }

@@ -137,7 +137,7 @@
             value="{{ old('instagram_user', $user->instagram_user) }}">
     </div>
     <div class="mb-3">
-        <label for="facebook_user" class="form-label">Facebook</label>
+        <label for="facebook_user" class="form-label">Link Facebook</label>
         <input type="text" class="form-control" id="facebook_user" name="facebook_user"
             placeholder="Masukkan username Facebook Anda" value="{{ old('facebook_user', $user->facebook_user) }}">
     </div>

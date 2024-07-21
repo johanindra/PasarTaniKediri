@@ -302,6 +302,57 @@ class SidebarController extends Controller
         }
     }
 
+    public function hapusAkunUser($id)
+    {
+        // Temukan pengguna berdasarkan ID
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Akun tidak ditemukan');
+        }
+
+        // Hapus foto profil jika ada
+        if ($user->foto_user && file_exists(public_path('Foto Profil User/' . $user->foto_user))) {
+            unlink(public_path('Foto Profil User/' . $user->foto_user));
+        }
+
+        // Hapus foto produk jika ada
+        $produks = $user->produks;
+        if ($produks) {
+            foreach ($produks as $produk) {
+                if ($produk->gambar1_produk && file_exists(public_path('Produk/' . $produk->gambar1_produk))) {
+                    unlink(public_path('Produk/' . $produk->gambar1_produk));
+                }
+                if ($produk->gambar2_produk && file_exists(public_path('Produk/' . $produk->gambar2_produk))) {
+                    unlink(public_path('Produk/' . $produk->gambar2_produk));
+                }
+                if ($produk->gambar3_produk && file_exists(public_path('Produk/' . $produk->gambar3_produk))) {
+                    unlink(public_path('Produk/' . $produk->gambar3_produk));
+                }
+                $produk->delete();
+            }
+        }
+
+        // Hapus foto Kabar Tani jika ada
+        foreach ($user->kabarTani as $berita) {
+            if ($berita->foto_berita && file_exists(public_path('Kabar Tani/' . $berita->foto_berita))) {
+                unlink(public_path('Kabar Tani/' . $berita->foto_berita));
+            }
+            $berita->delete();
+        }
+
+        // Hapus pengguna dari database
+        $user->delete();
+
+        // Logout pengguna jika yang dihapus adalah pengguna yang sedang login
+        if (Auth::check() && Auth::id() == $user->id) {
+            Auth::logout();
+        }
+
+        return redirect()->back()->with('success', 'Akun Berhasil dihapus');
+    }
+
+
+
     public function hapusAkun($id)
     {
         $user = User::find($id);

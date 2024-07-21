@@ -124,7 +124,7 @@
                             <!-- Tampilkan link Facebook jika ada -->
                             @if ($user->facebook_user)
                                 <div class="social-links mt-2">
-                                    <a href="https://facebook.com/{{ $user->facebook_user }}" target="_blank"
+                                    <a href="{{ $user->facebook_user }}" target="_blank"
                                         class="facebook"><i class="bi bi-facebook"></i> Facebook</a>
                                 </div>
                             @endif

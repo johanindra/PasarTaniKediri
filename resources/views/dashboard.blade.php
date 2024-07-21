@@ -511,7 +511,15 @@
 
                             @endif
                             @if (auth()->user()->hasRole(['masyarakat', 'kelompok_tani']))
-                                <h5 class="card-title">Produk Saya <span>| {{ ucfirst($filter) }}</span></h5>
+                                <h5 class="card-title">Produk Saya
+                                    <span>|
+                                        @if (isset($filter))
+                                            {{ ucfirst($filter) }}
+                                        @else
+                                            Default
+                                        @endif
+                                    </span>
+                                </h5>
                             @endif
 
                             <table class="table table-borderless">

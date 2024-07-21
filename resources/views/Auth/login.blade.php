@@ -10,7 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/LogoPasarTani.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -34,17 +34,36 @@
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    <style>
+        .btn-back {
+            color: #86A789;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            font-size: 25px;
+            /* Ukuran ikon */
+        }
+
+        .btn-back:hover {
+            color: #445D48;
+        }
+
+        .btn-back .bi-arrow-left {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 
 <body>
-
+    <a href="{{ url('/') }}" class="btn btn-back">
+        <i class="bi bi-arrow-left"></i>
+    </a>
     <main>
         <div class="container">
 

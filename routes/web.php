@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\Auth\LupaSandiController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\DetailArtikelController;
+use App\Http\Controllers\DetailProdukController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SidebarController;
+use App\Http\Controllers\TentangController;
 use App\Http\Controllers\UploadBeritaController;
 use App\Http\Controllers\UploadProdukController;
 use Illuminate\Support\Facades\Route;
@@ -15,10 +21,31 @@ Route::get('dashboard', function () {
 // Route::get('/', function () {
 //     return view('lengkapi-profil');
 // });
-Route::get('/', function () {
-    return view('Auth.login');
-})->middleware('auth.redirect');
+// Route::get('/', function () {
+//     return view('landing');
+// })->middleware('auth.redirect');
 
+//landing
+Route::middleware('auth.redirect')->group(function () {
+    Route::get('/', [LandingController::class, 'index'])->name('landing');
+    Route::post('/landing/contact', [LandingController::class, 'contact'])->name('landing.contact');
+
+    // Route::get('/detailproduk/{id_produk}', [DetailProdukController::class, 'show'])->name('produkshow');
+    Route::get('/detailproduk/{id_produk}', [DetailProdukController::class, 'show'])->name('detailproduk');
+    Route::post('/detailproduk/store-comment', [DetailProdukController::class, 'storeComment'])->name('storecomment');
+
+    // Route::get('/detailartikel/{id_berita}', [DetailArtikelController::class, 'show'])->name('artikelshow');
+    Route::get('/detailartikel/{id_berita}', [DetailArtikelController::class, 'show'])->name('detailartikel');
+
+
+    Route::get('/produk/admin', [ProdukController::class, 'index'])->name('produk');
+
+    Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel');
+
+    Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
+    Route::get('/produk/filter', [ProdukController::class, 'filter'])->name('produk.filter');
+});
+//login
 Route::get('login', [SidebarController::class, 'login'])->name('login')->middleware('auth.redirect');
 
 //lupa sandi
@@ -67,6 +94,7 @@ Route::middleware('auth.admin')->group(function () {
 
     //data pengguna
     Route::post('pengguna/tambah-admin', [UserController::class, 'tambahAdmin'])->name('AddAdmin');
+    Route::delete('hapus-akun/{id}', [SidebarController::class,'HapusAkunUser'])->name('HapusAkunUser');
 
     //profil
     Route::delete('/profil/hapus/{id_user}', [SidebarController::class, 'hapusAkun'])->name('hapus-akun');
