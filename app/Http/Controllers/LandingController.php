@@ -14,14 +14,36 @@ use App\Mail\ContactMail;
 class LandingController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
 {
     $berita = Berita::latest()->take(3)->get();
+    // dd($category);
+
+    // $produk = Produk::all();
+    $category = $request->get('kategori_produk');
     
-    $produk = Produk::all();
+    if ($category) {
+        $produk = Produk::where('kategori_produk', $category)->get();
+    } else {
+        $produk = Produk::all();
+    }
     
-    return view('landing', compact('berita', 'produk'));
+    return view('landing', compact('berita','category', 'produk'));
 }
+// ProductController.php
+// public function index(Request $request)
+// {
+//     $category = $request->get('category');
+    
+//     if ($category) {
+//         $produk = Product::where('kategori', $category)->get();
+//     } else {
+//         $produk = Product::all();
+//     }
+    
+//     return view('produk.index', compact('produk', 'category'));
+// }
+
 // public function contact(Request $request)
 //     {
 //         $request->validate([
