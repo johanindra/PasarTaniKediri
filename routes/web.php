@@ -14,10 +14,11 @@ Route::get('/', function () {
 
 Route::get('/landing', [LandingController::class, 'index'])->name('landing');
 Route::post('/landing/contact', [LandingController::class, 'contact'])->name('landing.contact');
+Route::post('/landing/store', [LandingController::class, 'store'])->name('storereview');
 
-// Route::get('/detailproduk/{id_produk}', [DetailProdukController::class, 'show'])->name('produkshow');
+
 Route::get('/detailproduk/{id_produk}', [DetailProdukController::class, 'show'])->name('detailproduk');
-Route::post('/detailproduk/store-comment', [DetailProdukController::class, 'storeComment'])->name('storecomment');
+Route::post('/detailproduk/store', [DetailProdukController::class, 'store'])->name('storecomment');
 
 
 

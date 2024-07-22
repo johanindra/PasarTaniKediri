@@ -274,125 +274,25 @@
               }
             </script>
                         <div class="swiper-wrapper">
-
-                            <div class="swiper-slide">
-                                <div class="testimonial-item">
-                                    {{-- <div class="stars">
-                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i>
-                                    </div> --}}
-                                    <p>
-                                        Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit
-                                        rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam,
-                                        risus at semper.
-                                    </p>
-                                    <div class="profile mt-auto">
-                                        {{-- <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img"
-                                            alt=""> --}}
-                                            <img src="{{ asset('assets/img/default-comment.png') }}" class="testimonial-img" alt="">
-
-                                        <h3>Saul Goodman</h3>
-                                        <h4>Ceo &amp; Founder</h4>
+                            @foreach ($review as $review)
+                                <div class="swiper-slide">
+                                    <div class="testimonial-item">
+                                        <p>
+                                            {{ $review->komentar }} <!-- Menampilkan komentar dari tabel review -->
+                                        </p>
+                                        <div class="profile mt-auto">
+                                            <img src="{{ asset('assets/img/default-comment.png') }}"
+                                                class="testimonial-img" alt="">
+                                            <h3>{{ $review->nama }}</h3> <!-- Menampilkan nama dari tabel review -->
+                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- End testimonial item -->
-
-                            <div class="swiper-slide">
-                                <div class="testimonial-item">
-                                    {{-- <div class="stars">
-                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i>
-                                    </div> --}}
-                                    <p>
-                                        Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid
-                                        cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet
-                                        legam anim culpa.
-                                    </p>
-                                    <div class="profile mt-auto">
-                                        {{-- <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img"
-                                            alt=""> --}}
-                                            <img src="{{ asset('assets/img/default-comment.png') }}" class="testimonial-img" alt="">
-
-                                        <h3>Sara Wilsson</h3>
-                                        <h4>Designer</h4>
-                                    </div>
-                                </div>
-                            </div><!-- End testimonial item -->
-
-                            <div class="swiper-slide">
-                                <div class="testimonial-item">
-                                    {{-- <div class="stars">
-                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i>
-                                    </div> --}}
-                                    <p>
-                                        Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem
-                                        veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint
-                                        minim.
-                                    </p>
-                                    <div class="profile mt-auto">
-                                        {{-- <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img"
-                                            alt=""> --}}
-                                            <img src="{{ asset('assets/img/default-comment.png') }}" class="testimonial-img" alt="">
-
-                                        <h3>Jena Karlis</h3>
-                                        <h4>Store Owner</h4>
-                                    </div>
-                                </div>
-                            </div><!-- End testimonial item -->
-
-                            <div class="swiper-slide">
-                                <div class="testimonial-item">
-                                    {{-- <div class="stars">
-                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i>
-                                    </div> --}}
-                                    <p>
-                                        Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim
-                                        fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem
-                                        dolore labore illum veniam.
-                                    </p>
-                                    <div class="profile mt-auto">
-                                        {{-- <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img"
-                                            alt=""> --}}
-                                            <img src="{{ asset('assets/img/default-comment.png') }}" class="testimonial-img" alt="">
-
-                                        <h3>Matt Brandon</h3>
-                                        <h4>Freelancer</h4>
-                                    </div>
-                                </div>
-                            </div><!-- End testimonial item -->
-
-                            <div class="swiper-slide">
-                                <div class="testimonial-item">
-                                    {{-- <div class="stars">
-                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                            class="bi bi-star-fill"></i>
-                                    </div> --}}
-                                    <p>
-                                        Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster
-                                        veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam
-                                        culpa fore nisi cillum quid.
-                                    </p>
-                                    <div class="profile mt-auto">
-                                        {{-- <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img"
-                                            alt=""> --}}
-                                            <img src="{{ asset('assets/img/default-comment.png') }}" class="testimonial-img" alt="">
-
-                                        <h3>John Larson</h3>
-                                        <h4>Entrepreneur</h4>
-                                    </div>
-                                </div>
-                            </div><!-- End testimonial item -->
-
+                                </div><!-- End testimonial item -->
+                            @endforeach
                         </div>
                         <div class="swiper-pagination"></div>
-                    </div>
+
+                        {{-- <div class="swiper-pagination"></div>
+                    </div> --}}
 
                 </div>
 
@@ -408,82 +308,88 @@
                 </div><!-- End Section Title -->
                 <div class="container" data-aos="fade-up" data-aos-delay="100">
                     <div class="row gy-4">
+                        <!-- Formulir Testimoni Pengguna -->
                         <div class="col-lg-6">
-                            @if (session('message_sent'))
-                                <div class="alert alert-success">
-                                    {{ session('message_sent') }}
-                                </div>
-                            @endif
-
-                            <form action="/landing/contact" method="post" class="php-email-form" data-aos="fade-up"
-                                data-aos-delay="200">
+                            <form action="{{ route('storereview') }}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
                                 @csrf
                                 <div class="row gy-4">
                                     <h3>Testimoni Pengguna</h3>
                                     <div class="col-md-6">
-                                        <input type="text" name="name" class="form-control" placeholder="Nama"
-                                            required="">
+                                        <input type="text" name="nama" class="form-control" placeholder="Nama" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="email" class="form-control" name="email" placeholder="Email"
-                                            required="">
+                                        <input type="email" class="form-control" name="email" placeholder="Email" required>
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="subject" placeholder="Subjek"
-                                            required="">
+                                        <textarea class="form-control" name="komentar" rows="6" placeholder="Testimoni Pengguna" required></textarea>
                                     </div>
-                                    <div class="col-md-12">
-                                        <textarea class="form-control" name="message" rows="6" placeholder="Pesan" required=""></textarea>
-                                    </div>
+                                    {{-- <div class="col-md-12 text-center">
+                                        <div class="loading" style="display: none;">Loading</div>
+                                        @if (session('success'))
+                                            <div class="sent-message">{{ session('success') }}</div>
+                                        @elseif (session('error'))
+                                            <div class="error-message">{{ session('error') }}</div>
+                                        @endif
+                                        <button type="submit">Kirim</button>
+                                    </div> --}}
                                     <div class="col-md-12 text-center">
                                         <div class="loading">Loading</div>
-                                        <div class="error-message"></div>
-                                        <div class="sent-message">Pesanmu Berhasil di kirim, Terimakasih!</div>
+                                        <div class="sent-message">Pesanmu Berhasil dikirim, Terimakasih!</div>
+                                        <div class="error-message">Pesanmu Berhasil dikirim, Terimakasih!</div>
+
                                         <button type="submit">Kirim</button>
                                     </div>
                                 </div>
                             </form>
                         </div><!-- End Contact Form -->
-
-
+                
+                        <!-- Info Items -->
                         <div class="col-lg-6">
-                            @if (session('message_sent'))
-                                <div class="alert alert-success">
-                                    {{ session('message_sent') }}
-                                </div>
-                            @endif
-
-                            <form action="/landing/contact" method="post" class="php-email-form" data-aos="fade-up"
-                                data-aos-delay="200">
-                                @csrf
-                                <div class="row gy-4">
-                                    <h3>Layanan Konsultasi Website</h3>
-                                    <div class="col-md-6">
-                                        <input type="text" name="name" class="form-control" placeholder="Nama"
-                                            required="">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="email" class="form-control" name="email" placeholder="Email"
-                                            required="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" name="subject" placeholder="Subjek"
-                                            required="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <textarea class="form-control" name="message" rows="6" placeholder="Pesan" required=""></textarea>
-                                    </div>
-                                    <div class="col-md-12 text-center">
-                                        <div class="loading">Loading</div>
-                                        <div class="error-message"></div>
-                                        <div class="sent-message">Pesanmu Berhasil di kirim, Terimakasih!</div>
-                                        <button type="submit">Kirim</button>
+                            <div class="row gy-4">
+                                <div class="col-md-6">
+                                    <div class="info-item" data-aos="fade" data-aos-delay="200">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <h3>Alamat</h3>
+                                        <p>Kabupaten Kediri, Jawa Timur</p>
+                                        {{-- <p>New York, NY 535022</p> --}}
                                     </div>
                                 </div>
-                            </form>
-                        </div><!-- End Contact Form -->
+                                <!-- End Info Item -->
+                
+                                {{-- <div class="col-md-6">
+                                    <div class="info-item" data-aos="fade" data-aos-delay="300">
+                                        <i class="bi bi-telephone"></i>
+                                        <h3>Call Us</h3>
+                                        <p>+1 5589 55488 55</p>
+                                        <p>+1 6678 254445 41</p>
+                                    </div>
+                                </div> --}}
+                                <!-- End Info Item -->
+                
+                                <div class="col-md-6">
+                                    <div class="info-item" data-aos="fade" data-aos-delay="400">
+                                        <i class="bi bi-envelope"></i>
+                                        <h3>Email</h3>
+                                        <p>pasartanikediri@gmail.com</p>
+                                        {{-- <p>contact@example.com</p> --}}
+                                    </div>
+                                </div>
+                                <!-- End Info Item -->
+                
+                                {{-- <div class="col-md-6">
+                                    <div class="info-item" data-aos="fade" data-aos-delay="500">
+                                        <i class="bi bi-clock"></i>
+                                        <h3>Open Hours</h3>
+                                        <p>Monday - Friday</p>
+                                        <p>9:00AM - 05:00PM</p>
+                                    </div>
+                                </div> --}}
+                                <!-- End Info Item -->
+                            </div>
+                        </div><!-- End Info Items -->
                     </div>
                 </div>
-            </section><!-- /Contact Section -->
+                
+            
     </main>
 @endsection

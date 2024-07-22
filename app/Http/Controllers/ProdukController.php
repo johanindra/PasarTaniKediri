@@ -22,7 +22,7 @@ public function index(Request $request)
     if ($request->get('kecamatan')) {
         $kecamatan = $request->get('kecamatan');
         $produk->whereHas('user', function ($query) use ($kecamatan) {
-            $query->where('alamat_user', 'LIKE', '%' . $kecamatan . '%');
+            $query->where('kecamatan_user', 'LIKE', '%' . $kecamatan . '%');
         });
     }
 

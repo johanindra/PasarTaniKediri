@@ -43,6 +43,10 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+    .disabled-icon {
+        pointer-events: none; /* Nonaktifkan klik */
+        color: #6c757d; /* Ubah warna ikon untuk menunjukkan bahwa ikon tidak aktif */
+    }
 body {
   color: var(--default-color);
   background-color: var(--background-color);
